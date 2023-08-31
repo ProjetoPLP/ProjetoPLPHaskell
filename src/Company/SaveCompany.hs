@@ -39,24 +39,23 @@ saveCompanyJSON :: String -> Company -> IO ()
 saveCompanyJSON jsonFilePath company = do
   let companyList = getCompanyJSON jsonFilePath
   let companiesList = companyList ++ [company]
-
-  B.writeFile "../Temp.json" $ encode companiesList
+  B.writeFile "./ArquivoTemporario.json" $ encode companiesList
   removeFile jsonFilePath
-  renameFile "../Temp.json" jsonFilePath
+  renameFile "./ArquivoTemporario.json" jsonFilePath
 
 
 editCompanyInfoJSON :: String -> Company -> IO ()
 editCompanyInfoJSON jsonFilePath updatedCompany = do
  let companiesList = getCompanyJSON jsonFilePath
  let newCompaniesList = removeCompanyByID (identifier updatedCompany) companiesList ++ [updatedCompany]
- B.writeFile "../Temp.json" $ encode newCompaniesList
+ B.writeFile "./ArquivoTemporario.json" $ encode newCompaniesList
  removeFile jsonFilePath
- renameFile "../Temp.json" jsonFilePath
+ renameFile "./ArquivoTemporario.json" jsonFilePath
 
 removeCompanyJSON :: String -> Int -> IO ()
 removeCompanyJSON jsonFilePath identifier = do
  let companiesList = getCompanyJSON jsonFilePath
  let newCompaniesList = removeCompanyByID identifier companiesList
- B.writeFile "../Temp.json" $ encode newCompaniesList
+ B.writeFile "./ArquivoTemporario.json" $ encode newCompaniesList
  removeFile jsonFilePath
- renameFile "../Temp.json" jsonFilePath
+ renameFile "./ArquivoTemporario.json" jsonFilePath

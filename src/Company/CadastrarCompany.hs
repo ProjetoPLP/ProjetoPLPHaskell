@@ -7,5 +7,5 @@ import CreateCompany
 cadastrarCompany :: IO String
 cadastrarCompany = do
   company <- getCompany
-  saveCompanyJSON "../Temp.json" company
+  saveCompanyJSON "./Companies.json" company
   return ("A empresa " ++ name company ++ " foi cadastrada com sucesso!")

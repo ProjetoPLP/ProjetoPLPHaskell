@@ -39,24 +39,22 @@ saveClientJSON :: String -> Client -> IO ()
 saveClientJSON jsonFilePath client = do
   let clientList = getClientJSON jsonFilePath
   let clientsList = clientList ++ [client]
-
-  B.writeFile "../Temp.json" $ encode clientsList
+  B.writeFile "./ArquivoTemporario.json" $ encode clientsList
   removeFile jsonFilePath
-  renameFile "../Temp.json" jsonFilePath
-
+  renameFile "./ArquivoTemporario.json" jsonFilePath
 
 editClientInfoJSON :: String -> Client -> IO ()
 editClientInfoJSON jsonFilePath updatedClient = do
  let clientsList = getClientJSON jsonFilePath
  let newClientsList = removeClientByID (identifier updatedClient) clientsList ++ [updatedClient]
- B.writeFile "../Temp.json" $ encode newClientsList
+ B.writeFile "../ArquivoTemporario.json" $ encode newClientsList
  removeFile jsonFilePath
- renameFile "../Temp.json" jsonFilePath
+ renameFile "../ArquivoTemporario.json" jsonFilePath
 
 removeClientJSON :: String -> Int -> IO ()
 removeClientJSON jsonFilePath identifier = do
  let clientsList = getClientJSON jsonFilePath
  let newClientsList = removeClientByID identifier clientsList
- B.writeFile "../Temp.json" $ encode newClientsList
+ B.writeFile "./ArquivoTemporario.json" $ encode newClientsList
  removeFile jsonFilePath
- renameFile "../Temp.json" jsonFilePath
+ renameFile "./ArquivoTemporario.json" jsonFilePath
