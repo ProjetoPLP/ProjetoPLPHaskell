@@ -43,27 +43,37 @@ saveCompanyJSON :: String -> Company -> IO ()
 saveCompanyJSON jsonFilePath company = do
   let companyList = getCompanyJSON jsonFilePath
   let companiesList = companyList ++ [giveIdForCompany company (length companyList)]
-  B.writeFile "../data/ArquivoTemporario.json" $ encode companiesList
+  B.writeFile "../Data/ArquivoTemporario.json" $ encode companiesList
   removeFile jsonFilePath
-  renameFile "../data/ArquivoTemporario.json" jsonFilePath
+  renameFile "../Data/ArquivoTemporario.json" jsonFilePath
 
 -- Edita as ações da Empresa
 editCompanyInfoJSON :: String -> Company -> IO ()
 editCompanyInfoJSON jsonFilePath updatedCompany = do
  let companiesList = getCompanyJSON jsonFilePath
  let newCompaniesList = removeCompanyByID (identifier updatedCompany) companiesList ++ [updatedCompany]
- B.writeFile "../data/ArquivoTemporario.json" $ encode newCompaniesList
+ B.writeFile "../Data/ArquivoTemporario.json" $ encode newCompaniesList
  removeFile jsonFilePath
- renameFile "../data/ArquivoTemporario.json" jsonFilePath
+ renameFile "../Data/ArquivoTemporario.json" jsonFilePath
 
 -- Remove uma empresa pelo ID
 removeCompanyJSON :: String -> Int -> IO ()
 removeCompanyJSON jsonFilePath identifier = do
  let companiesList = getCompanyJSON jsonFilePath
  let newCompaniesList = removeCompanyByID identifier companiesList
- B.writeFile "../data/ArquivoTemporario.json" $ encode newCompaniesList
+ B.writeFile "../Data/ArquivoTemporario.json" $ encode newCompaniesList
  removeFile jsonFilePath
- renameFile "../data/ArquivoTemporario.json" jsonFilePath
+ renameFile "../Data/ArquivoTemporario.json" jsonFilePath
+
+-- Verifica a existencia do cliente pelo email
+existCompanyByName :: String -> Bool
+existCompanyByName name = verifyExistNameCompany name (getCompanyJSON "../Data/Clients.json")
+
+verifyExistNameCompany :: String -> [Company] -> Bool
+verifyExistNameCompany _ [] = False
+verifyExistNameCompany nameCompany (head:tail) = 
+  if nameCompany == (name head) then True
+  else verifyExistNameCompany nameCompany tail
 
 -- Atribui novo id ao cliente
 giveIdForCompany :: Company -> Int -> Company
