@@ -3,14 +3,14 @@ import System.IO (hFlush, stdout)
 
 getName :: IO String
 getName = do
-  putStr "Digite o seu nome: "
+  putStr "Digite o nome da empresa: "
   hFlush stdout
   input <- getLine
   return input
 
 getAgeFounded :: IO Int
 getAgeFounded = do
-  putStr "Digite o ano de fundação: "
+  putStr "Digite o ano de fundação da empresa: "
   hFlush stdout
   input <- getLine
   let age = (read input :: Int)
@@ -33,14 +33,14 @@ getActuation = do
 
 getDeclaration :: IO String
 getDeclaration = do
-  putStr "Digite a declaração de missão: "
+  putStr "Digite a declaração de missão da empresa: "
   hFlush stdout
   input <- getLine
   return input
 
 getPassword :: IO Int
 getPassword = do
-  putStr "Digite o código de verificação de 5 dígitos: "
+  putStr "Digite o código de verificação de 5 dígitos da empresa: "
   hFlush stdout
   input <- getLine
   let password = (read input :: Int)
