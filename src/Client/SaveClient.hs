@@ -15,18 +15,21 @@ import ModelClient
 instance FromJSON Client
 instance ToJSON Client
 
+-- Pega cliente pelo ID (identifier)
 getClientsByID :: Int -> [Client] -> Client
 getClientsByID _ [] = Client (-1) "" 0 0 "" 0 0
 getClientsByID identifierS (x:xs)
  | (identifier x) == identifierS = x
  | otherwise = getClientsByID identifierS xs
 
+-- Remove cliente pelo ID (identifier)
 removeClientByID :: Int -> [Client] -> [Client]
 removeClientByID _ [] = []
 removeClientByID identifierS (x:xs)
  | (identifier x) == identifierS = xs
  | otherwise = [x] ++ (removeClientByID identifierS xs)
 
+-- Pega todos os clientes salvos em JSON
 getClientJSON :: String -> [Client]
 getClientJSON path = do
  let file = unsafePerformIO (B.readFile path)
@@ -35,26 +38,43 @@ getClientJSON path = do
   Nothing -> []
   Just out -> out
 
+-- Salva um cliente em JSON
 saveClientJSON :: String -> Client -> IO ()
 saveClientJSON jsonFilePath client = do
   let clientList = getClientJSON jsonFilePath
-  let clientsList = clientList ++ [client]
-  B.writeFile "./ArquivoTemporario.json" $ encode clientsList
+  let clientsList = clientList ++ [giveIdForClient client (length clientList)]
+  B.writeFile "../data/ArquivoTemporario.json" $ encode clientsList
   removeFile jsonFilePath
-  renameFile "./ArquivoTemporario.json" jsonFilePath
+  renameFile "../data/ArquivoTemporario.json" jsonFilePath
 
+-- Incrementa o cash do cliente
 editClientInfoJSON :: String -> Client -> IO ()
 editClientInfoJSON jsonFilePath updatedClient = do
  let clientsList = getClientJSON jsonFilePath
  let newClientsList = removeClientByID (identifier updatedClient) clientsList ++ [updatedClient]
- B.writeFile "../ArquivoTemporario.json" $ encode newClientsList
+ B.writeFile "../data/ArquivoTemporario.json" $ encode newClientsList
  removeFile jsonFilePath
- renameFile "../ArquivoTemporario.json" jsonFilePath
+ renameFile "../data/ArquivoTemporario.json" jsonFilePath
 
+-- Remove um cliente pelo ID (identifier)
 removeClientJSON :: String -> Int -> IO ()
 removeClientJSON jsonFilePath identifier = do
  let clientsList = getClientJSON jsonFilePath
  let newClientsList = removeClientByID identifier clientsList
- B.writeFile "./ArquivoTemporario.json" $ encode newClientsList
+ B.writeFile "../data/ArquivoTemporario.json" $ encode newClientsList
  removeFile jsonFilePath
- renameFile "./ArquivoTemporario.json" jsonFilePath
+ renameFile "../data/ArquivoTemporario.json" jsonFilePath
+
+-- Verifica a existencia do cliente pelo email
+existClientByEmail :: String -> Bool
+existClientByEmail email = verifyExistEmailClient email (getClientJSON "../data/Clients.json")
+
+verifyExistEmailClient :: String -> [Client] -> Bool
+verifyExistEmailClient _ [] = False
+verifyExistEmailClient emailClient (head:tail) = 
+  if emailClient == (email head) then True
+  else verifyExistEmailClient emailClient tail
+
+-- Atribui novo id ao cliente
+giveIdForClient :: Client -> Int -> Client
+giveIdForClient client newId = client { identifier = newId }
