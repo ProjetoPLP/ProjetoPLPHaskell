@@ -1,7 +1,7 @@
-module CreateClient where
+module Client.CreateClient where
 
-import GetInfoForCreateClient
-import ModelClient
+import Client.GetInfoForCreateClient
+import Client.ModelClient
 
 getClient :: IO Client
 getClient = do
@@ -10,4 +10,4 @@ getClient = do
   userCPF <- getCPF
   userEmail <- getEmail
   userPassword <- getPassword
-  return $ createClient 10 userName userAge userCPF userEmail userPassword 100
+  return $ createClient 10 userName userAge userCPF userEmail userPassword 100.00

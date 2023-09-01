@@ -1,6 +1,6 @@
-module SearchCompany where
-import ModelCompany
-import SaveCompany
+module Client.SearchCompany where
+import Client.ModelCompany
+import Client.SaveCompany
 import Data.List (isInfixOf)
 
 -- Filtro por nome

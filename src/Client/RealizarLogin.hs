@@ -1,7 +1,7 @@
-module RealizarLogin where
-import GetInfoForMakeLogin
-import SaveClient
-import ModelClient
+module Client.RealizarLogin where
+import Client.GetInfoForMakeLogin
+import Client.SaveClient
+import Client.ModelClient
 
 fazerLogin :: IO String
 fazerLogin = do
@@ -20,7 +20,7 @@ searchAndGetClientByEmail :: String -> Client
 searchAndGetClientByEmail email = verifingIfExistEmailClient email (getClientJSON "../Data/Clients.json")
 
 verifingIfExistEmailClient :: String -> [Client] -> Client
-verifingIfExistEmailClient _ [] = Client (-1) "" 0 0 "" 0 0
+verifingIfExistEmailClient _ [] = Client (-1) "" 0 0 "" 0 0.00
 verifingIfExistEmailClient emailClient (head:tail) = 
   if emailClient == (email head) then head
   else verifingIfExistEmailClient emailClient tail

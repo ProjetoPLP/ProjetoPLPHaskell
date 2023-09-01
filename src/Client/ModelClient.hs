@@ -1,5 +1,5 @@
 {-# LANGUAGE DeriveGeneric #-}
-module ModelClient where
+module Client.ModelClient where
 import GHC.Generics
 
 data Client = Client
@@ -9,11 +9,11 @@ data Client = Client
     cpf :: Int,
     email :: String,
     password :: Int,
-    cash :: Int
+    cash :: Float
   }
   deriving (Show, Generic)
 
-createClient :: Int -> String -> Int -> Int -> String -> Int -> Int -> Client
+createClient :: Int -> String -> Int -> Int -> String -> Int -> Float -> Client
 createClient identifier name age cpf email password cash =
   Client
     { identifier = identifier,
