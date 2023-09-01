@@ -30,7 +30,7 @@ updateHBStockStartPrice filePath num = do
 updateHBCash :: FilePath -> Float -> IO ()
 updateHBCash filePath num = do
     let val = fillLeft (show num) 8
-    writeValue filePath val 3 (77 - length val) 
+    writeValue filePath val 3 (76 - length val) 
 
 
 updateHBOwnedStocks :: FilePath -> Int -> IO ()

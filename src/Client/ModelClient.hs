@@ -24,3 +24,4 @@ createClient identifier name age cpf email password cash =
       password = password,
       cash = cash
     }
+
