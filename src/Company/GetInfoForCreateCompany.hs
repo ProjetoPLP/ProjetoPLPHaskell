@@ -38,10 +38,10 @@ getDeclaration = do
   input <- getLine
   return input
 
-getPassword :: IO Int
-getPassword = do
+getCode :: IO Int
+getCode = do
   putStr "Digite o código de verificação de 5 dígitos da empresa: "
   hFlush stdout
   input <- getLine
-  let password = (read input :: Int)
-  return password
+  let code = (read input :: Int)
+  return code

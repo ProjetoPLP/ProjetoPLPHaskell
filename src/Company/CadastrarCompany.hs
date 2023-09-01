@@ -7,7 +7,7 @@ import CreateCompany
 cadastrarCompany :: IO String
 cadastrarCompany = do
     company <- getCompany
-    if length (show (password company)) == 5 then do
+    if length (show (code company)) == 5 then do
         if not (existCompanyByName (name company)) then do
             saveCompanyJSON "../Data/Companies.json" company
             return ("\nParabéns, a empresa " ++ name company ++ " foi cadastrada com sucesso!")

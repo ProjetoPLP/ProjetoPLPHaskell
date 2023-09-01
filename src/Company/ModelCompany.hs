@@ -9,13 +9,13 @@ data Company = Company
     cnpj :: Int,
     actuation :: String,
     declaration :: String,
-    password :: Int,
+    code :: Int,
     actions :: Double
   }
   deriving (Show, Generic)
 
 createCompany :: Int -> String -> Int -> Int -> String -> String -> Int -> Double -> Company
-createCompany identifier name ageFounded cnpj actuation declaration password actions =
+createCompany identifier name ageFounded cnpj actuation declaration code actions =
   Company
     { identifier = identifier,
       name = name,
@@ -23,6 +23,6 @@ createCompany identifier name ageFounded cnpj actuation declaration password act
       cnpj = cnpj,
       actuation = actuation,
       declaration = declaration,
-      password = password,
+      code = code,
       actions = actions
     }

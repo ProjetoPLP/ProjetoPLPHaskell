@@ -10,5 +10,5 @@ getCompany = do
   companyCNPJ <- getCNPJ
   companyActuation <- getActuation
   companyDeclaration <- getDeclaration
-  companyPassword <- getPassword
-  return $ createCompany 10 companyName companyAgeFounded companyCNPJ companyActuation companyDeclaration companyPassword 30.0
+  companyCode <- getCode
+  return $ createCompany 10 companyName companyAgeFounded companyCNPJ companyActuation companyDeclaration companyCode 30.0
