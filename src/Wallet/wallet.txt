@@ -10,7 +10,7 @@
 ║  ┃ Daniel Mantovani   ║         ▔▔▔▔          ║                                               ║
 ║  ┃ 123.456.789-10     ║                       ║                                               ║
 ║                       ║   As ações da bolsa   ║                                               ║
-║  ┃ Saldo:    500.00   ║                       ║                                               ║
+║  ┃ Saldo:    100.00   ║                       ║                                               ║
 ║                       ║   valorizaram         ║                                               ║
 ║                       ║                       ║                                               ║
 ║         Sacar         ║   10.0% comparado     ║                                               ║
