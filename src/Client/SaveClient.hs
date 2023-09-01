@@ -42,7 +42,11 @@ getClientJSON path = do
 saveClientJSON :: String -> Client -> IO ()
 saveClientJSON jsonFilePath client = do
   let clientList = getClientJSON jsonFilePath
-  let clientsList = clientList ++ [giveIdForClient client (length clientList)]
+  let newID = length clientList + 1
+  let clientsList = clientList ++ [giveIdForClient client (newID)]
+  let walletFileName = "./Wallet/wallet" ++ (show newID) ++ ".txt"
+  arquivo <- openFile walletFileName WriteMode
+  hClose arquivo
   B.writeFile "../Data/ArquivoTemporario.json" $ encode clientsList
   removeFile jsonFilePath
   renameFile "../Data/ArquivoTemporario.json" jsonFilePath
