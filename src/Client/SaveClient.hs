@@ -44,9 +44,11 @@ saveClientJSON jsonFilePath client = do
   let clientList = getClientJSON jsonFilePath
   let newID = length clientList + 1
   let clientsList = clientList ++ [giveIdForClient client (newID)]
+
+  textoContents <- readFile "../Wallet/wallet.txt"
   let walletFileName = "./Wallet/wallet" ++ (show newID) ++ ".txt"
-  arquivo <- openFile walletFileName WriteMode
-  hClose arquivo
+  appendFile walletFileName textoContents
+
   B.writeFile "../Data/ArquivoTemporario.json" $ encode clientsList
   removeFile jsonFilePath
   renameFile "../Data/ArquivoTemporario.json" jsonFilePath

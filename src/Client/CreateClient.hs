@@ -10,4 +10,4 @@ getClient = do
   userCPF <- getCPF
   userEmail <- getEmail
   userPassword <- getPassword
-  return $ createClient 10 userName userAge userCPF userEmail userPassword 100
+  return $ createClient 10 userName userAge userCPF userEmail userPassword 100.00
