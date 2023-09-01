@@ -1,8 +1,8 @@
-module CadastrarCompany where
+module Client.CadastrarCompany where
 
-import SaveCompany
-import ModelCompany
-import CreateCompany
+import Client.SaveCompany
+import Client.ModelCompany
+import Client.CreateCompany
 
 cadastrarCompany :: IO String
 cadastrarCompany = do
