@@ -14,4 +14,3 @@ getPassword = do
     hFlush stdout
     input <- getLine
     return (read input :: Int)
-

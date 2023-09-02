@@ -42,14 +42,20 @@ getCompanyJSON path = do
 saveCompanyJSON :: String -> Company -> IO ()
 saveCompanyJSON jsonFilePath company = do
   let companyList = getCompanyJSON jsonFilePath
-  let companiesList = companyList ++ [giveIdForCompany company (length companyList)]
+  let newID = length companyList + 1
+  let companiesList = companyList ++ [giveIdForCompany company (newID)]
+
+  textoContents <- readFile "../Sprites/homebroker.txt"
+  let walletFileName = "./HomeBroker/homebroker" ++ (show newID) ++ ".txt"
+  appendFile walletFileName textoContents
+
   B.writeFile "../Data/ArquivoTemporario.json" $ encode companiesList
   removeFile jsonFilePath
   renameFile "../Data/ArquivoTemporario.json" jsonFilePath
 
 -- Edita as ações da Empresa
-editCompanyInfoJSON :: String -> Company -> IO ()
-editCompanyInfoJSON jsonFilePath updatedCompany = do
+editCompanyJSON :: String -> Company -> IO ()
+editCompanyJSON jsonFilePath updatedCompany = do
  let companiesList = getCompanyJSON jsonFilePath
  let newCompaniesList = removeCompanyByID (identifier updatedCompany) companiesList ++ [updatedCompany]
  B.writeFile "../Data/ArquivoTemporario.json" $ encode newCompaniesList

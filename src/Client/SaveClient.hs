@@ -54,8 +54,8 @@ saveClientJSON jsonFilePath client = do
   renameFile "../Data/ArquivoTemporario.json" jsonFilePath
 
 -- Incrementa o cash do cliente
-editClientInfoJSON :: String -> Client -> IO ()
-editClientInfoJSON jsonFilePath updatedClient = do
+editClientJSON :: String -> Client -> IO ()
+editClientJSON jsonFilePath updatedClient = do
  let clientsList = getClientJSON jsonFilePath
  let newClientsList = removeClientByID (identifier updatedClient) clientsList ++ [updatedClient]
  B.writeFile "../Data/ArquivoTemporario.json" $ encode newClientsList

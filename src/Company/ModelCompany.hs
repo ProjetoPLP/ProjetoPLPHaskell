@@ -10,11 +10,11 @@ data Company = Company
     actuation :: String,
     declaration :: String,
     code :: Int,
-    actions :: Double
+    actions :: Float
   }
   deriving (Show, Generic)
 
-createCompany :: Int -> String -> Int -> Int -> String -> String -> Int -> Double -> Company
+createCompany :: Int -> String -> Int -> Int -> String -> String -> Int -> Float -> Company
 createCompany identifier name ageFounded cnpj actuation declaration code actions =
   Company
     { identifier = identifier,
