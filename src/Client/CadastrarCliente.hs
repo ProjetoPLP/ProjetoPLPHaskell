@@ -1,8 +1,8 @@
-module CadastrarCliente where
+module Client.CadastrarCliente where
 
-import SaveClient
-import ModelClient
-import CreateClient
+import Client.SaveClient
+import Client.ModelClient
+import Client.CreateClient
 
 cadastrarCliente :: IO String
 cadastrarCliente = do

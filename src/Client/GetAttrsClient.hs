@@ -1,9 +1,9 @@
-module GetAttrsClient where
-import SaveClient
-import ModelClient
+module Client.GetAttrsClient where
+import Client.SaveClient
+import Client.ModelClient
 
 getSaldo :: Int -> Float
-getSaldo id = (cash (getClientsByID id (getClientJSON "../Data/Clients.json")))
+getSaldo id = (cash (getClientsByID id (getClientJSON "./Data/Clients.json")))
 
 getCPF :: Int -> String
 getCPF id = formatCPF (cpf (getClientsByID id (getClientJSON "../Data/Clients.json")))
