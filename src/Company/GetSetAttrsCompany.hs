@@ -1,4 +1,4 @@
-module GetAttrsCompany where
+module GetSetAttrsCompany where
 import SaveCompany
 import ModelCompany
 

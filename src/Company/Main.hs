@@ -1,7 +1,7 @@
 module Main where
 import CadastrarCompany
 import SearchCompany
-import GetAttrsCompany
+import GetSetAttrsCompany
 
 main :: IO()
 main = do

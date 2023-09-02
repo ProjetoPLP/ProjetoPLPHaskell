@@ -6,4 +6,3 @@ main :: IO()
 main = do
     result <- cadastrarCliente
     putStrLn (result)
-    
