@@ -11,6 +11,24 @@ getCNPJ id = formatCNPJ (cnpj (getCompaniesByID id (getCompanyJSON "./Data/Compa
 getNome :: Int -> String
 getNome id = (name (getCompaniesByID id (getCompanyJSON "./Data/Companies.json")))
 
+getCol :: Int -> Int
+getCol id = col (getCompaniesByID id (getCompanyJSON "./Data/Companies.json"))
+
+getRow :: Int -> Int
+getRow id = row (getCompaniesByID id (getCompanyJSON "./Data/Companies.json"))
+
+updateRow :: Int -> Int -> IO()
+updateRow id addRow = do
+    let company = getCompaniesByID id (getCompanyJSON "./Data/Companies.json")
+    let newCompany = company {row = getRow id + addRow}
+    editCompanyJSON "./Data/Companies.json" newCompany
+
+updateCol :: Int -> Int -> IO()
+updateCol id addCol = do
+    let company = getCompaniesByID id (getCompanyJSON "./Data/Companies.json")
+    let newCompany = company {col = getCol id + addCol}
+    editCompanyJSON "./Data/Companies.json" newCompany
+
 setSaldo :: Int -> Float -> IO()
 setSaldo id acaoAdicional = do
     let company = getCompaniesByID id (getCompanyJSON "./Data/Companies.json")
