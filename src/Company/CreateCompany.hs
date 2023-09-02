@@ -1,7 +1,7 @@
-module CreateCompany where
+module Company.CreateCompany where
 
-import GetInfoForCreateCompany
-import ModelCompany
+import Company.GetInfoForCreateCompany
+import Company.ModelCompany
 
 getCompany :: IO Company
 getCompany = do

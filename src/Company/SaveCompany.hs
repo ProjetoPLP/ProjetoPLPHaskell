@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE DeriveGeneric #-}
 
-module SaveCompany where
+module Company.SaveCompany where
 
 import Data.Aeson
 import qualified Data.ByteString.Lazy as B
@@ -10,7 +10,7 @@ import GHC.Generics
 import System.IO.Unsafe ( unsafePerformIO )
 import System.IO
 import System.Directory
-import ModelCompany
+import Company.ModelCompany
 
 instance FromJSON Company
 instance ToJSON Company
@@ -58,9 +58,9 @@ editCompanyJSON :: String -> Company -> IO ()
 editCompanyJSON jsonFilePath updatedCompany = do
  let companiesList = getCompanyJSON jsonFilePath
  let newCompaniesList = removeCompanyByID (identifier updatedCompany) companiesList ++ [updatedCompany]
- B.writeFile "../Data/ArquivoTemporario.json" $ encode newCompaniesList
+ B.writeFile "./Data/ArquivoTemporario.json" $ encode newCompaniesList
  removeFile jsonFilePath
- renameFile "../Data/ArquivoTemporario.json" jsonFilePath
+ renameFile "./Data/ArquivoTemporario.json" jsonFilePath
 
 -- Remove uma empresa pelo ID
 removeCompanyJSON :: String -> Int -> IO ()
