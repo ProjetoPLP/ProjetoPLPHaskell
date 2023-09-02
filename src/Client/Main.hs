@@ -6,4 +6,5 @@ main :: IO()
 main = do
     result <- cadastrarCliente
     putStrLn (result)
-    putStrLn (show (getSaldo 1))
+    putStrLn (getNome 1)
+    putStrLn (getCPF 1)

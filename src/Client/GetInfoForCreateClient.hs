@@ -18,7 +18,7 @@ getAge = do
 
 getCPF :: IO Int
 getCPF = do
-  putStr "Digite o seu CPF: "
+  putStr "Digite o seu CPF (apenas números): "
   hFlush stdout
   input <- getLine
   let cpf = (read input :: Int)

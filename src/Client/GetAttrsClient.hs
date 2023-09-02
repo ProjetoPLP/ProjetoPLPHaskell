@@ -5,18 +5,27 @@ import Client.ModelClient
 getSaldo :: Int -> Float
 getSaldo id = (cash (getClientsByID id (getClientJSON "./Data/Clients.json")))
 
-getCPF :: Int -> Int
-getCPF id = (cpf (getClientsByID id (getClientJSON "./Data/Clients.json")))
+getCPF :: Int -> String
+getCPF id = formatCPF (cpf (getClientsByID id (getClientJSON "../Data/Clients.json")))
 
 getNome :: Int -> String
-getNome id = (name (getClientsByID id (getClientJSON "./Data/Clients.json")))
+getNome id = (name (getClientsByID id (getClientJSON "../Data/Clients.json")))
 
-formatarCPF :: String -> String
-formatarCPF cpf =
-    let digitos = filter (`elem` ['0'..'9']) cpf  -- Remove caracteres não numéricos
-    in case digitos of
-        [] -> ""  -- Retorna uma string vazia se não houver dígitos
-        _  -> let (parte1, resto1) = splitAt 3 digitos
-                  (parte2, parte3) = splitAt 3 resto1
-                  (parte4, parte5) = splitAt 3 parte3
-              in parte1 ++ "." ++ parte2 ++ "." ++ parte4 ++ "-" ++ parte5
+setSaldo :: Int -> Float -> IO()
+setSaldo id saldoAdicional = do
+    let client = getClientsByID id (getClientJSON "../Data/Clients.json")
+    let newCash = (cash client) + saldoAdicional
+    let newClient = client {cash = newCash}
+    editClientJSON "../Data/Clients.json" newClient
+
+formatCPF :: Int -> String
+formatCPF cpf =
+  let cpfStr = show cpf
+  in if length cpfStr == 11
+       then
+         let part1 = take 3 cpfStr
+             part2 = take 3 (drop 3 cpfStr)
+             part3 = take 3 (drop 6 cpfStr)
+             part4 = drop 9 cpfStr
+         in part1 ++ "." ++ part2 ++ "." ++ part3 ++ "-" ++ part4
+       else "CPF inválido"

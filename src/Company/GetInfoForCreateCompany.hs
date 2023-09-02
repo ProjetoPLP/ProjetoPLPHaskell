@@ -18,7 +18,7 @@ getAgeFounded = do
 
 getCNPJ :: IO Int
 getCNPJ = do
-  putStr "Digite o seu CNPJ da empresa: "
+  putStr "Digite o seu CNPJ da empresa (apenas números): "
   hFlush stdout
   input <- getLine
   let cpf = (read input :: Int)
