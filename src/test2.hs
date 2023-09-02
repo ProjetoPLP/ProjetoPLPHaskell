@@ -5,7 +5,10 @@ import Data.Time.Clock (getCurrentTime, UTCTime, addUTCTime)
 import HomeBroker.HomeBrokerUpdate
 import Utils.MatrixUtils (printMatrix)
 
-import Company.GetSetAttrsCompany (getSaldo, setSaldo)
+import Company.GetSetAttrsCompany
+import Clock.Clock
+import HomeBroker.HomeBrokerGraphUpdate
+import Company.GetSetAttrsCompany (updateCol)
 
 getIndex :: IO Int
 getIndex = do
@@ -36,8 +39,9 @@ attStockPriceFor seg = do
 loop :: UTCTime -> IO ()
 loop endTime = do
     currentTime <- getCurrentTime
-    if currentTime >= endTime
-        then putStrLn "Tempo esgotado."
+    if currentTime >= endTime then do
+        updateCol 1 3
+        putStrLn "Tempo esgotado."
         else do
             attStocksPrice
             threadDelay (1 * 500000)
@@ -46,8 +50,13 @@ loop endTime = do
 attStocksPrice :: IO ()
 attStocksPrice = do
     newPrice <- getNewPrice
+    if newPrice + getSaldo 1 > getSaldo 1 then
+        updateRow 1 1
+    else do
+        updateRow 1 (-1)
     setSaldo 1 newPrice
     updateHBStockPrice "./Company/HomeBroker/homebroker1.txt" (getSaldo 1)
+    updateHBGraphCandle "./Company/HomeBroker/homebroker1.txt" (getRow 1) (getCol 1)
     printMatrix "./Company/HomeBroker/homebroker1.txt"
 
 

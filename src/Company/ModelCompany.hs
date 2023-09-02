@@ -10,7 +10,9 @@ data Company = Company
     actuation :: String,
     declaration :: String,
     code :: Int,
-    actions :: Float
+    actions :: Float,
+    row :: Int,
+    col :: Int
   }
   deriving (Show, Generic)
 
@@ -24,5 +26,7 @@ createCompany identifier name ageFounded cnpj actuation declaration code actions
       actuation = actuation,
       declaration = declaration,
       code = code,
-      actions = actions
+      actions = actions,
+      row = 25,
+      col = 3
     }

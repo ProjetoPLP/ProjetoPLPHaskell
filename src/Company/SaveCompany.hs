@@ -17,7 +17,7 @@ instance ToJSON Company
 
 -- Pega uma empresa pelo ID
 getCompaniesByID :: Int -> [Company] -> Company
-getCompaniesByID _ [] = Company (-1) "" 0 0 "" "" 0 0.00
+getCompaniesByID _ [] = Company (-1) "" 0 0 "" "" 0 0.00 0 0
 getCompaniesByID identifierS (x:xs)
  | (identifier x) == identifierS = x
  | otherwise = getCompaniesByID identifierS xs
