@@ -1,19 +1,19 @@
-module GetAttrsClient where
-import SaveClient
-import ModelClient
+module Client.GetAttrsClient where
+import Client.SaveClient
+import Client.ModelClient
 
 getSaldo :: Int -> Float
 getSaldo id = (cash (getClientsByID id (getClientJSON "./Data/Clients.json")))
 
 getCPF :: Int -> String
-getCPF id = formatCPF (cpf (getClientsByID id (getClientJSON "../Data/Clients.json")))
+getCPF id = formatCPF (cpf (getClientsByID id (getClientJSON "./Data/Clients.json")))
 
 getNome :: Int -> String
-getNome id = (name (getClientsByID id (getClientJSON "../Data/Clients.json")))
+getNome id = (name (getClientsByID id (getClientJSON "./Data/Clients.json")))
 
 setSaldo :: Int -> Float -> IO()
 setSaldo id saldoAdicional = do
-    let client = getClientsByID id (getClientJSON "../Data/Clients.json")
+    let client = getClientsByID id (getClientJSON "./Data/Clients.json")
     let newCash = (cash client) + saldoAdicional
     let newClient = client {cash = newCash}
     editClientJSON "../Data/Clients.json" newClient

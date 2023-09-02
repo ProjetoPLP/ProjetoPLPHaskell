@@ -1,4 +1,4 @@
-module GetInfoForMakeLogin where
+module Client.GetInfoForMakeLogin where
 import System.IO (hFlush, stdout)
 
 getEmail :: IO String

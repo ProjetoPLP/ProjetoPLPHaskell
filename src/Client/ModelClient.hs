@@ -1,5 +1,5 @@
 {-# LANGUAGE DeriveGeneric #-}
-module ModelClient where
+module Client.ModelClient where
 import GHC.Generics
 
 data Client = Client

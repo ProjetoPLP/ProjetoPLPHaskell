@@ -1,7 +1,7 @@
-module CreateClient where
+module Client.CreateClient where
 
-import GetInfoForCreateClient
-import ModelClient
+import Client.GetInfoForCreateClient
+import Client.ModelClient
 
 getClient :: IO Client
 getClient = do

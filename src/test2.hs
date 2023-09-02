@@ -18,20 +18,12 @@ getVariation = do
     return var
 
 
-getNewPriceOld :: IO Float
-getNewPriceOld = do
+getNewPrice :: IO Float
+getNewPrice = do
     index <- getIndex
     var <- getVariation
     if var == 1 then return ([0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0] !! index)
     else if var == (-1) then return ([-0.1, -0.2, -0.3, -0.4, -0.5, -0.6, -0.7, -0.8, -0.9, -1.0] !! index)
-    else return 0
-
-
-getNewPrice :: IO Float
-getNewPrice = do
-    var <- getVariation
-    if var == 1 then return 0.5
-    else if var == (-1) then return (-0.5)
     else return 0
 
 
@@ -53,10 +45,11 @@ loop endTime = do
 
 attStocksPrice :: IO ()
 attStocksPrice = do
-    newPrice <- getNewPriceOld
+    newPrice <- getNewPrice
     setSaldo 1 newPrice
-    updateHBStockPrice "./HomeBroker/homebroker_test.txt" (getSaldo 1)
-    printMatrix "./HomeBroker/homebroker_test.txt"
+    updateHBStockPrice "./Company/HomeBroker/homebroker1.txt" (getSaldo 1)
+    printMatrix "./Company/HomeBroker/homebroker1.txt"
+
 
 main :: IO ()
 main = do
@@ -64,5 +57,3 @@ main = do
 
     -- setSaldo 1 0.7
     -- putStrLn $ show (getSaldo 1)
-
-

@@ -1,7 +1,7 @@
-module RealizarLogin where
-import GetInfoForMakeLogin
-import SaveClient
-import ModelClient
+module Client.RealizarLogin where
+import Client.GetInfoForMakeLogin
+import Client.SaveClient
+import Client.ModelClient
 
 fazerLogin :: IO String
 fazerLogin = do
@@ -17,7 +17,7 @@ fazerLogin = do
     else return "\nOcorreu um problema. A senha deve ter 5 digitos."
 
 searchAndGetClientByEmail :: String -> Client
-searchAndGetClientByEmail email = verifingIfExistEmailClient email (getClientJSON "../Data/Clients.json")
+searchAndGetClientByEmail email = verifingIfExistEmailClient email (getClientJSON "./Data/Clients.json")
 
 verifingIfExistEmailClient :: String -> [Client] -> Client
 verifingIfExistEmailClient _ [] = Client (-1) "" 0 0 "" 0 0.00
