@@ -1,7 +1,7 @@
-module Client.RealizarLogin where
-import Client.GetInfoForMakeLogin
-import Client.SaveClient
-import Client.ModelClient
+module RealizarLogin where
+import GetInfoForMakeLogin
+import SaveClient
+import ModelClient
 
 fazerLogin :: IO String
 fazerLogin = do

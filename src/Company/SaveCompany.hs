@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE DeriveGeneric #-}
 
-module Client.SaveCompany where
+module SaveCompany where
 
 import Data.Aeson
 import qualified Data.ByteString.Lazy as B
@@ -10,7 +10,7 @@ import GHC.Generics
 import System.IO.Unsafe ( unsafePerformIO )
 import System.IO
 import System.Directory
-import Client.ModelCompany
+import ModelCompany
 
 instance FromJSON Company
 instance ToJSON Company

@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE DeriveGeneric #-}
 
-module Client.SaveClient where
+module SaveClient where
 
 import Data.Aeson
 import qualified Data.ByteString.Lazy as B
@@ -10,7 +10,7 @@ import GHC.Generics
 import System.IO.Unsafe ( unsafePerformIO )
 import System.IO
 import System.Directory
-import Client.ModelClient
+import ModelClient
 
 instance FromJSON Client
 instance ToJSON Client

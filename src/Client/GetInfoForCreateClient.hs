@@ -1,4 +1,4 @@
-module Client.GetInfoForCreateClient where
+module GetInfoForCreateClient where
 import System.IO (hFlush, stdout)
 
 getName :: IO String

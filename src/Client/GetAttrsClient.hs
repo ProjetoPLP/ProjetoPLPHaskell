@@ -1,6 +1,6 @@
-module Client.GetAttrsClient where
-import Client.SaveClient
-import Client.ModelClient
+module GetAttrsClient where
+import SaveClient
+import ModelClient
 
 getSaldo :: Int -> Float
 getSaldo id = (cash (getClientsByID id (getClientJSON "./Data/Clients.json")))

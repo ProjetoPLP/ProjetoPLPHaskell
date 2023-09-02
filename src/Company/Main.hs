@@ -1,6 +1,6 @@
-module Client.Main where
-import Client.CadastrarCompany
-import Client.SearchCompany
+module Main where
+import CadastrarCompany
+import SearchCompany
 
 main :: IO()
 main = do

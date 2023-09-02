@@ -1,6 +1,5 @@
-module Main where
-import Client.CadastrarCliente
-import Client.GetAttrsClient
+import CadastrarCliente
+import GetAttrsClient
 
 main :: IO()
 main = do
