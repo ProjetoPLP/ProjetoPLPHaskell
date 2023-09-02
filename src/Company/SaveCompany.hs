@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE DeriveGeneric #-}
 
-module SaveCompany where
+module Company.SaveCompany where
 
 import Data.Aeson
 import qualified Data.ByteString.Lazy as B
@@ -10,7 +10,7 @@ import GHC.Generics
 import System.IO.Unsafe ( unsafePerformIO )
 import System.IO
 import System.Directory
-import ModelCompany
+import Company.ModelCompany
 
 instance FromJSON Company
 instance ToJSON Company
@@ -45,35 +45,35 @@ saveCompanyJSON jsonFilePath company = do
   let newID = length companyList + 1
   let companiesList = companyList ++ [giveIdForCompany company (newID)]
 
-  textoContents <- readFile "../Sprites/homebroker.txt"
-  let walletFileName = "./HomeBroker/homebroker" ++ (show newID) ++ ".txt"
+  textoContents <- readFile "./Sprites/homebroker.txt"
+  let walletFileName = "./Company/HomeBroker/homebroker" ++ (show newID) ++ ".txt"
   appendFile walletFileName textoContents
 
-  B.writeFile "../Data/ArquivoTemporario.json" $ encode companiesList
+  B.writeFile "./Data/ArquivoTemporario.json" $ encode companiesList
   removeFile jsonFilePath
-  renameFile "../Data/ArquivoTemporario.json" jsonFilePath
+  renameFile "./Data/ArquivoTemporario.json" jsonFilePath
 
 -- Edita as ações da Empresa
 editCompanyJSON :: String -> Company -> IO ()
 editCompanyJSON jsonFilePath updatedCompany = do
  let companiesList = getCompanyJSON jsonFilePath
  let newCompaniesList = removeCompanyByID (identifier updatedCompany) companiesList ++ [updatedCompany]
- B.writeFile "../Data/ArquivoTemporario.json" $ encode newCompaniesList
+ B.writeFile "./Data/ArquivoTemporario.json" $ encode newCompaniesList
  removeFile jsonFilePath
- renameFile "../Data/ArquivoTemporario.json" jsonFilePath
+ renameFile "./Data/ArquivoTemporario.json" jsonFilePath
 
 -- Remove uma empresa pelo ID
 removeCompanyJSON :: String -> Int -> IO ()
 removeCompanyJSON jsonFilePath identifier = do
  let companiesList = getCompanyJSON jsonFilePath
  let newCompaniesList = removeCompanyByID identifier companiesList
- B.writeFile "../Data/ArquivoTemporario.json" $ encode newCompaniesList
+ B.writeFile "./Data/ArquivoTemporario.json" $ encode newCompaniesList
  removeFile jsonFilePath
- renameFile "../Data/ArquivoTemporario.json" jsonFilePath
+ renameFile "./Data/ArquivoTemporario.json" jsonFilePath
 
 -- Verifica a existencia do cliente pelo email
 existCompanyByName :: String -> Bool
-existCompanyByName name = verifyExistNameCompany name (getCompanyJSON "../Data/Clients.json")
+existCompanyByName name = verifyExistNameCompany name (getCompanyJSON "./Data/Clients.json")
 
 verifyExistNameCompany :: String -> [Company] -> Bool
 verifyExistNameCompany _ [] = False

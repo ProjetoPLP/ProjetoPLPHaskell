@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE DeriveGeneric #-}
 
-module SaveClient where
+module Client.SaveClient where
 
 import Data.Aeson
 import qualified Data.ByteString.Lazy as B
@@ -10,7 +10,7 @@ import GHC.Generics
 import System.IO.Unsafe ( unsafePerformIO )
 import System.IO
 import System.Directory
-import ModelClient
+import Client.ModelClient
 
 instance FromJSON Client
 instance ToJSON Client
@@ -45,35 +45,35 @@ saveClientJSON jsonFilePath client = do
   let newID = length clientList + 1
   let clientsList = clientList ++ [giveIdForClient client (newID)]
 
-  textoContents <- readFile "../Sprites/wallet.txt"
-  let walletFileName = "./Wallet/wallet" ++ (show newID) ++ ".txt"
+  textoContents <- readFile "./Sprites/wallet.txt"
+  let walletFileName = "./Client/Wallet/wallet" ++ (show newID) ++ ".txt"
   appendFile walletFileName textoContents
 
-  B.writeFile "../Data/ArquivoTemporario.json" $ encode clientsList
+  B.writeFile "./Data/ArquivoTemporario.json" $ encode clientsList
   removeFile jsonFilePath
-  renameFile "../Data/ArquivoTemporario.json" jsonFilePath
+  renameFile "./Data/ArquivoTemporario.json" jsonFilePath
 
 -- Incrementa o cash do cliente
 editClientJSON :: String -> Client -> IO ()
 editClientJSON jsonFilePath updatedClient = do
  let clientsList = getClientJSON jsonFilePath
  let newClientsList = removeClientByID (identifier updatedClient) clientsList ++ [updatedClient]
- B.writeFile "../Data/ArquivoTemporario.json" $ encode newClientsList
+ B.writeFile "./Data/ArquivoTemporario.json" $ encode newClientsList
  removeFile jsonFilePath
- renameFile "../Data/ArquivoTemporario.json" jsonFilePath
+ renameFile "./Data/ArquivoTemporario.json" jsonFilePath
 
 -- Remove um cliente pelo ID (identifier)
 removeClientJSON :: String -> Int -> IO ()
 removeClientJSON jsonFilePath identifier = do
  let clientsList = getClientJSON jsonFilePath
  let newClientsList = removeClientByID identifier clientsList
- B.writeFile "../Data/ArquivoTemporario.json" $ encode newClientsList
+ B.writeFile "./Data/ArquivoTemporario.json" $ encode newClientsList
  removeFile jsonFilePath
- renameFile "../Data/ArquivoTemporario.json" jsonFilePath
+ renameFile "./Data/ArquivoTemporario.json" jsonFilePath
 
 -- Verifica a existencia do cliente pelo email
 existClientByEmail :: String -> Bool
-existClientByEmail email = verifyExistEmailClient email (getClientJSON "../Data/Clients.json")
+existClientByEmail email = verifyExistEmailClient email (getClientJSON "./Data/Clients.json")
 
 verifyExistEmailClient :: String -> [Client] -> Bool
 verifyExistEmailClient _ [] = False

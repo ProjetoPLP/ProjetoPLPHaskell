@@ -1,8 +1,8 @@
-module CadastrarCliente where
+module Client.CadastrarCliente where
 
-import SaveClient
-import ModelClient
-import CreateClient
+import Client.SaveClient
+import Client.ModelClient
+import Client.CreateClient
 
 cadastrarCliente :: IO String
 cadastrarCliente = do
@@ -11,7 +11,7 @@ cadastrarCliente = do
         if (length (show (cpf client))) == 11 then do
             if (length (show (password client))) == 5 then do 
                 if not (existClientByEmail (email client)) then do
-                    saveClientJSON "../Data/Clients.json" client
+                    saveClientJSON "./Data/Clients.json" client
                     return ("\n" ++ name client ++ " você foi cadastrado! Você iniciará com um saldo de R$100,00.")
                 else return "\nOcorreu um problema! O Cliente já está cadastrado!"
             else return "\nOcorreu um problema! A senha deve ter 5 digitos."
