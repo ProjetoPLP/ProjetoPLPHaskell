@@ -32,7 +32,7 @@ setClock increment = do
         Just oldClock -> do
             let oldMinutes = minutes oldClock
             let newMinutes = oldMinutes + increment
-            if newMinutes == 720 then do
+            if newMinutes >= 720 then do
                 let newClock = Clock { minutes = 420 }
                 saveClockToFile newClock
             else do 

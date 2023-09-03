@@ -8,11 +8,12 @@ import HomeBroker.HomeBrokerUpdate
 import Utils.MatrixUtils (printMatrix, writeValue)
 
 import Company.GetSetAttrsCompany
-import Clock.Clock
+import Clock.ClockUpdate
+import Clock.GetSetClock (setClock, readClock)
 
 updateHBGraphCandle :: FilePath -> Int -> Int -> IO ()
 updateHBGraphCandle filePath row col = do
-    writeValue filePath "|" row col
+    writeValue filePath "❚" row col
 
 getIndex :: IO Int
 getIndex = do
@@ -34,31 +35,48 @@ getNewPrice = do
     else return 0
 
 
-attStockPriceFor :: Int -> IO ()
-attStockPriceFor seg = do
+attStockPriceFor :: Int -> Int -> IO ()
+attStockPriceFor id seg = do
     startTime <- getCurrentTime
+    setClock seg
+    newClockHour <- readClock
+    updateMatrixClock ("./Company/HomeBroker/homebroker" ++ show id ++ ".txt") newClockHour
     let endTime = addUTCTime (fromIntegral seg) startTime
-    loop endTime
+    loop id endTime
 
-loop :: UTCTime -> IO ()
-loop endTime = do
+loop :: Int -> UTCTime -> IO ()
+loop id endTime = do
     currentTime <- getCurrentTime
     if currentTime >= endTime then do
-        updateCol 1 2
+        updateCol id 3
         putStrLn "Tempo esgotado."
         else do
-            attStocksPrice
+            attStocksPrice id
             threadDelay (1 * 500000)
-            loop endTime
+            loop id endTime
 
-attStocksPrice :: IO ()
-attStocksPrice = do
+attStocksPrice :: Int -> IO ()
+attStocksPrice id = do
     newPrice <- getNewPrice
-    if newPrice + getSaldo 1 > getSaldo 1 then
-        updateRow 1 1
+    if newPrice + getSaldo id > getSaldo id then do
+        if getRow id == 6 then do
+            cleanGraph ("./Company/HomeBroker/homebroker" ++ show id ++ ".txt") 6
+            updateRow id 20
+        else
+            updateRow id (-1)
     else do
-        updateRow 1 (-1)
-    setSaldo 1 newPrice
-    updateHBStockPrice "./Company/HomeBroker/homebroker1.txt" (getSaldo 1)
-    updateHBGraphCandle "./Company/HomeBroker/homebroker1.txt" (getRow 1) (getCol 1)
-    printMatrix "./Company/HomeBroker/homebroker1.txt"
+        if getRow id == 26 then do
+            cleanGraph ("./Company/HomeBroker/homebroker" ++ show id ++ ".txt") 6
+            updateRow id (-20)
+        else
+            updateRow id 1
+    setSaldo id newPrice
+    updateHBStockPrice ("./Company/HomeBroker/homebroker" ++ show id ++ ".txt") (getSaldo id)
+    updateHBGraphCandle ("./Company/HomeBroker/homebroker" ++ show id ++ ".txt") (getRow id) (getCol id)
+    printMatrix ("./Company/HomeBroker/homebroker" ++ show id ++ ".txt")
+
+cleanGraph :: FilePath -> Int -> IO ()
+cleanGraph filepath 26 = writeValue filepath (replicate 74 ' ') 26 2
+cleanGraph filepath row = do
+    writeValue filepath (replicate 74 ' ') row 2
+    cleanGraph filepath (row + 1) 
