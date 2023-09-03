@@ -17,7 +17,7 @@ getCol id = col (getCompaniesByID id (getCompanyJSON "./Data/Companies.json"))
 getRow :: Int -> Int
 getRow id = row (getCompaniesByID id (getCompanyJSON "./Data/Companies.json"))
 
-getLengthCompanies :: IO Int
+getLengthCompanies :: Int
 getLengthCompanies = length (getCompanyJSON "./Data/Companies.json")
 
 updateRow :: Int -> Int -> IO()
