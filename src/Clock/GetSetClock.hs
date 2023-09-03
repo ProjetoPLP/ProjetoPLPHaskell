@@ -12,15 +12,17 @@ data Clock = Clock
 instance ToJSON Clock
 instance FromJSON Clock
 
-readClock :: IO (Maybe Clock)
+readClock :: IO Int
 readClock = do
-  fileContent <- B.readFile "./Data/Clock.json"
-  let maybeClock = decode fileContent
-  return maybeClock
+    fileContent <- B.readFile "./Data/Clock.json"
+    let maybeClock = decode fileContent :: Maybe Clock
+    case maybeClock of
+        Just clock -> return (minutes clock)
+        Nothing    -> return (-1)
 
 saveClockToFile :: Clock -> IO ()
 saveClockToFile clock = do
-      B.writeFile "./Data/Clock.json" $ encode clock
+    B.writeFile "./Data/Clock.json" $ encode clock
 
 setClock :: Int -> IO ()
 setClock increment = do 
