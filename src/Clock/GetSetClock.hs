@@ -1,4 +1,3 @@
-{-# LANGUAGE DeriveGeneric #-}
 module Clock.GetSetClock where
 
 import Data.Aeson
@@ -12,20 +11,17 @@ data Clock = Clock
 instance ToJSON Clock
 instance FromJSON Clock
 
-readClock :: IO Int
-readClock = do
+getClock :: IO Int
+getClock = do
     fileContent <- B.readFile "./Data/Clock.json"
     let maybeClock = decode fileContent :: Maybe Clock
     case maybeClock of
         Just clock -> return (minutes clock)
         Nothing    -> return (-1)
 
-saveClockToFile :: Clock -> IO ()
-saveClockToFile clock = do
-    B.writeFile "./Data/Clock.json" $ encode clock
 
-setClock :: Int -> IO ()
-setClock increment = do 
+addClock :: Int -> IO ()
+addClock increment = do 
     jsonContent <- B.readFile "./Data/Clock.json"
     let maybeClock = decode jsonContent :: Maybe Clock
     case maybeClock of
@@ -39,3 +35,8 @@ setClock increment = do
                 let newClock = Clock { minutes = newMinutes }
                 saveClockToFile newClock
         Nothing -> putStrLn "Erro ao ler o arquivo JSON"
+
+
+saveClockToFile :: Clock -> IO ()
+saveClockToFile clock = do
+    B.writeFile "./Data/Clock.json" $ encode clock

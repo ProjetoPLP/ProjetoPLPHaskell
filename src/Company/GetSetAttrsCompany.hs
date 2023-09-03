@@ -2,8 +2,8 @@ module Company.GetSetAttrsCompany where
 import Company.SaveCompany
 import Company.ModelCompany
 
-getSaldo :: Int -> Float
-getSaldo id = (actions (getCompaniesByID id (getCompanyJSON "./Data/Companies.json")))
+getPrice :: Int -> Float
+getPrice id = actions (getCompaniesByID id (getCompanyJSON "./Data/Companies.json"))
 
 getCNPJ :: Int -> String
 getCNPJ id = formatCNPJ (cnpj (getCompaniesByID id (getCompanyJSON "./Data/Companies.json")))
@@ -29,10 +29,10 @@ updateCol id addCol = do
     let newCompany = company {col = getCol id + addCol}
     editCompanyJSON "./Data/Companies.json" newCompany
 
-setSaldo :: Int -> Float -> IO()
-setSaldo id acaoAdicional = do
+addPrice :: Int -> Float -> IO()
+addPrice id acaoAdicional = do
     let company = getCompaniesByID id (getCompanyJSON "./Data/Companies.json")
-    let newActions = fromIntegral (round (((actions company) + acaoAdicional) * 10 )) / 10    -- formata o valor para somente uma casa decimal
+    let newActions = fromIntegral (round ((actions company + acaoAdicional) * 10 )) / 10    -- formata o valor para somente uma casa decimal
     let newCompany = company {actions = newActions}
     editCompanyJSON "./Data/Companies.json" newCompany
 
