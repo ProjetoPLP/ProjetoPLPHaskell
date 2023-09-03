@@ -17,6 +17,9 @@ getCol id = col (getCompaniesByID id (getCompanyJSON "./Data/Companies.json"))
 getRow :: Int -> Int
 getRow id = row (getCompaniesByID id (getCompanyJSON "./Data/Companies.json"))
 
+getLengthCompanies :: IO Int
+getLengthCompanies = length (getCompanyJSON "./Data/Companies.json")
+
 updateRow :: Int -> Int -> IO()
 updateRow id addRow = do
     let company = getCompaniesByID id (getCompanyJSON "./Data/Companies.json")
