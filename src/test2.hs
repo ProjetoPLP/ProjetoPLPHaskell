@@ -8,7 +8,6 @@ import Utils.MatrixUtils (printMatrix)
 import Company.GetSetAttrsCompany
 import Clock.Clock
 import HomeBroker.HomeBrokerGraphUpdate
-import Company.GetSetAttrsCompany (updateCol)
 
 getIndex :: IO Int
 getIndex = do

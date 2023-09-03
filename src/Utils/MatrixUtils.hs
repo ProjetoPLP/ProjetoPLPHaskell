@@ -18,13 +18,13 @@ readMatrixFromFile filePath = do
 updateMatrix :: Matrix -> Int -> Int -> Char -> Matrix
 updateMatrix matrix row col newChar =
     let (beforeRow, targetRow : afterRow) = splitAt (row - 1) matrix
-        newRow = updateRow targetRow (col - 1) newChar
+        newRow = updateRowGraph targetRow (col - 1) newChar
     in beforeRow ++ newRow : afterRow
 
 
 -- Atualiza uma linha do gráfico na coluna col, retorna a linha atualizada
-updateRow :: [Char] -> Int -> Char -> [Char]
-updateRow row col newChar =
+updateRowGraph :: [Char] -> Int -> Char -> [Char]
+updateRowGraph row col newChar =
     take col row ++ [newChar] ++ drop (col + 1) row
 
 
