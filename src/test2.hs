@@ -40,7 +40,7 @@ loop :: UTCTime -> IO ()
 loop endTime = do
     currentTime <- getCurrentTime
     if currentTime >= endTime then do
-        updateCol 1 3
+        updateCol 1 2
         putStrLn "Tempo esgotado."
         else do
             attStocksPrice

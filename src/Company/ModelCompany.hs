@@ -27,6 +27,6 @@ createCompany identifier name ageFounded cnpj actuation declaration code actions
       declaration = declaration,
       code = code,
       actions = actions,
-      row = 25,
+      row = 20,
       col = 3
     }

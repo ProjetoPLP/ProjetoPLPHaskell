@@ -1,7 +1,6 @@
 module Company.GetSetAttrsCompany where
 import Company.SaveCompany
 import Company.ModelCompany
-import Data.IntMap (update)
 
 getSaldo :: Int -> Float
 getSaldo id = (actions (getCompaniesByID id (getCompanyJSON "./Data/Companies.json")))
