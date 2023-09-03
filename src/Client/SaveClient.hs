@@ -11,6 +11,7 @@ import System.IO.Unsafe ( unsafePerformIO )
 import System.IO
 import System.Directory
 import Client.ModelClient
+import Data.Maybe
 
 instance FromJSON Client
 instance ToJSON Client
@@ -84,3 +85,15 @@ verifyExistEmailClient emailClient (head:tail) =
 -- Atribui novo id ao cliente
 giveIdForClient :: Client -> Int -> Client
 giveIdForClient client newId = client { identifier = newId }
+
+saveLoginJSON :: Client -> IO ()
+saveLoginJSON client = do
+  B.writeFile "./Data/ArquivoTemporario.json" $ encode client
+  removeFile "./Data/Login.json"
+  renameFile "./Data/ArquivoTemporario.json" "./Data/Login.json"
+
+hasLoginDataInJSON :: IO Bool
+hasLoginDataInJSON = do
+  jsonContent <- B.readFile "./Data/Login.json"
+  let result = decode jsonContent :: Maybe Client
+  return $ isJust result

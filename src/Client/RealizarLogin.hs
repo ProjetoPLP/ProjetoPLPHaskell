@@ -7,14 +7,20 @@ fazerLogin :: IO String
 fazerLogin = do
     email <- getEmail
     passwordClient <- getPassword
+
     let client = searchAndGetClientByEmail email
-    if length (show passwordClient) == 5 then do
-        if not (identifier client == (-1)) then do
-            if (password client) == passwordClient then do
-                return "\nLogin realizado!"
-            else return "\nSenha incorreta!"
-        else return "\nOcorreu um  probelama! O email não existe."
-    else return "\nOcorreu um problema. A senha deve ter 5 digitos."
+    hasData <- hasLoginDataInJSON
+    
+    if not hasData then do
+        if length (show passwordClient) == 5 then do
+            if not (identifier client == (-1)) then do
+                if (password client) == passwordClient then do
+                    saveLoginJSON client
+                    return "\nLogin realizado!"
+                else return "\nSenha incorreta!"
+            else return "\nOcorreu um  probelama! O email não existe."
+        else return "\nOcorreu um problema! A senha deve ter 5 digitos."
+    else return "\nOcorreu um problema! Você já está logado, saia da sessão para logar novamente."
 
 searchAndGetClientByEmail :: String -> Client
 searchAndGetClientByEmail email = verifingIfExistEmailClient email (getClientJSON "./Data/Clients.json")
