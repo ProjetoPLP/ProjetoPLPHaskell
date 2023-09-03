@@ -2,6 +2,6 @@ import Clock.GetSetClock
 
 main :: IO()
 main = do
-    setClock (-1)
+    setClock (20)
     result <- readClock
     putStrLn (show result)

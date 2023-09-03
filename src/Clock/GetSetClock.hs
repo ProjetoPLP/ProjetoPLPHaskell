@@ -32,6 +32,10 @@ setClock increment = do
         Just oldClock -> do
             let oldMinutes = minutes oldClock
             let newMinutes = oldMinutes + increment
-            let newClock = Clock { minutes = newMinutes }
-            saveClockToFile newClock
+            if newMinutes == 720 then do
+                let newClock = Clock { minutes = 420 }
+                saveClockToFile newClock
+            else do 
+                let newClock = Clock { minutes = newMinutes }
+                saveClockToFile newClock
         Nothing -> putStrLn "Erro ao ler o arquivo JSON"
