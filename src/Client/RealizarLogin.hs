@@ -18,8 +18,8 @@ fazerLogin = do
                     saveLoginJSON client
                     return "\nLogin realizado!"
                 else return "\nSenha incorreta!"
-            else return "\nOcorreu um  probelama! O email não existe."
-        else return "\nOcorreu um problema! A senha deve ter 5 digitos."
+            else return "\nOcorreu um problema! O email não existe."
+        else return "\nOcorreu um problema! A senha deve ter 5 dígitos."
     else return "\nOcorreu um problema! Você já está logado, saia da sessão para logar novamente."
 
 searchAndGetClientByEmail :: String -> Client
