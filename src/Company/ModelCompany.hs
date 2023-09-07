@@ -3,30 +3,30 @@ module Company.ModelCompany where
 import GHC.Generics
 
 data Company = Company
-  { identifier :: Int,
+  { ident :: Int,
     name :: String,
-    ageFounded :: Int,
+    age :: Int,
     cnpj :: Int,
     actuation :: String,
     declaration :: String,
-    code :: Int,
-    actions :: Float,
+    code :: String,
+    price :: Float,
     row :: Int,
     col :: Int
   }
   deriving (Show, Generic)
 
-createCompany :: Int -> String -> Int -> Int -> String -> String -> Int -> Float -> Company
-createCompany identifier name ageFounded cnpj actuation declaration code actions =
+createCompany :: Int -> String -> Int -> Int -> String -> String -> String -> Float -> Company
+createCompany id_ name age cnpj actuation declaration code price =
   Company
-    { identifier = identifier,
+    { ident = id_,
       name = name,
-      ageFounded = ageFounded,
+      age = age,
       cnpj = cnpj,
       actuation = actuation,
       declaration = declaration,
       code = code,
-      actions = actions,
+      price = price,
       row = 20,
       col = 3
     }

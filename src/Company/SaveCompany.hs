@@ -15,18 +15,21 @@ import Company.ModelCompany
 instance FromJSON Company
 instance ToJSON Company
 
+getCompany :: Int -> Company
+getCompany id = getCompaniesByID id (getCompanyJSON "./Data/Companies.json")
+
 -- Pega uma empresa pelo ID
 getCompaniesByID :: Int -> [Company] -> Company
-getCompaniesByID _ [] = Company (-1) "" 0 0 "" "" 0 0.00 0 0
+getCompaniesByID _ [] = Company (-1) "" 0 0 "" "" "" 0.00 0 0
 getCompaniesByID identifierS (x:xs)
- | (identifier x) == identifierS = x
+ | (ident x) == identifierS = x
  | otherwise = getCompaniesByID identifierS xs
 
 -- Remove uma empresa pelo ID
 removeCompanyByID :: Int -> [Company] -> [Company]
 removeCompanyByID _ [] = []
 removeCompanyByID identifierS (x:xs)
- | (identifier x) == identifierS = xs
+ | (ident x) == identifierS = xs
  | otherwise = [x] ++ (removeCompanyByID identifierS xs)
 
 -- Pega todas as empresas salvas
@@ -57,16 +60,16 @@ saveCompanyJSON jsonFilePath company = do
 editCompanyJSON :: String -> Company -> IO ()
 editCompanyJSON jsonFilePath updatedCompany = do
  let companiesList = getCompanyJSON jsonFilePath
- let newCompaniesList = removeCompanyByID (identifier updatedCompany) companiesList ++ [updatedCompany]
+ let newCompaniesList = removeCompanyByID (ident updatedCompany) companiesList ++ [updatedCompany]
  B.writeFile "./Data/ArquivoTemporario.json" $ encode newCompaniesList
  removeFile jsonFilePath
  renameFile "./Data/ArquivoTemporario.json" jsonFilePath
 
 -- Remove uma empresa pelo ID
 removeCompanyJSON :: String -> Int -> IO ()
-removeCompanyJSON jsonFilePath identifier = do
+removeCompanyJSON jsonFilePath ident = do
  let companiesList = getCompanyJSON jsonFilePath
- let newCompaniesList = removeCompanyByID identifier companiesList
+ let newCompaniesList = removeCompanyByID ident companiesList
  B.writeFile "./Data/ArquivoTemporario.json" $ encode newCompaniesList
  removeFile jsonFilePath
  renameFile "./Data/ArquivoTemporario.json" jsonFilePath
@@ -83,4 +86,4 @@ verifyExistNameCompany nameCompany (head:tail) =
 
 -- Atribui novo id ao cliente
 giveIdForCompany :: Company -> Int -> Company
-giveIdForCompany client newId = client { identifier = newId }
+giveIdForCompany client newId = client { ident = newId }

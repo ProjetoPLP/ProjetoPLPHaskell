@@ -16,21 +16,30 @@ import Data.Maybe
 instance FromJSON Client
 instance ToJSON Client
 
--- Pega cliente pelo ID (identifier)
+getClient :: Int -> Client
+getClient id = getClientsByID id (getClientJSON "./Data/Clients.json")
+
+-- ====================== GetClient ========================= --
+-- Entrada: id:Int / clients:[Client]
+-- TipoDeSaida: Client
 getClientsByID :: Int -> [Client] -> Client
-getClientsByID _ [] = Client (-1) "" 0 0 "" 0 0
+getClientsByID _ [] = Client (-1) "" 0 0 "" 0 0 0.00 False 19 52
 getClientsByID identifierS (x:xs)
- | (identifier x) == identifierS = x
+ | (ident x) == identifierS = x
  | otherwise = getClientsByID identifierS xs
 
--- Remove cliente pelo ID (identifier)
+-- ====================== RemoveClient ====================== --
+-- Entrada: id:ID / clients:[Client]
+-- TipoDeSaida: [Client]
 removeClientByID :: Int -> [Client] -> [Client]
 removeClientByID _ [] = []
 removeClientByID identifierS (x:xs)
- | (identifier x) == identifierS = xs
+ | (ident x) == identifierS = xs
  | otherwise = [x] ++ (removeClientByID identifierS xs)
 
--- Pega todos os clientes salvos em JSON
+-- ====================== getAllClients ===================== --
+-- Entrada: path:String
+-- TipoDeSaida: [Client]
 getClientJSON :: String -> [Client]
 getClientJSON path = do
  let file = unsafePerformIO (B.readFile path)
@@ -39,7 +48,9 @@ getClientJSON path = do
   Nothing -> []
   Just out -> out
 
--- Salva um cliente em JSON
+-- ====================== SaveClient ======================== --
+-- Entrada: path:String / client:Client
+-- TipoDeSaida: None
 saveClientJSON :: String -> Client -> IO ()
 saveClientJSON jsonFilePath client = do
   let clientList = getClientJSON jsonFilePath
@@ -54,46 +65,83 @@ saveClientJSON jsonFilePath client = do
   removeFile jsonFilePath
   renameFile "./Data/ArquivoTemporario.json" jsonFilePath
 
--- Incrementa o cash do cliente
+-- ====================== EditCashClient ==================== --
+-- Entrada: path:String / client:Client
+-- TipoDeSaida: None
 editClientJSON :: String -> Client -> IO ()
 editClientJSON jsonFilePath updatedClient = do
  let clientsList = getClientJSON jsonFilePath
- let newClientsList = removeClientByID (identifier updatedClient) clientsList ++ [updatedClient]
+ let newClientsList = removeClientByID (ident updatedClient) clientsList ++ [updatedClient]
  B.writeFile "./Data/ArquivoTemporario.json" $ encode newClientsList
  removeFile jsonFilePath
  renameFile "./Data/ArquivoTemporario.json" jsonFilePath
 
--- Remove um cliente pelo ID (identifier)
+-- ====================== RemoveClient ====================== --
+-- Entrada: path:String / id:Int
+-- TipoDeSaida: None
 removeClientJSON :: String -> Int -> IO ()
-removeClientJSON jsonFilePath identifier = do
+removeClientJSON jsonFilePath ident = do
  let clientsList = getClientJSON jsonFilePath
- let newClientsList = removeClientByID identifier clientsList
+ let newClientsList = removeClientByID ident clientsList
  B.writeFile "./Data/ArquivoTemporario.json" $ encode newClientsList
  removeFile jsonFilePath
  renameFile "./Data/ArquivoTemporario.json" jsonFilePath
 
--- Verifica a existencia do cliente pelo email
+-- ====================== ExistClient ======================= --
+-- Entrada: email:String
+-- TipoDeSaida: Bool
 existClientByEmail :: String -> Bool
 existClientByEmail email = verifyExistEmailClient email (getClientJSON "./Data/Clients.json")
 
+-- ====================== ExistClient ======================= --
+-- Entrada: email:String / client:Client
+-- TipoDeSaida: Bool
 verifyExistEmailClient :: String -> [Client] -> Bool
 verifyExistEmailClient _ [] = False
 verifyExistEmailClient emailClient (head:tail) = 
   if emailClient == (email head) then True
   else verifyExistEmailClient emailClient tail
 
--- Atribui novo id ao cliente
+-- ====================== GetClient ========================= --
+-- Entrada: client:Client / NewID:Int
+-- TipoDeSaida: Client
 giveIdForClient :: Client -> Int -> Client
-giveIdForClient client newId = client { identifier = newId }
+giveIdForClient client newId = client { ident = newId }
 
+-- ====================== SaveClient ======================== --
+-- Entrada: client:Client
+-- TipoDeSaida: None
 saveLoginJSON :: Client -> IO ()
 saveLoginJSON client = do
   B.writeFile "./Data/ArquivoTemporario.json" $ encode client
   removeFile "./Data/Login.json"
   renameFile "./Data/ArquivoTemporario.json" "./Data/Login.json"
 
+-- ====================== ExistLoginClient ================== --
+-- Entrada: None
+-- TipoDeSaida: Bool
 hasLoginDataInJSON :: IO Bool
 hasLoginDataInJSON = do
   jsonContent <- B.readFile "./Data/Login.json"
   let result = decode jsonContent :: Maybe Client
   return $ isJust result
+
+-- ====================== GetClientDefault ================== --
+-- Entrada: client:Client
+-- TipoDeSaida: Client
+defaultClient :: Client
+defaultClient = Client (-1) "" 0 0 "" 0 0 0.00 False 19 52
+
+-- ====================== ReadClient ======================== --
+-- Entrada: Path:String
+-- TipoDeSaida: Client
+readClientFromFile :: FilePath -> IO (Either String Client)
+readClientFromFile filePath = eitherDecodeFileStrict filePath
+
+-- ====================== GetLogin ========================== --
+-- Entrada: None
+-- TipoDeSaida: Client / Nothing
+getClientLogado :: IO (Maybe Client)
+getClientLogado = do
+    result <- readClientFromFile "./Data/Login.json"
+    return (either (const Nothing) Just result)

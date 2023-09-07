@@ -3,8 +3,8 @@ module Company.CreateCompany where
 import Company.GetInfoForCreateCompany
 import Company.ModelCompany
 
-getCompany :: IO Company
-getCompany = do
+getNewCompany :: IO Company
+getNewCompany = do
   companyName <- getName
   companyAgeFounded <- getAgeFounded
   companyCNPJ <- getCNPJ

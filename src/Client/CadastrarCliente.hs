@@ -6,7 +6,7 @@ import Client.CreateClient
 
 cadastrarCliente :: IO Bool
 cadastrarCliente = do
-    client <- getClient
+    client <- getNewClient
     if (age client) >= 18 then do
         if (length (show (cpf client))) == 11 then do
             if (length (show (password client))) == 5 then do 
