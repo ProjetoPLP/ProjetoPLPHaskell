@@ -8,6 +8,20 @@ updateHBStockPrice filePath num trendInd = do
     let val = fillLeft (trendInd ++ show num) 3
     writeMatrixValue filePath val 11 (94 - length val)
 
+
+updateHBGraphCandle :: FilePath -> Int -> Int -> IO ()
+updateHBGraphCandle filePath row col = do
+    writeMatrixValue filePath "❚" row col
+
+
+-- Reinicia o gráfico sobrescrevendo todos os espaços com caracteres vazios
+cleanHBGraph :: FilePath -> Int -> IO ()
+cleanHBGraph filepath 26 = writeMatrixValue filepath (replicate 74 ' ') 26 2
+cleanHBGraph filepath row = do
+    writeMatrixValue filepath (replicate 74 ' ') row 2
+    cleanHBGraph filepath (row + 1)
+
+
 updateHBStockMaxPrice :: FilePath -> Float -> IO ()
 updateHBStockMaxPrice filePath num = do
     let val = fillLeft (show num) 4
@@ -47,5 +61,6 @@ updateHBCompanyName filePath name = do
     writeMatrixValue filePath name 7 (getCompanyNameCol (length name))
 
 
+-- Formata, a partir do tamanho do nome, a coluna na qual o nome será escrito 
 getCompanyNameCol :: Int -> Int
 getCompanyNameCol len = 86 - ((len - 1) `div` 2)
