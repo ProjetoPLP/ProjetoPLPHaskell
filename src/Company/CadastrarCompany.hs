@@ -10,7 +10,7 @@ cadastrarCompany = do
     if (length (name company) <= 18) then
         if (length (actuation company) <= 15) then do
             if (length (declaration company) <= 86) then do
-                if (length (show (cnpj company))) == 14 then do
+                if (length (cnpj company)) == 14 then do
                     if not (existCompanyByName (name company)) then do
                         if length (code company) == 5 then do
                             saveCompanyJSON "./Data/Companies.json" company

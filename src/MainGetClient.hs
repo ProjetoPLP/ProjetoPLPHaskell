@@ -18,7 +18,7 @@ main = do
     putStrLn (show (getAllAssets 1))
     setName 1 "ok"
     setAge 1 2
-    setCPF 1 2
+    setCPF 1 "40404040404"
     setEmail 1 "ok"
     setPassword 1 2
     setCash 1 2

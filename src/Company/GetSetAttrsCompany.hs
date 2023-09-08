@@ -3,47 +3,23 @@ import Company.SaveCompany
 import Company.ModelCompany
 import Data.Char (toUpper)
 
-getName :: Int -> Maybe String
-getName id = do
-    let companyName = name (getCompany id)
-    if companyName == ""
-    then Nothing
-    else Just companyName
+getName :: Int -> String
+getName id = name (getCompany id)
+    
+getAge :: Int -> Int
+getAge id = age (getCompany id)
 
-getAge :: Int -> Maybe Int
-getAge id = do
-    let companyAge = age (getCompany id)
-    if companyAge == 0
-    then Nothing
-    else Just companyAge
+getCNPJ :: Int -> String
+getCNPJ id = formatCNPJ (cnpj (getCompany id))
 
-getCNPJ :: Int -> Maybe String
-getCNPJ id = do
-    let companyCNPJ = cnpj (getCompany id)
-    if length (show(companyCNPJ)) /= 14 
-        then Nothing
-        else Just (formatCNPJ(companyCNPJ))
+getActuation :: Int -> String
+getActuation id = actuation (getCompany id)
 
-getActuation :: Int -> Maybe String
-getActuation id = do
-    let companyActuation = actuation (getCompany id)
-    if companyActuation == ""
-        then Nothing
-        else Just companyActuation
+getDeclaration :: Int -> String
+getDeclaration id = declaration (getCompany id)
 
-getDeclaration :: Int -> Maybe String
-getDeclaration id = do
-    let companyDeclaration = declaration (getCompany id)
-    if companyDeclaration == ""
-        then Nothing
-        else Just companyDeclaration
-
-getCode :: Int -> Maybe String
-getCode id = do
-    let companyCode = code (getCompany id)
-    if  companyCode == ""
-        then Nothing
-        else Just companyCode
+getCode :: Int -> String
+getCode id = code (getCompany id)
 
 getPrice :: Int -> Float
 getPrice id = price (getCompany id)
@@ -65,8 +41,6 @@ getRow id = row (getCompany id)
 
 getCol :: Int -> Int
 getCol id = col (getCompany id)
-
--- ==========================
 
 setName :: Int -> String -> IO Bool
 setName id name = do
@@ -94,7 +68,7 @@ setAge id age = do
         putStrLn "\nOcorreu um problema! A Empresa com este id não foi encontrada!"
         return False
 
-setCNPJ :: Int -> Int -> IO Bool
+setCNPJ :: Int -> String -> IO Bool
 setCNPJ id cnpj = do
     let company = getCompany id
     if (length (show cnpj)) == 14 then do
@@ -231,7 +205,6 @@ setCol id col = do
         putStrLn "\nOcorreu um problema! A Empresa com este id não foi encontrada!"
         return False
 
--- ======================================================
 updateRow :: Int -> Int -> IO()
 updateRow id addRow = do
     let company = getCompaniesByID id (getCompanyJSON "./Data/Companies.json")
@@ -247,13 +220,13 @@ updateCol id addCol = do
 addPrice :: Int -> Float -> IO()
 addPrice id acaoAdicional = do
     let company = getCompaniesByID id (getCompanyJSON "./Data/Companies.json")
-    let newPrice = fromIntegral (round ((price company + acaoAdicional) * 10 )) / 10    -- formata o valor para somente uma casa decimal
+    let newPrice = fromIntegral (round ((price company + acaoAdicional) * 10 )) / 10
     let newCompany = company {price = newPrice}
     editCompanyJSON "./Data/Companies.json" newCompany
 
-formatCNPJ :: Int -> String
+formatCNPJ :: String -> String
 formatCNPJ cnpj =
-  let cnpjStr = show cnpj
+  let cnpjStr = cnpj
   in if length cnpjStr == 14
        then
          let (part1, rest1) = splitAt 2 cnpjStr
