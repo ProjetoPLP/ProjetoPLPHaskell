@@ -16,6 +16,25 @@ updateHBGraphCandle :: FilePath -> Int -> Int -> IO ()
 updateHBGraphCandle filePath row col = do
     writeMatrixValue filePath "❚" row col
 
+
+checkNewHBCandle :: Int -> Float -> Float ->  IO ()
+checkNewHBCandle id oldPrice newPrice = do
+    if newPrice > oldPrice then do
+        if getRow id == 6 then do
+            cleanHBGraph ("./Company/HomeBroker/homebroker" ++ show id ++ ".txt") 6
+            updateRow id 20
+        else
+            updateRow id (-1)
+    
+    else if newPrice < oldPrice then do
+        if getRow id == 26 then do
+            cleanHBGraph ("./Company/HomeBroker/homebroker" ++ show id ++ ".txt") 6
+            updateRow id (-20)
+        else
+            updateRow id 1
+
+    else updateRow id 0
+
 -- Reinicia o gráfico sobrescrevendo todos os espaços com caracteres vazios
 cleanHBGraph :: FilePath -> Int -> IO ()
 cleanHBGraph filepath 26 = writeMatrixValue filepath (replicate 74 ' ') 26 2
@@ -33,12 +52,15 @@ getIndexAndVariation = do
 
 
 -- Retorna um novo preço baseado na aleatóriedade da função getIndexAndVariation
-getNewPrice :: IO Float
-getNewPrice = do
+getNewPrice :: Float -> IO Float
+getNewPrice oldPrice = do
     indexVar <- getIndexAndVariation
-    if last indexVar == 1 then return ([0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0] !! head indexVar)
-    else if last indexVar == (-1) then return ([-0.1, -0.2, -0.3, -0.4, -0.5, -0.6, -0.7, -0.8, -0.9, -1.0] !! head indexVar)
-    else return 0
+    if last indexVar == 1 then return (format (([0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0] !! head indexVar) + oldPrice))
+    else if last indexVar == (-1) then return (format (([-0.1, -0.2, -0.3, -0.4, -0.5, -0.6, -0.7, -0.8, -0.9, -1.0] !! head indexVar) + oldPrice))
+    else return oldPrice
+    where 
+        format :: Float -> Float
+        format newPrice = fromIntegral (round (newPrice * 10 )) / 10
 
 
 attStockPriceFor :: Int -> Int -> IO ()
@@ -63,33 +85,13 @@ loop id endTime = do
             loop id endTime
 
 
-checkGraphBorders :: Int -> Float ->  IO ()
-checkGraphBorders id newPrice = do
-    let currentPrice = getPrice id
-    if newPrice + currentPrice > currentPrice then do
-        if getRow id == 6 then do
-            cleanHBGraph ("./Company/HomeBroker/homebroker" ++ show id ++ ".txt") 6
-            updateRow id 20
-        else
-            updateRow id (-1)
-    
-    else if newPrice + currentPrice < currentPrice then do
-        if getRow id == 26 then do
-            cleanHBGraph ("./Company/HomeBroker/homebroker" ++ show id ++ ".txt") 6
-            updateRow id (-20)
-        else
-            updateRow id 1
-
-    else updateRow id 0
-
-
 attStocksPrice :: Int -> IO ()
 attStocksPrice id = do
-    newPrice <- getNewPrice
-    checkGraphBorders id newPrice
+    let oldPrice = getPrice id
+    newPrice <- getNewPrice oldPrice
 
-    addPrice id newPrice
-    updateHBStockPrice ("./Company/HomeBroker/homebroker" ++ show id ++ ".txt") (getPrice id)
+    setPrice id newPrice
+    updateHBStockPrice ("./Company/HomeBroker/homebroker" ++ show id ++ ".txt") oldPrice newPrice
     updateHBGraphCandle ("./Company/HomeBroker/homebroker" ++ show id ++ ".txt") (getRow id) (getCol id)
     printMatrix ("./Company/HomeBroker/homebroker" ++ show id ++ ".txt")
 
