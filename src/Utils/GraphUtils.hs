@@ -2,6 +2,8 @@ module Utils.GraphUtils where
 import Company.GetSetAttrsCompany
 import Utils.MatrixUtils (writeMatrixValue)
 import HomeBroker.HomeBrokerUpdate (cleanHBGraph)
+import Company.ModelCompany (Company)
+import Company.GetSetAttrsCompany (getIdent)
 
 
 -- Atualiza em uma empresa, a partir do seu ID, a nova linha e coluna baseado no novo preço
@@ -23,6 +25,12 @@ checkCompanyColumn id = do
         updateCol id (-69)
     else
         updateCol id 3
+
+checkAllCompanyColumn :: [Company] -> IO()
+checkAllCompanyColumn [] = return ()
+checkAllCompanyColumn (x:xs) = do
+    checkCompanyColumn (getIdent x)
+    checkAllCompanyColumn xs
 
 
 checkCompanyRowOverflow :: Int -> IO ()

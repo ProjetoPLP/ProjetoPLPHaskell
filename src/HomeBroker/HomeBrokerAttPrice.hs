@@ -7,6 +7,8 @@ import Utils.MatrixUtils (printMatrix, writeMatrixValue)
 
 import Company.GetSetAttrsCompany
 import Utils.GraphUtils (attCompanyLineRow, attTrendIndicator)
+import Company.ModelCompany (Company)
+import Text.Read (Lexeme(Ident))
 
 
 -- Retorna um index e uma variação aleatória 
@@ -42,3 +44,22 @@ attCompanyPriceGraph id = do
     updateHBGraphCandle ("./Company/HomeBroker/homebroker" ++ show id ++ ".txt") (getRow id) (getCol id)
     printMatrix ("./Company/HomeBroker/homebroker" ++ show id ++ ".txt")
 
+attCompanyPrice :: Int -> IO ()
+attCompanyPrice id = do
+    let oldPrice = getPrice id
+    newPrice <- getNewPrice oldPrice
+
+    setPrice id newPrice
+    attTrendIndicator id oldPrice newPrice
+    attCompanyLineRow id oldPrice newPrice
+    updateHBStockPrice ("./Company/HomeBroker/homebroker" ++ show id ++ ".txt") newPrice (getTrendIndicator id)
+    updateHBGraphCandle ("./Company/HomeBroker/homebroker" ++ show id ++ ".txt") (getRow id) (getCol id)
+
+attAllCompanyPrice :: Int -> [Company] -> IO ()
+attAllCompanyPrice _ [] = return ()
+attAllCompanyPrice id (x:xs) = do
+    if (getIdent x) == id then do
+        attAllCompanyPrice id xs
+    else do
+        attCompanyPrice (getIdent x)
+        attAllCompanyPrice id xs
