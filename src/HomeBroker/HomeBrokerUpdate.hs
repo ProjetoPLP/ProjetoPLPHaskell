@@ -1,11 +1,11 @@
 module HomeBroker.HomeBrokerUpdate where
 
 import Utils.MatrixUtils (writeMatrixValue)
-import Utils.UpdateUtils (fillLeft, getNewTrendIndicator)
+import Utils.UpdateUtils (fillLeft)
 
-updateHBStockPrice :: FilePath -> Float -> Float -> IO ()
-updateHBStockPrice filePath oldPrice newPrice = do
-    let val = fillLeft (getTrendIndicator oldPrice newPrice ++ show newPrice) 3
+updateHBStockPrice :: FilePath -> Float -> String -> IO ()
+updateHBStockPrice filePath num trendInd = do
+    let val = fillLeft (trendInd ++ show num) 3
     writeMatrixValue filePath val 11 (94 - length val)
 
 updateHBStockMaxPrice :: FilePath -> Float -> IO ()

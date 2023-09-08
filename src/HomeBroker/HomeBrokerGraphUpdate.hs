@@ -17,8 +17,8 @@ updateHBGraphCandle filePath row col = do
     writeMatrixValue filePath "❚" row col
 
 
-checkNewHBCandle :: Int -> Float -> Float ->  IO ()
-checkNewHBCandle id oldPrice newPrice = do
+attLineRow :: Int -> Float -> Float ->  IO ()
+attLineRow id oldPrice newPrice = do
     if newPrice > oldPrice then do
         if getRow id == 6 then do
             cleanHBGraph ("./Company/HomeBroker/homebroker" ++ show id ++ ".txt") 6
@@ -63,6 +63,16 @@ getNewPrice oldPrice = do
         format newPrice = fromIntegral (round (newPrice * 10 )) / 10
 
 
+attTrendIndicator :: Int -> Float -> Float -> IO ()
+attTrendIndicator id oldPrice newPrice = do
+    if newPrice > oldPrice then do
+        setTrendIndicator id "▲"
+    else if newPrice < oldPrice then do
+        setTrendIndicator id "▼"
+    else
+        setTrendIndicator id " "
+
+
 attStockPriceFor :: Int -> Int -> IO ()
 attStockPriceFor id seg = do
     startTime <- getCurrentTime
@@ -91,7 +101,9 @@ attStocksPrice id = do
     newPrice <- getNewPrice oldPrice
 
     setPrice id newPrice
-    updateHBStockPrice ("./Company/HomeBroker/homebroker" ++ show id ++ ".txt") oldPrice newPrice
+    attTrendIndicator id oldPrice newPrice
+    attLineRow id oldPrice newPrice
+    updateHBStockPrice ("./Company/HomeBroker/homebroker" ++ show id ++ ".txt") newPrice (getTrendIndicator id)
     updateHBGraphCandle ("./Company/HomeBroker/homebroker" ++ show id ++ ".txt") (getRow id) (getCol id)
     printMatrix ("./Company/HomeBroker/homebroker" ++ show id ++ ".txt")
 

@@ -9,9 +9,3 @@ fillLeft val limit = replicate spaces ' ' ++ val
 -- Adiciona a uma string uma quantidade de caracteres vazios à direita
 fillRight :: String -> Int -> String
 fillRight val limit = val ++ replicate limit ' '
-
-getNewTrendIndicator :: Int -> Float -> Float -> String
-getNewTrendIndicator id oldPrice newPrice 
-    | newPrice > oldPrice = "▲"
-    | newPrice < oldPrice = "▼"
-    | otherwise = " "
