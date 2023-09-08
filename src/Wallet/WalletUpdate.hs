@@ -3,16 +3,31 @@ module Wallet.WalletUpdate where
 import Utils.MatrixUtils (writeMatrixValue)
 import Utils.UpdateUtils (fillLeft, fillRight)
 
+
 updateWLCash :: FilePath -> Float -> IO ()
 updateWLCash filePath num = do
     let val = fillLeft (show num) 8
     writeMatrixValue filePath val 13 (21 - length val)
 
 
-updateWLAssets :: FilePath -> Float -> IO ()
-updateWLAssets filePath num = do
+updateWLPatrimony :: FilePath -> Float -> IO ()
+updateWLPatrimony filePath num = do
     let val = fillLeft (show num) 8
     writeMatrixValue filePath val 6 (23 - length val)
+
+
+updateWLGraphCandle :: FilePath -> Int -> Int -> IO ()
+updateWLGraphCandle filePath row col = do
+    writeMatrixValue filePath "❚" row col
+
+
+-- refazer para wallet
+-- Reinicia o gráfico sobrescrevendo todos os espaços com caracteres vazios
+cleanWLGraph :: FilePath -> Int -> IO ()
+cleanWLGraph filepath 20 = writeMatrixValue filepath (replicate 47 ' ') 20 50
+cleanWLGraph filepath row = do
+    writeMatrixValue filepath (replicate 47 ' ') row 50
+    cleanWLGraph filepath (row + 1)
 
 
 updateWLStockName :: FilePath -> Int -> String -> IO ()
