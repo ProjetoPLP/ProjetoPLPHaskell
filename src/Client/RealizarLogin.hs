@@ -10,7 +10,7 @@ fazerLogin = do
 
     let client = searchAndGetClientByEmail email
     hasData <- hasLoginDataInJSON
-    
+
     if not hasData then do
         if length (show passwordClient) == 5 then do
             if not (ident client == (-1)) then do
