@@ -3,6 +3,14 @@ module Wallet.WalletUpdate where
 import Utils.MatrixUtils (writeMatrixValue)
 import Utils.UpdateUtils (fillLeft, fillRight)
 
+import Client.GetSetAttrsClient
+
+updateClientWallet :: Int -> IO ()
+updateClientWallet idClient = do 
+    updateWLUserName path (getName idClient)
+    updateWLCash path (getCash idClient)
+    updateWLPatrimony path (getPatrimony idClient)
+    where path = "./Client/Wallet/wallet" ++ show idClient ++ ".txt"
 
 updateWLCash :: FilePath -> Float -> IO ()
 updateWLCash filePath num = do
@@ -36,10 +44,10 @@ updateWLStockName filePath id name = do
     writeMatrixValue filePath name (head pos) (last pos)
 
 
-updateWLStockPrice :: FilePath -> Int -> Float -> IO ()
-updateWLStockPrice filePath id num = do
+updateWLStockPrice :: FilePath -> Int -> Float -> String -> IO ()
+updateWLStockPrice filePath id num trendInd = do
     let pos = getStockPricePosition id
-        val = fillLeft (show num) 4
+        val = fillLeft (trendInd ++ show num) 6
     writeMatrixValue filePath val (head pos) (last pos - length val)
 
 
@@ -74,47 +82,47 @@ updateWLNewsText filePath text = do
 
 getStockNamePosition :: Int -> [Int]
 getStockNamePosition id
-    | id == 1 = [22, 4]
-    | id == 2 = [24, 4]
-    | id == 3 = [26, 4]
-    | id == 4 = [22, 28]
-    | id == 5 = [24, 28]
-    | id == 6 = [26, 28]
-    | id == 7 = [22, 52]
-    | id == 8 = [24, 52]
-    | id == 9 = [26, 52]
-    | id == 10 = [22, 76]
-    | id == 11 = [24, 76]
-    | id == 12 = [26, 76]
+    | id == 1 = [22, 3]
+    | id == 2 = [24, 3]
+    | id == 3 = [26, 3]
+    | id == 4 = [22, 27]
+    | id == 5 = [24, 27]
+    | id == 6 = [26, 27]
+    | id == 7 = [22, 51]
+    | id == 8 = [24, 51]
+    | id == 9 = [26, 51]
+    | id == 10 = [22, 75]
+    | id == 11 = [24, 75]
+    | id == 12 = [26, 75]
 
 
 getStockPricePosition :: Int -> [Int]
 getStockPricePosition id
-    | id == 1 = [22, 14]
-    | id == 2 = [24, 14]
-    | id == 3 = [26, 14]
-    | id == 4 = [22, 38]
-    | id == 5 = [24, 38]
-    | id == 6 = [26, 38]
-    | id == 7 = [22, 62]
-    | id == 8 = [24, 62]
-    | id == 9 = [26, 62]
-    | id == 10 = [22, 86]
-    | id == 11 = [24, 86]
-    | id == 12 = [26, 86]
+    | id == 1 = [22, 15]
+    | id == 2 = [24, 15]
+    | id == 3 = [26, 15]
+    | id == 4 = [22, 39]
+    | id == 5 = [24, 39]
+    | id == 6 = [26, 39]
+    | id == 7 = [22, 63]
+    | id == 8 = [24, 63]
+    | id == 9 = [26, 63]
+    | id == 10 = [22, 87]
+    | id == 11 = [24, 87]
+    | id == 12 = [26, 87]
 
 
 getOwnedStockPosition :: Int -> [Int]
 getOwnedStockPosition id
-    | id == 1 = [22, 22]
-    | id == 2 = [24, 22]
-    | id == 3 = [26, 22]
-    | id == 4 = [22, 46]
-    | id == 5 = [24, 46]
-    | id == 6 = [26, 46]
-    | id == 7 = [22, 70]
-    | id == 8 = [24, 70]
-    | id == 9 = [26, 70]
-    | id == 10 = [22, 94]
-    | id == 11 = [24, 94]
-    | id == 12 = [26, 94]
+    | id == 1 = [22, 23]
+    | id == 2 = [24, 23]
+    | id == 3 = [26, 23]
+    | id == 4 = [22, 47]
+    | id == 5 = [24, 47]
+    | id == 6 = [26, 47]
+    | id == 7 = [22, 71]
+    | id == 8 = [24, 71]
+    | id == 9 = [26, 71]
+    | id == 10 = [22, 95]
+    | id == 11 = [24, 95]
+    | id == 12 = [26, 95]

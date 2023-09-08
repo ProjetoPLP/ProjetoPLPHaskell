@@ -29,7 +29,7 @@ loop id endTime = do
     if currentTime >= endTime then do
         checkCompanyColumn id
         putStrLn "Tempo esgotado."
-        else do
-            attCompanyPriceGraph id
-            threadDelay (1 * 500000)
-            loop id endTime
+    else do
+        attCompanyPriceGraph id
+        threadDelay (1 * 500000)
+        loop id endTime

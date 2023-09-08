@@ -57,12 +57,8 @@ getPassword id = do
 -- ====================== getCashOfClient ============================ --
 -- Entrada: id: Int
 -- TipoDeSaida: Float
-getCash :: Int -> Maybe Float
-getCash id = do
-  let clientCash = cash (getClient id)
-  if clientCash == 0
-    then Nothing
-    else Just clientCash
+getCash :: Int -> Float
+getCash id = cash (getClient id)
 
 -- ====================== getAssetsOfClient ========================== --
 -- Entrada: id: Int
