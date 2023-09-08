@@ -26,8 +26,8 @@ cadastrarCompany = do
                     putStrLn "\nOcorreu um problema! O CNPJ não contém 14 digitos."
                     return False
             else do
-                    putStrLn "\nOcorreu um problema! A área de atuação da Empresa deve ter no máximo 86 caracteres!"
-                    return False
+                putStrLn "\nOcorreu um problema! A área de atuação da Empresa deve ter no máximo 86 caracteres!"
+                return False
         else do
             putStrLn "\nOcorreu um problema! A área de atuação da Empresa deve ter no máximo 15 caracteres!"
             return False
