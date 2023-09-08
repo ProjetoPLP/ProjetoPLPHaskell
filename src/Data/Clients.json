@@ -1,1 +1,1 @@
-[{"age":22,"assets":0,"canDeposit":false,"cash":100,"col":52,"cpf":13387993471,"email":"levi.pereira.junior@ccc.ufcg.edu.br","ident":1,"name":"Levi","password":12345,"row":19}]
+[{"age":22,"allAssets":[{"companyID":3,"price":6000},{"companyID":2,"price":800},{"companyID":1,"price":200}],"assets":2,"canDeposit":true,"cash":2,"col":2,"cpf":13387993471,"email":"ok","ident":1,"name":"ok","password":12345,"row":2}]

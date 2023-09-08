@@ -88,6 +88,12 @@ getRow id = row (getClient id)
 getCol :: Int -> Int
 getCol id = col (getClient id)
 
+-- ====================== getAllAssetsOfClient ============================= --
+-- Entrada: id: Int
+-- TipoDeSaida: [Asset]
+getAllAssets :: Int -> [Asset]
+getAllAssets id = allAssets (getClient id)
+
 -- ================================ SetAttributeClient ============================= --
 
 -- ====================== setNameOfClient ============================ --
@@ -236,6 +242,20 @@ setCol id col = do
     let client = getClient id
     if (ident client) /= -1 then do
         let newClient = client { col = col }
+        editClientJSON "./Data/Clients.json" newClient
+        return True
+    else do
+        putStrLn "\nOcorreu um problema! O Cliente com este id não foi encontrado!"
+        return False
+
+-- ====================== setAllAssetsOfClient ========================== --
+-- Entrada: id: Int / allAssets: [Asset]
+-- TipoDeSaida: Bool
+setAllAssets :: Int -> [Asset] -> IO Bool
+setAllAssets id allAssets = do
+    let client = getClient id
+    if (ident client) /= -1 then do
+        let newClient = client { allAssets = allAssets }
         editClientJSON "./Data/Clients.json" newClient
         return True
     else do

@@ -1,4 +1,7 @@
 import Client.GetSetAttrsClient
+import Client.SaveClient
+import Client.ModelClient
+import Client.PostClient
 
 main :: IO()
 main = do
@@ -12,6 +15,7 @@ main = do
     putStrLn (show (getCanDeposit 1))
     putStrLn (show (getRow 1))
     putStrLn (show (getCol 1))
+    putStrLn (show (getAllAssets 1))
     setName 1 "ok"
     setAge 1 2
     setCPF 1 2
@@ -22,6 +26,10 @@ main = do
     setCanDeposit 1 True
     setRow 1 2
     setCol 1 2
+
+    addAsset 1 2 100
+    addAsset 1 3 1000
+
     putStrLn (show (getName 1))
     putStrLn (show (getAge 1))
     putStrLn (show (getCPF 1))
@@ -32,3 +40,4 @@ main = do
     putStrLn (show (getCanDeposit 1))
     putStrLn (show (getRow 1))
     putStrLn (show (getCol 1))
+    putStrLn (show(getAllAssets 1))
