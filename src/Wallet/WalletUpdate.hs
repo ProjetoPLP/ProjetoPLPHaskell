@@ -32,9 +32,9 @@ updateWLGraphCandle filePath row col = do
 -- refazer para wallet
 -- Reinicia o gráfico sobrescrevendo todos os espaços com caracteres vazios
 cleanWLGraph :: FilePath -> Int -> IO ()
-cleanWLGraph filepath 26 = writeMatrixValue filepath (replicate 74 ' ') 26 2
+cleanWLGraph filepath 20 = writeMatrixValue filepath (replicate 47 ' ') 20 50
 cleanWLGraph filepath row = do
-    writeMatrixValue filepath (replicate 74 ' ') row 2
+    writeMatrixValue filepath (replicate 47 ' ') row 50
     cleanWLGraph filepath (row + 1)
 
 

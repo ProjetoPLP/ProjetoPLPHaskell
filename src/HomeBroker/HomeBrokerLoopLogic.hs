@@ -7,8 +7,9 @@ import Clock.ClockUpdate
 import Clock.GetSetClock (addClock, getClock)
 
 import Company.GetSetAttrsCompany
-import HomeBroker.HomeBrokerAttPrice (attCompanyPriceGraph)
-import Utils.GraphUtils (checkCompanyColumn)
+import Company.SaveCompany (getCompanyJSON)
+import HomeBroker.HomeBrokerAttPrice (attCompanyPriceGraph, attAllCompanyPrice)
+import Utils.GraphUtils (checkCompanyColumn, checkAllCompanyColumn)
 
 
 -- Define, a partir da entrada do usuário, por quanto tempo o preço e o gráfico deve variar
@@ -27,9 +28,10 @@ loop :: Int -> UTCTime -> IO ()
 loop id endTime = do
     currentTime <- getCurrentTime
     if currentTime >= endTime then do
-        checkCompanyColumn id
+        checkAllCompanyColumn (getCompanyJSON "./Data/Companies.json")
         putStrLn "Tempo esgotado."
-    else do
-        attCompanyPriceGraph id
-        threadDelay (1 * 500000)
-        loop id endTime
+        else do
+            attCompanyPriceGraph id
+            attAllCompanyPrice id (getCompanyJSON "./Data/Companies.json")
+            threadDelay (1 * 500000)
+            loop id endTime

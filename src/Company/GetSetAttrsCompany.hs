@@ -66,6 +66,9 @@ getRow id = row (getCompany id)
 getCol :: Int -> Int
 getCol id = col (getCompany id)
 
+getIdent :: Company -> Int
+getIdent company = ident company;
+
 -- ==========================
 
 setName :: Int -> String -> IO Bool
