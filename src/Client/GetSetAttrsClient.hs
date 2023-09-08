@@ -2,8 +2,6 @@ module Client.GetSetAttrsClient where
 import Client.SaveClient
 import Client.ModelClient
 
--- ================================ GetAttributeClient ============================= --
-
 -- ====================== getNameOfClient ============================ --
 -- Entrada: id: Int
 -- TipoDeSaida: String
@@ -94,22 +92,23 @@ getCol id = col (getClient id)
 getAllAssets :: Int -> [Asset]
 getAllAssets id = allAssets (getClient id)
 
--- ================================ SetAttributeClient ============================= --
-
 -- ====================== setNameOfClient ============================ --
 -- Entrada: id: Int / name: String
 -- TipoDeSaida: Bool
 setName :: Int -> String -> IO Bool
 setName id name = do 
     let client = getClient id
-    if (ident client) /= -1 then do
-        let newClient = client { name = name }
-        editClientJSON "./Data/Clients.json" newClient
-        return True
+    if (length name) <= 18 then do
+        if (ident client) /= -1 then do
+            let newClient = client { name = name }
+            editClientJSON "./Data/Clients.json" newClient
+            return True
+        else do
+            putStrLn "Cliente não existente."
+            return False
     else do
-        putStrLn "Cliente não existente."
+        putStrLn "\nOcorreu um problema! O nome do cliente deve ter no máximo 18 caracteres."
         return False
-
 -- ====================== setAgeOfClient ============================ --
 -- Entrada: id: Int / age: Int
 -- TipoDeSaida: Bool

@@ -29,7 +29,7 @@ cadastrarCompany = do
                 putStrLn "\nOcorreu um problema! A área de atuação da Empresa deve ter no máximo 86 caracteres!"
                 return False
         else do
-            putStrLn "\nOcorreu um problema! A área de atuação da Empresa deve ter no máximo 15 caracteres!"
+            putStrLn "\nOcorreu um problema! A declaração da Empresa deve ter no máximo 15 caracteres!"
             return False
     else do
         putStrLn "\nOcorreu um problema! O nome da empresa deve ter no máximo 18 caracteres."

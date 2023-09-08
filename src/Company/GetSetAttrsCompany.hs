@@ -71,12 +71,16 @@ getCol id = col (getCompany id)
 setName :: Int -> String -> IO Bool
 setName id name = do
     let company = getCompany id
-    if (ident company) /= (-1) then do
-        let newCompany = company { name = name }
-        editCompanyJSON "./Data/Companies.json" newCompany
-        return True
+    if (length name) <= 18 then do
+        if (ident company) /= (-1) then do
+            let newCompany = company { name = name }
+            editCompanyJSON "./Data/Companies.json" newCompany
+            return True
+        else do
+            putStrLn "\nOcorreu um problema! A Empresa com este id não foi encontrada!"
+            return False
     else do
-        putStrLn "\nOcorreu um problema! A Empresa com este id não foi encontrada!"
+        putStrLn "\nOcorreu um problema! O nome da empresa deve ter no máximo 18 caracteres."
         return False
 
 setAge :: Int -> Int -> IO Bool
@@ -108,34 +112,46 @@ setCNPJ id cnpj = do
 setActuation :: Int -> String -> IO Bool
 setActuation id actuation = do
     let company = getCompany id
-    if (ident company) /= (-1) then do
-        let newCompany = company { actuation = actuation }
-        editCompanyJSON "./Data/Companies.json" newCompany
-        return True
+    if (length actuation) <= 86 then do
+        if (ident company) /= (-1) then do
+            let newCompany = company { actuation = actuation }
+            editCompanyJSON "./Data/Companies.json" newCompany
+            return True
+        else do
+            putStrLn "\nOcorreu um problema! A Empresa com este id não foi encontrada!"
+            return False
     else do
-        putStrLn "\nOcorreu um problema! A Empresa com este id não foi encontrada!"
+        putStrLn "\nOcorreu um problema! A área de atuação da Empresa deve ter no máximo 86 caracteres!"
         return False
 
 setDeclaration :: Int -> String -> IO Bool
 setDeclaration id declaration = do
     let company = getCompany id
-    if (ident company) /= (-1) then do
-        let newCompany = company { declaration = declaration }
-        editCompanyJSON "./Data/Companies.json" newCompany
-        return True
+    if (length declaration) <= 15 then do
+        if (ident company) /= (-1) then do
+            let newCompany = company { declaration = declaration }
+            editCompanyJSON "./Data/Companies.json" newCompany
+            return True
+        else do
+            putStrLn "\nOcorreu um problema! A Empresa com este id não foi encontrada!"
+            return False
     else do
-        putStrLn "\nOcorreu um problema! A Empresa com este id não foi encontrada!"
+        putStrLn "\nOcorreu um problema! A declaração da Empresa deve ter no máximo 15 caracteres!"
         return False
 
 setCode :: Int -> String -> IO Bool
 setCode id code = do
     let company = getCompany id
-    if (ident company) /= (-1) then do
-        let newCompany = company { code = (uppercaseString code) }
-        editCompanyJSON "./Data/Companies.json" newCompany
-        return True
+    if (length code) <= 15 then do
+        if (ident company) /= (-1) then do
+            let newCompany = company { code = (uppercaseString code) }
+            editCompanyJSON "./Data/Companies.json" newCompany
+            return True
+        else do
+            putStrLn "\nOcorreu um problema! A Empresa com este id não foi encontrada!"
+            return False
     else do
-        putStrLn "\nOcorreu um problema! A Empresa com este id não foi encontrada!"
+        putStrLn "\nOcorreu um problema! O código da Empresa deve ter 5 caracteres!"
         return False
 
 setPrice :: Int -> Float -> IO Bool
