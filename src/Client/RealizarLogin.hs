@@ -13,7 +13,7 @@ fazerLogin = do
 
     if not hasData then do
         if length (show passwordClient) == 5 then do
-            if not (identifier client == (-1)) then do
+            if not (ident client == (-1)) then do
                 if (password client) == passwordClient then do
                     saveLoginJSON client
                     putStrLn "\nLogin realizado!"
@@ -35,7 +35,7 @@ searchAndGetClientByEmail :: String -> Client
 searchAndGetClientByEmail email = verifingIfExistEmailClient email (getClientJSON "./Data/Clients.json")
 
 verifingIfExistEmailClient :: String -> [Client] -> Client
-verifingIfExistEmailClient _ [] = Client (-1) "" 0 0 "" 0 0.00
+verifingIfExistEmailClient _ [] = Client (-1) "" 0 0 "" 0 0 0.00 False 19 52
 verifingIfExistEmailClient emailClient (head:tail) = 
   if emailClient == (email head) then head
   else verifingIfExistEmailClient emailClient tail

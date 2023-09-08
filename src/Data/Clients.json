@@ -1,1 +1,1 @@
-[{"age":23,"cash":100,"cpf":12345678901,"email":"adfddafad","identifier":1,"name":"lucas","password":12345},{"age":23,"cash":100,"cpf":12345678901,"email":"fakkdfkd","identifier":2,"name":"lucas","password":12345},{"age":24,"cash":100,"cpf":12345678901,"email":"ffrsd","identifier":3,"name":"lucas","password":12345}]
+[{"age":22,"allAssets":[{"companyID":3,"qtd":4}],"canDeposit":true,"cash":2,"col":2,"cpf":13387993471,"email":"ok","ident":1,"name":"ok","password":12345,"patrimony":2,"row":2}]

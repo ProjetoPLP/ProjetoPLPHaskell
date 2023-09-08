@@ -3,8 +3,8 @@ module Client.CreateClient where
 import Client.GetInfoForCreateClient
 import Client.ModelClient
 
-getClient :: IO Client
-getClient = do
+getNewClient :: IO Client
+getNewClient = do
   userName <- getName
   userAge <- getAge
   userCPF <- getCPF
