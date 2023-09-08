@@ -1,60 +1,60 @@
 module Wallet.WalletUpdate where
 
-import Utils.MatrixUtils
-import Utils.UpdateUtils
+import Utils.MatrixUtils (writeMatrixValue)
+import Utils.UpdateUtils (fillLeft, fillRight)
 
 updateWLCash :: FilePath -> Float -> IO ()
 updateWLCash filePath num = do
     let val = fillLeft (show num) 8
-    writeValue filePath val 13 (21 - length val)
+    writeMatrixValue filePath val 13 (21 - length val)
 
 
 updateWLAssets :: FilePath -> Float -> IO ()
 updateWLAssets filePath num = do
     let val = fillLeft (show num) 8
-    writeValue filePath val 6 (23 - length val) 
+    writeMatrixValue filePath val 6 (23 - length val)
 
 
 updateWLStockName :: FilePath -> Int -> String -> IO ()
 updateWLStockName filePath id name = do
     let pos = getStockNamePosition id
-    writeValue filePath name (head pos) (last pos) 
+    writeMatrixValue filePath name (head pos) (last pos)
 
 
 updateWLStockPrice :: FilePath -> Int -> Float -> IO ()
 updateWLStockPrice filePath id num = do
     let pos = getStockPricePosition id
         val = fillLeft (show num) 4
-    writeValue filePath val (head pos) ((last pos) - length val) 
+    writeMatrixValue filePath val (head pos) (last pos - length val)
 
 
 updateWLOwnedStock :: FilePath -> Int -> Int -> IO ()
 updateWLOwnedStock filePath id num = do
     let pos = getOwnedStockPosition id
         val = fillLeft (show num) 5
-    writeValue filePath val (head pos) ((last pos) - length val) 
+    writeMatrixValue filePath val (head pos) (last pos - length val)
 
 
 updateWLUserName :: FilePath -> String -> IO ()
 updateWLUserName filePath name = do
-    writeValue filePath name 10 6 
+    writeMatrixValue filePath name 10 6
 
 
 updateWLUserCPF :: FilePath -> String -> IO ()
 updateWLUserCPF filePath name = do
-    writeValue filePath name 11 6 
+    writeMatrixValue filePath name 11 6
 
 
 updateWLNewsPercent :: FilePath -> Float -> IO ()
 updateWLNewsPercent filePath num = do
     let val = fillLeft (show num) 4
-    writeValue filePath val 16 (33 - length val) 
+    writeMatrixValue filePath val 16 (33 - length val)
 
 
 updateWLNewsText :: FilePath -> String -> IO ()
 updateWLNewsText filePath text = do
     let val = fillRight text 3
-    writeValue filePath val 14 29 
+    writeMatrixValue filePath val 14 29
 
 
 getStockNamePosition :: Int -> [Int]

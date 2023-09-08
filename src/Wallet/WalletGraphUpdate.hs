@@ -1,8 +1,7 @@
 module Wallet.WalletGraphUpdate where
 
-import Utils.MatrixUtils
-import Utils.UpdateUtils
+import Utils.MatrixUtils (writeMatrixValue)
 
 updateWLGraphCandle :: FilePath -> Int -> Int -> IO ()
 updateWLGraphCandle filePath row col = do
-    writeValue filePath "|" row col
+    writeMatrixValue filePath "|" row col
