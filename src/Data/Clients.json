@@ -1,1 +1,1 @@
-[{"age":22,"allAssets":[{"companyID":3,"price":6000},{"companyID":2,"price":800},{"companyID":1,"price":200}],"assets":2,"canDeposit":true,"cash":2,"col":2,"cpf":13387993471,"email":"ok","ident":1,"name":"ok","password":12345,"row":2}]
+[{"age":22,"allAssets":[{"companyID":3,"qtd":4}],"canDeposit":true,"cash":2,"col":2,"cpf":13387993471,"email":"ok","ident":1,"name":"ok","password":12345,"patrimony":2,"row":2}]

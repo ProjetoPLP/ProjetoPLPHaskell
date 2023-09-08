@@ -67,8 +67,8 @@ getCash id = do
 -- ====================== getAssetsOfClient ========================== --
 -- Entrada: id: Int
 -- TipoDeSaida: Float
-getAssets :: Int -> Float
-getAssets id = assets (getClient id)
+getPatrimony :: Int -> Float
+getPatrimony id = patrimony (getClient id)
 
 -- ====================== getCanDepositOfClient ====================== --
 -- Entrada: id: Int
@@ -192,14 +192,14 @@ setCash id cash = do
         putStrLn "\nOcorreu um problema! O Cliente com este id não foi encontrado!"
         return False
 
--- ====================== setNameOfClient ========================== --
--- Entrada: id: Int / assets: Float
+-- ====================== setPatrimonyOfClient ========================== --
+-- Entrada: id: Int / patrimony: Float
 -- TipoDeSaida: Bool
-setAssets :: Int -> Float -> IO Bool
-setAssets id assets = do
+setPatrimony :: Int -> Float -> IO Bool
+setPatrimony id patrimony = do
     let client = getClient id
     if (ident client) /= -1 then do
-        let newClient = client { assets = assets }
+        let newClient = client { patrimony = patrimony }
         editClientJSON "./Data/Clients.json" newClient
         return True
     else do

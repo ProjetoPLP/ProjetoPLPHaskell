@@ -11,4 +11,4 @@ getNewCompany = do
   companyActuation <- getActuation
   companyDeclaration <- getDeclaration
   companyCode <- getCode
-  return $ createCompany 10 companyName companyAgeFounded companyCNPJ companyActuation companyDeclaration companyCode 30.0 ' ' 0.00 0.00 0.00
+  return $ createCompany 10 companyName companyAgeFounded companyCNPJ companyActuation companyDeclaration companyCode 30.0 " " 0.00 0.00 0.00

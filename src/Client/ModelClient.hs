@@ -10,7 +10,7 @@ data Client = Client
     email :: String,
     password :: Int,
     cash :: Float,
-    assets :: Float,
+    patrimony :: Float,
     canDeposit :: Bool,
     row :: Int,
     col :: Int,
@@ -20,7 +20,7 @@ data Client = Client
 
 data Asset = Asset {
   companyID :: Int,
-  price :: Float
+  qtd :: Int
 } deriving (Show, Generic)
 
 createClient :: Int -> String -> Int -> Int -> String -> Int -> Float -> Client
@@ -33,16 +33,16 @@ createClient id name age cpf email password cash =
       email = email,
       password = password,
       cash = cash,
-      assets = 0.00,
+      patrimony = 0.00,
       canDeposit = False,
       row = 19,
       col = 52,
       allAssets = []
     }
 
-createAsset :: Int -> Float -> Asset
+createAsset :: Int -> Int -> Asset
 createAsset companyID price = 
   Asset {
     companyID = companyID,
-    price = price
+    qtd = price
   }

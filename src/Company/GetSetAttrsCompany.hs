@@ -48,7 +48,7 @@ getCode id = do
 getPrice :: Int -> Float
 getPrice id = price (getCompany id)
 
-getTrendIndicator :: Int -> Char
+getTrendIndicator :: Int -> String
 getTrendIndicator id = trendIndicator (getCompany id)
 
 getMinPrice :: Int -> Float
@@ -149,7 +149,7 @@ setPrice id price = do
         putStrLn "\nOcorreu um problema! A Empresa com este id não foi encontrada!"
         return False
 
-setTrendIndicator:: Int -> Char -> IO Bool
+setTrendIndicator:: Int -> String -> IO Bool
 setTrendIndicator id trendIndicator = do
     let company = getCompany id
     if (ident company) /= (-1) then do
@@ -214,7 +214,6 @@ setCol id col = do
     else do
         putStrLn "\nOcorreu um problema! A Empresa com este id não foi encontrada!"
         return False
-
 
 -- ======================================================
 updateRow :: Int -> Int -> IO()

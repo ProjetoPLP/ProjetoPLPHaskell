@@ -23,7 +23,7 @@ main = do
     setDeclaration 1 "Declaro"
     setCode 1 "codigo"
     setPrice 1 100
-    setTrendIndicator 1 '.'
+    setTrendIndicator 1 " "
     setMinPrice 1 100.00
     setMaxPrice 1 100.00
     setStartPrice 1 100.00
