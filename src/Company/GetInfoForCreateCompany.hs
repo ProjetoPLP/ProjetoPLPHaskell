@@ -1,5 +1,6 @@
 module Company.GetInfoForCreateCompany where
 import System.IO (hFlush, stdout) 
+import Data.Char (toUpper)
 
 getName :: IO String
 getName = do
@@ -43,4 +44,7 @@ getCode = do
   putStr "Digite o código da empresa: "
   hFlush stdout
   input <- getLine
-  return input
+  return (uppercaseString input)
+
+uppercaseString :: String -> String
+uppercaseString = map toUpper

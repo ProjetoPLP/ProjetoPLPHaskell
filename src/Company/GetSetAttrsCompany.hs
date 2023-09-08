@@ -1,6 +1,7 @@
 module Company.GetSetAttrsCompany where
 import Company.SaveCompany
 import Company.ModelCompany
+import Data.Char (toUpper)
 
 getName :: Int -> Maybe String
 getName id = do
@@ -46,6 +47,18 @@ getCode id = do
 
 getPrice :: Int -> Float
 getPrice id = price (getCompany id)
+
+getTrendIndicator :: Int -> Char
+getTrendIndicator id = trendIndicator (getCompany id)
+
+getMinPrice :: Int -> Float
+getMinPrice id = minPrice (getCompany id)
+
+getMaxPrice :: Int -> Float
+getMaxPrice id = maxPrice (getCompany id)
+
+getStartPrice :: Int -> Float
+getStartPrice id = startPrice (getCompany id)
 
 getRow :: Int -> Int
 getRow id = row (getCompany id)
@@ -118,7 +131,7 @@ setCode :: Int -> String -> IO Bool
 setCode id code = do
     let company = getCompany id
     if (ident company) /= (-1) then do
-        let newCompany = company { code = code }
+        let newCompany = company { code = (uppercaseString code) }
         editCompanyJSON "./Data/Companies.json" newCompany
         return True
     else do
@@ -136,6 +149,49 @@ setPrice id price = do
         putStrLn "\nOcorreu um problema! A Empresa com este id não foi encontrada!"
         return False
 
+setTrendIndicator:: Int -> Char -> IO Bool
+setTrendIndicator id trendIndicator = do
+    let company = getCompany id
+    if (ident company) /= (-1) then do
+        let newCompany = company { trendIndicator = trendIndicator }
+        editCompanyJSON "./Data/Companies.json" newCompany
+        return True
+    else do
+        putStrLn "\nOcorreu um problema! A Empresa com este id não foi encontrada!"
+        return False
+
+setMinPrice :: Int -> Float -> IO Bool
+setMinPrice id minPrice = do 
+    let company = getCompany id
+    if (ident company) /= (-1) then do
+        let newCompany = company { minPrice = minPrice }
+        editCompanyJSON "./Data/Companies.json" newCompany
+        return True
+    else do
+        putStrLn "\nOcorreu um problema! A Empresa com este id não foi encontrada!"
+        return False
+
+setMaxPrice :: Int -> Float -> IO Bool
+setMaxPrice id maxPrice = do 
+    let company = getCompany id
+    if (ident company) /= (-1) then do
+        let newCompany = company { maxPrice = maxPrice }
+        editCompanyJSON "./Data/Companies.json" newCompany
+        return True
+    else do
+        putStrLn "\nOcorreu um problema! A Empresa com este id não foi encontrada!"
+        return False
+
+setStartPrice :: Int -> Float -> IO Bool
+setStartPrice id startPrice = do 
+    let company = getCompany id
+    if (ident company) /= (-1) then do
+        let newCompany = company { startPrice = startPrice }
+        editCompanyJSON "./Data/Companies.json" newCompany
+        return True
+    else do
+        putStrLn "\nOcorreu um problema! A Empresa com este id não foi encontrada!"
+        return False
 
 setRow :: Int -> Int -> IO Bool
 setRow id row = do
@@ -191,3 +247,6 @@ formatCNPJ cnpj =
              (part4, part5) = splitAt 4 rest3
          in part1 ++ "." ++ part2 ++ "." ++ part3 ++ "/" ++ part4 ++ "-" ++ part5
        else "CNPJ inválido"
+
+uppercaseString :: String -> String
+uppercaseString = map toUpper

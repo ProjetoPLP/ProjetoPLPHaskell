@@ -9,16 +9,24 @@ main = do
     putStrLn (show(getDeclaration 1))
     putStrLn (show(getCode 1))
     putStrLn (show(getPrice 1))
+    putStrLn (show(getTrendIndicator 1))
+    putStrLn (show(getMinPrice 1))
+    putStrLn (show(getMaxPrice 1))
+    putStrLn (show(getStartPrice 1))
     putStrLn (show(getRow 1))
     putStrLn (show(getCol 1))
 
-    setName 1 "2"
-    setAge 1 2
-    setCNPJ 1 22222222222222
-    setActuation 1 "2"
-    setDeclaration 1 "2"
-    setCode 1 "2"
-    setPrice 1 2
+    setName 1 "Empresa2"
+    setAge 1 2024
+    setCNPJ 1 10101010101010
+    setActuation 1 "Algo"
+    setDeclaration 1 "Declaro"
+    setCode 1 "codigo"
+    setPrice 1 100
+    setTrendIndicator 1 '.'
+    setMinPrice 1 100.00
+    setMaxPrice 1 100.00
+    setStartPrice 1 100.00
     setRow 1 2
     setCol 1 2
     
@@ -29,5 +37,9 @@ main = do
     putStrLn (show(getDeclaration 1))
     putStrLn (show(getCode 1))
     putStrLn (show(getPrice 1))
+    putStrLn (show(getTrendIndicator 1))
+    putStrLn (show(getMinPrice 1))
+    putStrLn (show(getMaxPrice 1))
+    putStrLn (show(getStartPrice 1))
     putStrLn (show(getRow 1))
     putStrLn (show(getCol 1))
