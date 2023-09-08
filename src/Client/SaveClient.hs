@@ -117,7 +117,7 @@ saveLoginJSON client = do
   removeFile "./Data/Login.json"
   renameFile "./Data/ArquivoTemporario.json" "./Data/Login.json"
 
--- ====================== ExistLoginClient ================== --
+-- ====================== ExistClientLogged ================== --
 -- Entrada: None
 -- TipoDeSaida: Bool
 hasLoginDataInJSON :: IO Bool
@@ -125,6 +125,15 @@ hasLoginDataInJSON = do
   jsonContent <- B.readFile "./Data/Login.json"
   let result = decode jsonContent :: Maybe Client
   return $ isJust result
+
+-- ====================== LogoutClient ======================= --
+-- Entrada: None
+-- TipoDeSaida: None
+logoutClient :: IO()
+logoutClient = do
+    withFile "./Data/Login.json" WriteMode $ \handle -> do
+        let emptyContent = B.empty
+        B.hPut handle emptyContent
 
 -- ====================== GetClientDefault ================== --
 -- Entrada: client:Client
