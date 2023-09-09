@@ -4,7 +4,7 @@ import Control.Concurrent (threadDelay)
 import Data.Time.Clock (getCurrentTime, UTCTime, addUTCTime)
 
 import Clock.ClockUpdate
-import Clock.GetSetClock (addClock, getClock)
+import Clock.GetSetClock (addClock)
 
 import Company.GetSetAttrsCompany
 import Company.SaveCompany (getCompanyJSON)
@@ -17,7 +17,7 @@ callLoop :: Int -> Int -> IO ()
 callLoop id seg = do
     startTime <- getCurrentTime
     addClock seg
-    updateMatrixClock ("./Company/HomeBroker/homebroker" ++ show id ++ ".txt") getClock
+    updateMatrixClock ("./Company/HomeBroker/homebroker" ++ show id ++ ".txt")
     let endTime = addUTCTime (fromIntegral seg) startTime
     loop id endTime
 

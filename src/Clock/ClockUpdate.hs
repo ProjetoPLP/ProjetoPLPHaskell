@@ -1,11 +1,12 @@
 module Clock.ClockUpdate where
 
 import Utils.MatrixUtils (writeMatrixValue)
+import Clock.GetSetClock (getClock)
 
 -- Atualiza no arquivo .txt o relógio
-updateMatrixClock :: FilePath -> Int -> IO ()
-updateMatrixClock filePath num = do
-    let val = formatHour num
+updateMatrixClock :: FilePath -> IO ()
+updateMatrixClock filePath = do
+    let val = formatHour getClock
     writeMatrixValue filePath val 3 88
 
 

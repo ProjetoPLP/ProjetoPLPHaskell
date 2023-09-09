@@ -2,16 +2,17 @@ module MainMenu.MainMenuUpdate where
 import Utils.UpdateUtils
 import Utils.MatrixUtils (writeMatrixValue)
 import Clock.ClockUpdate (updateMatrixClock)
-import Clock.GetSetClock (getClock)
 import Client.GetSetAttrsClient (getCash)
 import Company.GetSetAttrsCompany (getCode, getIdent, getName, getPrice, getTrendIndicator)
 import Company.ModelCompany (Company)
 import Company.SaveCompany (getCompanyJSON)
 
 
+-- Atualiza todas as informações no Main Menu
 updateMainMenu :: Int -> IO ()
 updateMainMenu idClient = do
-    updateMatrixClock filePath getClock
+    resetMenu filePath "./Sprites/mainMenu_base.txt"
+    updateMatrixClock filePath
     updateMMCash filePath (getCash idClient)
     updateAllMMCompanyCode filePath jsonPath
     updateAllMMCompanyPrice filePath jsonPath
@@ -64,12 +65,13 @@ updateAllMMCompanyPrice filePath (x:xs) = do
 updateMMCompanyPrice :: FilePath -> Int -> Float -> String -> IO ()
 updateMMCompanyPrice filePath id num trendInd = do
     let pos = getCompanyPricePosition id
-        val = fillLeft (trendInd ++ show num) 6
+        val = fillLeft (trendInd ++ show num ++ "0") 7
     writeMatrixValue filePath val (head pos) (last pos - length val)
 
 
 getCompanyNameCol :: Int -> Int -> Int
 getCompanyNameCol len col = col - ((len - 1) `div` 2)
+
 
 getCompanyCodePosition :: Int -> [Int]
 getCompanyCodePosition id
@@ -86,6 +88,7 @@ getCompanyCodePosition id
     | id == 11 = [18, 74]
     | id == 12 = [23, 74]
 
+
 getCompanyNamePosition :: Int -> [Int]
 getCompanyNamePosition id
     | id == 1 = [9, 31]
@@ -101,17 +104,18 @@ getCompanyNamePosition id
     | id == 11 = [19, 81]
     | id == 12 = [24, 81]
 
+
 getCompanyPricePosition :: Int -> [Int]
 getCompanyPricePosition id
-    | id == 1 = [8, 38]
-    | id == 2 = [13, 38]
-    | id == 3 = [18, 38]
-    | id == 4 = [23, 38]
-    | id == 5 = [8, 63]
-    | id == 6 = [13, 63]
-    | id == 7 = [18, 63]
-    | id == 8 = [23, 63]
-    | id == 9 = [8, 88]
-    | id == 10 = [13, 88]
-    | id == 11 = [18, 88]
-    | id == 12 = [23, 88]
+    | id == 1 = [8, 39]
+    | id == 2 = [13, 39]
+    | id == 3 = [18, 39]
+    | id == 4 = [23, 39]
+    | id == 5 = [8, 64]
+    | id == 6 = [13, 64]
+    | id == 7 = [18, 64]
+    | id == 8 = [23, 64]
+    | id == 9 = [8, 89]
+    | id == 10 = [13, 89]
+    | id == 11 = [18, 89]
+    | id == 12 = [23, 89]

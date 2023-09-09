@@ -4,9 +4,9 @@ import Utils.MatrixUtils (writeMatrixValue)
 import Utils.UpdateUtils (fillLeft)
 
 updateHBStockPrice :: FilePath -> Float -> String -> IO ()
-updateHBStockPrice filePath num trendInd = do
-    let val = fillLeft (trendInd ++ show num) 3
-    writeMatrixValue filePath val 11 (94 - length val)
+updateHBStockPrice filePath price trendInd = do
+    let val = fillLeft (trendInd ++ show price ++ "0") 4
+    writeMatrixValue filePath val 11 (95 - length val)
 
 
 updateHBGraphCandle :: FilePath -> Int -> Int -> IO ()
@@ -23,27 +23,27 @@ cleanHBGraph filepath row = do
 
 
 updateHBStockMaxPrice :: FilePath -> Float -> IO ()
-updateHBStockMaxPrice filePath num = do
-    let val = fillLeft (show num) 4
-    writeMatrixValue filePath val 16 (94 - length val)
+updateHBStockMaxPrice filePath price = do
+    let val = fillLeft (show price ++ "0") 5
+    writeMatrixValue filePath val 16 (95 - length val)
 
 
 updateHBStockMinPrice :: FilePath -> Float -> IO ()
-updateHBStockMinPrice filePath num = do
-    let val = fillLeft (show num) 4
-    writeMatrixValue filePath val 18 (94 - length val)
+updateHBStockMinPrice filePath price = do
+    let val = fillLeft (show price ++ "0") 5
+    writeMatrixValue filePath val 18 (95 - length val)
 
 
 updateHBStockStartPrice :: FilePath -> Float -> IO ()
-updateHBStockStartPrice filePath num = do
-    let val = fillLeft (show num) 4
-    writeMatrixValue filePath val 14 (94 - length val)
+updateHBStockStartPrice filePath price = do
+    let val = fillLeft (show price ++ "0") 5
+    writeMatrixValue filePath val 14 (95 - length val)
 
 
 updateHBCash :: FilePath -> Float -> IO ()
-updateHBCash filePath num = do
-    let val = fillLeft (show num) 8
-    writeMatrixValue filePath val 3 (76 - length val)
+updateHBCash filePath cash = do
+    let val = fillLeft (show cash ++ "0") 9
+    writeMatrixValue filePath val 3 (77 - length val)
 
 updateHBOwnedStocks :: FilePath -> Int -> IO ()
 updateHBOwnedStocks filePath num = do
