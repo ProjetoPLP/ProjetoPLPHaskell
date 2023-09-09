@@ -87,3 +87,4 @@ verifyExistNameCompany nameCompany (head:tail) =
 -- Atribui novo id ao cliente
 giveIdForCompany :: Company -> Int -> Company
 giveIdForCompany client newId = client { ident = newId }
+

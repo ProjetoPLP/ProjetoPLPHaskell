@@ -281,3 +281,8 @@ removeCash id cashRemove = do
     let newCash = fromIntegral (round ((cash client - cashRemove) * 10)) / 10
     let newClient = client {cash = newCash}
     editClientJSON "../Data/Clients.json" newClient
+
+getID :: IO Int
+getID = do
+    result <- getClientLogged
+    return (ident result)

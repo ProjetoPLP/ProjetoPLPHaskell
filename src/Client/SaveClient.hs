@@ -143,16 +143,13 @@ logoutClient = do
 defaultClient :: Client
 defaultClient = Client (-1) "" 0 "" "" 0 0 0.00 False 19 52 []
 
--- ====================== ReadClient ======================== --
--- Entrada: Path:String
--- TipoDeSaida: Client
+-- Ler cliente logado
+getClientLogged :: IO Client
+getClientLogged = do
+    result <- readClientFromFile "./Data/Login.json"
+    case result of
+        Left _ -> return defaultClient
+        Right client -> return client
+
 readClientFromFile :: FilePath -> IO (Either String Client)
 readClientFromFile filePath = eitherDecodeFileStrict filePath
-
--- ====================== GetLogin ========================== --
--- Entrada: None
--- TipoDeSaida: Client / Nothing
-getClientLogado :: IO (Maybe Client)
-getClientLogado = do
-    result <- readClientFromFile "./Data/Login.json"
-    return (either (const Nothing) Just result)

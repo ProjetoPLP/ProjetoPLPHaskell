@@ -1,13 +1,13 @@
 import Client.RealizarLogin
 import Client.SaveClient
-
 import Client.ModelClient
+import Client.GetSetAttrsClient
 
 main :: IO()
 main = do
     -- result <- fazerLogin
 
-    client <- getClientLogado
+    client <- getID
 
     -- print (ident client)
 
