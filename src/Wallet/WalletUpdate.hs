@@ -14,7 +14,7 @@ import Company.SaveCompany (getCompanyJSON)
 -- Aualiza todas as informações da carteira de cliente
 updateClientWallet :: Int -> IO ()
 updateClientWallet idClient = do
-    resetMenu filePath "./Sprites/wallet_base.txt"
+    resetMenu filePath "./Sprites/Wallet/wallet_base.txt"
     updateMatrixClock filePath
     updateWLUserName filePath (Cli.getName idClient)
     updateWLCash filePath (getCash idClient)

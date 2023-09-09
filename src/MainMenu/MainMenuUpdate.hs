@@ -1,4 +1,5 @@
 module MainMenu.MainMenuUpdate where
+
 import Utils.UpdateUtils
 import Utils.MatrixUtils (writeMatrixValue)
 import Clock.ClockUpdate (updateMatrixClock)
@@ -11,7 +12,7 @@ import Company.SaveCompany (getCompanyJSON)
 -- Atualiza todas as informações no Main Menu
 updateMainMenu :: Int -> IO ()
 updateMainMenu idClient = do
-    resetMenu filePath "./Sprites/mainMenu_base.txt"
+    resetMenu filePath "./Sprites/MainMenu/mainMenu_base.txt"
     updateMatrixClock filePath
     updateMMCash filePath (getCash idClient)
     updateAllMMCompanyCode filePath jsonPath

@@ -11,7 +11,7 @@ import Company.GetSetAttrsCompany (getCode, getName, getActuation, getPrice, get
 -- Atualiza toddas as informações de uma empresa em Company Description
 updateCompanyDescription :: Int -> Int -> IO ()
 updateCompanyDescription idClient idComp = do
-    resetMenu filePath "./Sprites/companyDescription_base.txt"
+    resetMenu filePath "./Sprites/MainMenu/companyDescription_base.txt"
     updateMatrixClock filePath
     updateCDCash filePath (getCash idClient)
     updateCDCompanyCode filePath (getCode idComp)
