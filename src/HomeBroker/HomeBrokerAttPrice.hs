@@ -26,7 +26,7 @@ getNewPrice oldPrice = do
     if last indexVar == 1 then return (format (([0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0] !! head indexVar) + oldPrice))
     else if last indexVar == (-1) then return (format (([-0.1, -0.2, -0.3, -0.4, -0.5, -0.6, -0.7, -0.8, -0.9, -1.0] !! head indexVar) + oldPrice))
     else return oldPrice
-    where 
+    where
         format :: Float -> Float
         format newPrice = fromIntegral (round (newPrice * 10 )) / 10
 
@@ -60,7 +60,7 @@ attCompanyPrice id = do
 attAllCompanyPrice :: Int -> [Company] -> IO ()
 attAllCompanyPrice _ [] = return ()
 attAllCompanyPrice id (x:xs) = do
-    if (getIdent x) == id then do
+    if getIdent x == id then do
         attAllCompanyPrice id xs
     else do
         attCompanyPrice (getIdent x)

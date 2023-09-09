@@ -17,8 +17,7 @@ callLoop :: Int -> Int -> IO ()
 callLoop id seg = do
     startTime <- getCurrentTime
     addClock seg
-    newClockHour <- getClock
-    updateMatrixClock ("./Company/HomeBroker/homebroker" ++ show id ++ ".txt") newClockHour
+    updateMatrixClock ("./Company/HomeBroker/homebroker" ++ show id ++ ".txt") getClock
     let endTime = addUTCTime (fromIntegral seg) startTime
     loop id endTime
 

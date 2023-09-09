@@ -5,9 +5,12 @@ import Utils.UpdateUtils (fillLeft, fillRight)
 
 import Client.GetSetAttrsClient
 
+import Clock.ClockUpdate
+import Clock.GetSetClock ( getClock )
+
 updateClientWallet :: Int -> IO ()
 updateClientWallet idClient = do
-    
+    updateMatrixClock path getClock
     updateWLUserName path (getName idClient)
     updateWLCash path (getCash idClient)
     updateWLPatrimony path (getPatrimony idClient)
