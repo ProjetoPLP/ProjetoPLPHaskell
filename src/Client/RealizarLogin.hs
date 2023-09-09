@@ -35,7 +35,7 @@ searchAndGetClientByEmail :: String -> Client
 searchAndGetClientByEmail email = verifingIfExistEmailClient email (getClientJSON "./Data/Clients.json")
 
 verifingIfExistEmailClient :: String -> [Client] -> Client
-verifingIfExistEmailClient _ [] = Client (-1) "" 0 0 "" 0 0 0.00 False 19 52
+verifingIfExistEmailClient _ [] = Client (-1) "" 0 "" "" 0 0 0.00 False 19 52 []
 verifingIfExistEmailClient emailClient (head:tail) = 
   if emailClient == (email head) then head
   else verifingIfExistEmailClient emailClient tail
