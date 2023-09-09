@@ -10,6 +10,8 @@ updateClientWallet idClient = do
     updateWLUserName path (getName idClient)
     updateWLCash path (getCash idClient)
     updateWLPatrimony path (getPatrimony idClient)
+    updateWLUserName path (getName idClient)
+    updateWLUserCPF path (getCPF idClient)
     where path = "./Client/Wallet/wallet" ++ show idClient ++ ".txt"
 
 updateWLCash :: FilePath -> Float -> IO ()

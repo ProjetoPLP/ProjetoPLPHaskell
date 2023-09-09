@@ -7,12 +7,8 @@ import Client.ModelClient
 -- ====================== getNameOfClient ============================ --
 -- Entrada: id: Int
 -- TipoDeSaida: String
-getName :: Int -> Maybe String
-getName id = do
-  let clientName = name (getClient id)
-  if clientName == ""
-    then Nothing
-    else Just clientName
+getName :: Int -> String
+getName id = name (getClient id)
 
 -- ====================== getNameOfClient ============================ --
 -- Entrada: id: Int
@@ -27,12 +23,8 @@ getAge id = do
 -- ====================== getCPFOfClient ============================= --
 -- Entrada: id: Int
 -- TipoDeSaida: String
-getCPF :: Int -> Maybe String
-getCPF id = do
-  let clientCPF = cpf (getClient id)
-  if clientCPF == 0
-    then Nothing
-    else Just (formatCPF(clientCPF))
+getCPF :: Int -> String
+getCPF id = formatCPF (cpf (getClient id))
 
 -- ====================== getEmailOfClient =========================== --
 -- Entrada: id: Int

@@ -12,7 +12,7 @@ main = do
 
     -- updateWLOwnedStock "./Client/Wallet/wallet2.txt" 10 99999
 
-    updateAllWallet 1
+    updateClientWallet 1
 
     printMatrix "./Client/Wallet/wallet1.txt"
 
