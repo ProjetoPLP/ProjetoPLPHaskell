@@ -6,7 +6,7 @@ data Company = Company
   { ident :: Int,
     name :: String,
     age :: Int,
-    cnpj :: Int,
+    cnpj :: String,
     actuation :: String,
     declaration :: String,
     code :: String,
@@ -20,7 +20,7 @@ data Company = Company
   }
   deriving (Show, Generic)
 
-createCompany :: Int -> String -> Int -> Int -> String -> String -> String -> Float -> String -> Float -> Float -> Float -> Company
+createCompany :: Int -> String -> Int -> String -> String -> String -> String -> Float -> String -> Float -> Float -> Float -> Company
 createCompany id_ name age cnpj actuation declaration code price trendIndicator minPrice maxPrice startPrice =
   Company
     { ident = id_,

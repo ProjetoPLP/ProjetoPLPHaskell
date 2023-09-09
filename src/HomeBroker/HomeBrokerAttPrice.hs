@@ -40,9 +40,10 @@ attCompanyPriceGraph id = do
     setPrice id newPrice
     attTrendIndicator id oldPrice newPrice
     attCompanyLineRow id oldPrice newPrice
-    updateHBStockPrice ("./Company/HomeBroker/homebroker" ++ show id ++ ".txt") newPrice (getTrendIndicator id)
-    updateHBGraphCandle ("./Company/HomeBroker/homebroker" ++ show id ++ ".txt") (getRow id) (getCol id)
-    printMatrix ("./Company/HomeBroker/homebroker" ++ show id ++ ".txt")
+    updateHBStockPrice path newPrice (getTrendIndicator id)
+    updateHBGraphCandle path (getRow id) (getCol id)
+    printMatrix path
+    where path = "./Company/HomeBroker/homebroker" ++ show id ++ ".txt"
 
 attCompanyPrice :: Int -> IO ()
 attCompanyPrice id = do
@@ -52,8 +53,9 @@ attCompanyPrice id = do
     setPrice id newPrice
     attTrendIndicator id oldPrice newPrice
     attCompanyLineRow id oldPrice newPrice
-    updateHBStockPrice ("./Company/HomeBroker/homebroker" ++ show id ++ ".txt") newPrice (getTrendIndicator id)
-    updateHBGraphCandle ("./Company/HomeBroker/homebroker" ++ show id ++ ".txt") (getRow id) (getCol id)
+    updateHBStockPrice path newPrice (getTrendIndicator id)
+    updateHBGraphCandle path (getRow id) (getCol id)
+    where path = "./Company/HomeBroker/homebroker" ++ show id ++ ".txt"
 
 attAllCompanyPrice :: Int -> [Company] -> IO ()
 attAllCompanyPrice _ [] = return ()

@@ -12,4 +12,4 @@ import HomeBroker.HomeBrokerLoopLogic (callLoop)
 
 main :: IO ()
 main = do
-    callLoop 1 5
+    callLoop 1 20

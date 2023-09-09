@@ -20,7 +20,7 @@ getCompany id = getCompaniesByID id (getCompanyJSON "./Data/Companies.json")
 
 -- Pega uma empresa pelo ID
 getCompaniesByID :: Int -> [Company] -> Company
-getCompaniesByID _ [] = Company (-1) "" 0 0 "" "" "" 0.00 " " 0.00 0.00 0.00 0 0
+getCompaniesByID _ [] = Company (-1) "" 0 "" "" "" "" 0.00 " " 0.00 0.00 0.00 0 0
 getCompaniesByID identifierS (x:xs)
  | (ident x) == identifierS = x
  | otherwise = getCompaniesByID identifierS xs

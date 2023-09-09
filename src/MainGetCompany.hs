@@ -18,7 +18,7 @@ main = do
 
     setName 1 "Empresa2"
     setAge 1 2024
-    setCNPJ 1 10101010101010
+    setCNPJ 1 "10101010101010"
     setActuation 1 "Algo"
     setDeclaration 1 "Declaro"
     setCode 1 "codigo"
