@@ -263,3 +263,19 @@ addCash id cashAdd = do
     let newCash = fromIntegral (round ((cash client + cashAdd) * 10)) / 10
     let newClient = client {cash = newCash}
     editClientJSON "../Data/Clients.json" newClient
+
+getAllAssetsInCompany :: Int -> Int
+getAllAssetsInCompany idCompany = getAssetsClientInCompany (getClientJSON "./Data/Clients.json") idCompany
+
+getAssetsClientInCompany :: [Client] -> Int -> Int
+getAssetsClientInCompany [] _= 0
+getAssetsClientInCompany (x:xs) idCompany = (verifyAssetInClient x idCompany) + (getAssetsClientInCompany xs idCompany)
+
+verifyAssetInClient :: Client -> Int -> Int
+verifyAssetInClient client idCompany = getAssetValue (allAssets client) idCompany
+
+getAssetValue :: [Asset] -> Int -> Int
+getAssetValue [] _ = 0
+getAssetValue (x:xs) idCompany =
+    if (companyID x) == idCompany then (qtd x)
+    else getAssetValue xs idCompany
