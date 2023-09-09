@@ -170,16 +170,14 @@ setPassword id password = do
 -- ====================== setCashOfClient ========================== --
 -- Entrada: id: Int / cash: Float
 -- TipoDeSaida: Bool
-setCash :: Int -> Float -> IO Bool
+setCash :: Int -> Float -> IO ()
 setCash id cash = do
     let client = getClient id
     if (ident client) /= -1 then do
         let newClient = client { cash = cash }
         editClientJSON "./Data/Clients.json" newClient
-        return True
     else do
         putStrLn "\nOcorreu um problema! O Cliente com este id não foi encontrado!"
-        return False
 
 -- ====================== setPatrimonyOfClient ========================== --
 -- Entrada: id: Int / patrimony: Float
@@ -266,12 +264,20 @@ formatCPF cpf =
          in part1 ++ "." ++ part2 ++ "." ++ part3 ++ "-" ++ part4
        else "CPF inválido"
 
--- ====================== addCashClient: Remover em breve ===== --
+-- ====================== addCashClient ===== --
 -- Entrada: id: Int / cash: Float
 -- TipoDeSaida: None
-addCash :: Int -> Float -> IO()
+addCash :: Int -> Float -> IO ()
 addCash id cashAdd = do
     let client = getClientsByID id (getClientJSON "./Data/Clients.json")
     let newCash = fromIntegral (round ((cash client + cashAdd) * 10)) / 10
+    let newClient = client {cash = newCash}
+    editClientJSON "../Data/Clients.json" newClient
+
+
+removeCash :: Int -> Float -> IO ()
+removeCash id cashRemove = do
+    let client = getClientsByID id (getClientJSON "./Data/Clients.json")
+    let newCash = fromIntegral (round ((cash client - cashRemove) * 10)) / 10
     let newClient = client {cash = newCash}
     editClientJSON "../Data/Clients.json" newClient

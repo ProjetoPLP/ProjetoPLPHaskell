@@ -8,7 +8,7 @@ import Client.GetSetAttrsClient (getCash)
 import Company.GetSetAttrsCompany (getCode, getName, getActuation, getPrice, getTrendIndicator, getDeclaration, getAge, getCNPJ)
 
 
--- Atualiza toddas as informações de uma empresa em Company Description
+-- Atualiza todas as informações de uma empresa em Company Description
 updateCompanyDescription :: Int -> Int -> IO ()
 updateCompanyDescription idClient idComp = do
     resetMenu filePath "./Sprites/MainMenu/companyDescription_base.txt"

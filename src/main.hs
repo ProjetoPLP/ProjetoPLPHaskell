@@ -32,6 +32,7 @@ menuPrincipal = do
    respostaUser <- getLine
    if respostaUser == "W" ||respostaUser == "w"then
       walletUser
+      -- updateClientWallet
    else if respostaUser == "S" ||respostaUser == "s"then
       menuStart
    else do

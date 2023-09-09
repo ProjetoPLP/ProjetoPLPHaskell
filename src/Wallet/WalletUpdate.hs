@@ -17,7 +17,6 @@ updateClientWallet :: Int -> IO ()
 updateClientWallet idClient = do
     resetMenu filePath "./Sprites/Wallet/wallet_base.txt"
     updateMatrixClock filePath
-    updateWLUserName filePath (Cli.getName idClient)
     updateWLCash filePath (getCash idClient)
     updateWLPatrimony filePath (getPatrimony idClient)
     updateWLUserName filePath (Cli.getName idClient)
@@ -27,6 +26,30 @@ updateClientWallet idClient = do
     updateAllWLOwnedStocks filePath (getAllAssets idClient)
     where filePath = "./Client/Wallet/wallet" ++ show idClient ++ ".txt"
           jsonPath = getCompanyJSON "./Data/Companies.json"
+
+
+-- Aualiza todas as informações no menu de depósito
+updateWalletDeposito :: Int -> IO ()
+updateWalletDeposito idClient = do
+    resetMenu filePath "./Sprites/Wallet/walletDeposito_base.txt"
+    updateMatrixClock filePath
+    updateWLCash filePath (getCash idClient)
+    updateWLPatrimony filePath (getPatrimony idClient)
+    updateWLUserName filePath (Cli.getName idClient)
+    updateWLUserCPF filePath (getCPF idClient)
+    where filePath = "./Wallet/DepositoSaque/walletDeposito.txt"
+
+
+-- Aualiza todas as informações no menu de saque
+updateWalletSaque :: Int -> IO ()
+updateWalletSaque idClient = do
+    resetMenu filePath "./Sprites/Wallet/walletSaque_base.txt"
+    updateMatrixClock filePath
+    updateWLCash filePath (getCash idClient)
+    updateWLPatrimony filePath (getPatrimony idClient)
+    updateWLUserName filePath (Cli.getName idClient)
+    updateWLUserCPF filePath (getCPF idClient)
+    where filePath = "./Wallet/DepositoSaque/walletSaque.txt"
 
 
 updateWLCash :: FilePath -> Float -> IO ()

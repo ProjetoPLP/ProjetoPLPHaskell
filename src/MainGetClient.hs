@@ -17,7 +17,7 @@ main = do
     -- putStrLn (show (getCol 1))
     -- putStrLn (show (getAllAssets 1))
 
-    -- addAsset 1 4 7
+    addAsset 1 1 7
     print (getAssetsInCompany (getAllAssets 1) 3)
     -- setName 1 "ok"
     -- setAge 1 2
