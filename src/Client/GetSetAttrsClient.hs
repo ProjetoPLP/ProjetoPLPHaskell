@@ -2,8 +2,6 @@ module Client.GetSetAttrsClient where
 import Client.SaveClient
 import Client.ModelClient
 
--- ================================ GetAttributeClient ============================= --
-
 -- ====================== getNameOfClient ============================ --
 -- Entrada: id: Int
 -- TipoDeSaida: String
@@ -13,12 +11,8 @@ getName id = name (getClient id)
 -- ====================== getNameOfClient ============================ --
 -- Entrada: id: Int
 -- TipoDeSaida: Int
-getAge :: Int -> Maybe Int
-getAge id = do
-  let clientAge = age (getClient id)
-  if clientAge == 0
-    then Nothing
-    else Just clientAge
+getAge :: Int -> Int
+getAge id = age (getClient id)
 
 -- ====================== getCPFOfClient ============================= --
 -- Entrada: id: Int
@@ -29,22 +23,14 @@ getCPF id = formatCPF (cpf (getClient id))
 -- ====================== getEmailOfClient =========================== --
 -- Entrada: id: Int
 -- TipoDeSaida: String
-getEmail :: Int -> Maybe String
-getEmail id = do
-  let clientEmail = email (getClient id)
-  if clientEmail == ""
-    then Nothing
-    else Just clientEmail
+getEmail :: Int -> String
+getEmail id = email (getClient id)
 
 -- ====================== getPasswordOfClient ======================== --
 -- Entrada: id: Int
 -- TipoDeSaida: Int
-getPassword :: Int -> Maybe Int
-getPassword id = do
-  let clientPassword = password (getClient id)
-  if clientPassword == 0
-    then Nothing
-    else Just clientPassword
+getPassword :: Int -> Int
+getPassword id = password (getClient id)
 
 -- ====================== getCashOfClient ============================ --
 -- Entrada: id: Int
@@ -82,22 +68,23 @@ getCol id = col (getClient id)
 getAllAssets :: Int -> [Asset]
 getAllAssets id = allAssets (getClient id)
 
--- ================================ SetAttributeClient ============================= --
-
 -- ====================== setNameOfClient ============================ --
 -- Entrada: id: Int / name: String
 -- TipoDeSaida: Bool
 setName :: Int -> String -> IO Bool
 setName id name = do 
     let client = getClient id
-    if (ident client) /= -1 then do
-        let newClient = client { name = name }
-        editClientJSON "./Data/Clients.json" newClient
-        return True
+    if (length name) <= 18 then do
+        if (ident client) /= -1 then do
+            let newClient = client { name = name }
+            editClientJSON "./Data/Clients.json" newClient
+            return True
+        else do
+            putStrLn "Cliente não existente."
+            return False
     else do
-        putStrLn "Cliente não existente."
+        putStrLn "\nOcorreu um problema! O nome do cliente deve ter no máximo 18 caracteres."
         return False
-
 -- ====================== setAgeOfClient ============================ --
 -- Entrada: id: Int / age: Int
 -- TipoDeSaida: Bool
@@ -119,10 +106,10 @@ setAge id age = do
 -- ====================== setCPFOfClient =========================== --
 -- Entrada: id: Int / cpf: Int
 -- TipoDeSaida: Bool
-setCPF :: Int -> Int -> IO Bool
+setCPF :: Int -> String -> IO Bool
 setCPF id cpf = do
     let client = getClient id
-    if (length (show cpf) == 11) then do
+    if (length cpf) == 11 then do
         if (ident client) /= -1 then do
             let newClient = client { cpf = cpf }
             editClientJSON "./Data/Clients.json" newClient
@@ -255,10 +242,10 @@ setAllAssets id allAssets = do
 -- ====================== formatCPF =========================== --
 -- Entrada: cpf: Int
 -- TipoDeSaida: Saida
-formatCPF :: Int -> String
+formatCPF :: String -> String
 formatCPF cpf =
-  let cpfStr = show cpf
-  in if length cpfStr == 11
+  let cpfStr = cpf
+  in if (length cpfStr) == 11
        then
          let part1 = take 3 cpfStr
              part2 = take 3 (drop 3 cpfStr)

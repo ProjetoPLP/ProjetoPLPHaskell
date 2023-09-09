@@ -10,7 +10,7 @@ cadastrarCompany = do
     if (length (name company) <= 18) then
         if (length (actuation company) <= 15) then do
             if (length (declaration company) <= 86) then do
-                if (length (show (cnpj company))) == 14 then do
+                if (length (cnpj company)) == 14 then do
                     if not (existCompanyByName (name company)) then do
                         if length (code company) == 5 then do
                             saveCompanyJSON "./Data/Companies.json" company
@@ -26,10 +26,10 @@ cadastrarCompany = do
                     putStrLn "\nOcorreu um problema! O CNPJ não contém 14 digitos."
                     return False
             else do
-                    putStrLn "\nOcorreu um problema! A área de atuação da Empresa deve ter no máximo 86 caracteres!"
-                    return False
+                putStrLn "\nOcorreu um problema! A área de atuação da Empresa deve ter no máximo 86 caracteres!"
+                return False
         else do
-            putStrLn "\nOcorreu um problema! A área de atuação da Empresa deve ter no máximo 15 caracteres!"
+            putStrLn "\nOcorreu um problema! A declaração da Empresa deve ter no máximo 15 caracteres!"
             return False
     else do
         putStrLn "\nOcorreu um problema! O nome da empresa deve ter no máximo 18 caracteres."

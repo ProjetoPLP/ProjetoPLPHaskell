@@ -6,7 +6,7 @@ data Client = Client
   { ident :: Int,
     name :: String,
     age :: Int,
-    cpf :: Int,
+    cpf :: String,
     email :: String,
     password :: Int,
     cash :: Float,
@@ -23,10 +23,10 @@ data Asset = Asset {
   qtd :: Int
 } deriving (Show, Generic)
 
-createClient :: Int -> String -> Int -> Int -> String -> Int -> Float -> Client
-createClient id name age cpf email password cash =
+createClient :: Int -> String -> Int -> String -> String -> Int -> Float -> Client
+createClient id_ name age cpf email password cash =
   Client
-    { ident = id,
+    { ident = id_,
       name = name,
       age = age,
       cpf = cpf,

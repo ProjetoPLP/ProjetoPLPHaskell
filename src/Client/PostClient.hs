@@ -13,20 +13,30 @@ addAsset clientID companyID qtd = do
     if (ident client) /= -1 then do    
         let recoveryAssetsClient = allAssets client
 
-        if (existAssetInClient (allAssets client) companyID) then do
-            let newExistentAssets = addExistentAssetInCompany recoveryAssetsClient companyID qtd
-            setAllAssets clientID newExistentAssets
-            putStrLn ("\nOlá" ++ (name client) ++ "! A compra da ação foi concluída e incrementada!")
-            return True
+        if qtd >= 0 then do
+            if (existAssetInClient (allAssets client) companyID) then do
+                let newExistentAssets = addExistentAssetInCompany recoveryAssetsClient companyID qtd
+                setAllAssets clientID newExistentAssets
+                putStrLn ("\nOlá" ++ (name client) ++ "! A compra da ação foi concluída e incrementada!")
+                return True
 
+            else do
+                let newAllAssets = [(createAsset companyID qtd)] ++ recoveryAssetsClient
+                if (length newAllAssets) <= 11 then do
+                    setAllAssets clientID newAllAssets
+                    putStrLn ("\nOlá " ++ (name client) ++ "! A compra da ação foi concluída!")
+                    return True
+                else do
+                    putStrLn "\nOcorreu um  probelama! Quantidade de ações excedida."
+                    return False
         else do
-            let newAllAssets = [(createAsset companyID qtd)] ++ recoveryAssetsClient
-            if (length newAllAssets) <= 11 then do
-                setAllAssets clientID newAllAssets
-                putStrLn ("\nOlá " ++ (name client) ++ "! A compra da ação foi concluída!")
+            if (existAssetInClient (allAssets client) companyID) then do
+                let newExistentAssets = addExistentAssetInCompany recoveryAssetsClient companyID qtd
+                let removed = removeAssetsNegative newExistentAssets
+                setAllAssets clientID removed
                 return True
             else do
-                putStrLn "\nOcorreu um  probelama! Quantidade de ações excedida."
+                putStrLn "\nOcorreu um problema! O Cliente com este id não foi encontrado!"
                 return False
     else do
         putStrLn "\nOcorreu um problema! O Cliente com este id não foi encontrado!"
@@ -50,3 +60,12 @@ addQtd asset idCompany qtd_ =
         asset { qtd = (qtd asset) + qtd_ }
     else
         asset
+
+removeAssetsNegative :: [Asset] -> [Asset]
+removeAssetsNegative [] = []
+removeAssetsNegative (x:xs) = (remove x) ++ removeAssetsNegative xs
+
+remove :: Asset -> [Asset]
+remove asset = 
+    if (qtd asset) <= 0 then []
+    else [asset]
