@@ -31,9 +31,9 @@ getNewPrice oldPrice = do
         format newPrice = fromIntegral (round (newPrice * 10 )) / 10
 
 
--- Atualiza em uma empresa, a partir do seu ID, o preço e o gráfico
-attCompanyPriceGraph :: Int -> IO ()
-attCompanyPriceGraph id = do
+-- Atualiza na empresa atual, a partir do seu ID, o preço e o gráfico
+attCurrentCompanyPriceGraph :: Int -> IO ()
+attCurrentCompanyPriceGraph id = do
     let oldPrice = getPrice id
     newPrice <- getNewPrice oldPrice
 
@@ -45,8 +45,10 @@ attCompanyPriceGraph id = do
     printMatrix path
     where path = "./Company/HomeBroker/homebroker" ++ show id ++ ".txt"
 
-attCompanyPrice :: Int -> IO ()
-attCompanyPrice id = do
+
+-- Atualiza em uma empresa qualquer, a partir do seu ID, o preço e o gráfico
+attOthersCompanyPriceGraph :: Int -> IO ()
+attOthersCompanyPriceGraph id = do
     let oldPrice = getPrice id
     newPrice <- getNewPrice oldPrice
 
@@ -57,11 +59,13 @@ attCompanyPrice id = do
     updateHBGraphCandle path (getRow id) (getCol id)
     where path = "./Company/HomeBroker/homebroker" ++ show id ++ ".txt"
 
-attAllCompanyPrice :: Int -> [Company] -> IO ()
-attAllCompanyPrice _ [] = return ()
-attAllCompanyPrice id (x:xs) = do
+
+-- Atualiza o preço e o gráfico em todas as empresas cadastradas
+attAllCompanyPriceGraph :: Int -> [Company] -> IO ()
+attAllCompanyPriceGraph _ [] = return ()
+attAllCompanyPriceGraph id (x:xs) = do
     if getIdent x == id then do
-        attAllCompanyPrice id xs
+        attAllCompanyPriceGraph id xs
     else do
-        attCompanyPrice (getIdent x)
-        attAllCompanyPrice id xs
+        attOthersCompanyPriceGraph (getIdent x)
+        attAllCompanyPriceGraph id xs

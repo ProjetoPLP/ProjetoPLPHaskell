@@ -12,7 +12,7 @@ import Company.SaveCompany (getCompanyJSON)
 import Client.ModelClient (Asset (companyID, qtd))
 
 
--- Aualiza todas as informações da carteira de cliente
+-- Aualiza todas as informações da carteira do cliente
 updateClientWallet :: Int -> IO ()
 updateClientWallet idClient = do
     resetMenu filePath "./Sprites/Wallet/wallet_base.txt"
@@ -27,6 +27,7 @@ updateClientWallet idClient = do
     updateAllWLOwnedStocks filePath (getAllAssets idClient)
     where filePath = "./Client/Wallet/wallet" ++ show idClient ++ ".txt"
           jsonPath = getCompanyJSON "./Data/Companies.json"
+
 
 updateWLCash :: FilePath -> Float -> IO ()
 updateWLCash filePath cash = do
@@ -68,7 +69,6 @@ updateWLCompanyCode filePath id code = do
     writeMatrixValue filePath code (head pos) (last pos)
 
 
-
 updateAllWLCompanyPrice :: FilePath -> [Company] -> IO ()
 updateAllWLCompanyPrice filePath [] = return ()
 updateAllWLCompanyPrice filePath (x:xs) = do
@@ -83,6 +83,7 @@ updateWLCompanyPrice filePath id price trendInd = do
         val = fillLeft (trendInd ++ show price ++ "0") 7
     writeMatrixValue filePath val (head pos) (last pos - length val)
 
+
 updateAllWLOwnedStocks :: FilePath -> [Asset] -> IO ()
 updateAllWLOwnedStocks filePath [] = return ()
 updateAllWLOwnedStocks filePath (x:xs) = do
@@ -90,6 +91,7 @@ updateAllWLOwnedStocks filePath (x:xs) = do
         qtd_ = qtd x
     updateWLOwnedStocks filePath id qtd_
     updateAllWLOwnedStocks filePath xs
+
 
 updateWLOwnedStocks :: FilePath -> Int -> Int -> IO ()
 updateWLOwnedStocks filePath id num = do

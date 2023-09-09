@@ -69,10 +69,12 @@ getAllAssets :: Int -> [Asset]
 getAllAssets id = allAssets (getClient id)
 
 
--- getQtdAssetsInCompany :: Int -> Int -> Int
--- getQtdAssetsInCompany idClient = getAssetsInCompany (getAllAssets idClient)
+-- Retorna a quantidade de ações que um cliente X possui em uma empresa Y
+getQtdAssetsInCompany :: Int -> Int -> Int
+getQtdAssetsInCompany idClient = getAssetsInCompany (getAllAssets idClient)
 
 
+-- Retorna a quantidade de ações possuídas em uma empresa, usado em recursões
 getAssetsInCompany :: [Asset] -> Int -> Int
 getAssetsInCompany [] idComp = 0
 getAssetsInCompany (x:xs) idComp =
