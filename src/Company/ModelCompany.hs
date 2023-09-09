@@ -20,8 +20,8 @@ data Company = Company
   }
   deriving (Show, Generic)
 
-createCompany :: Int -> String -> Int -> String -> String -> String -> String -> Float -> String -> Float -> Float -> Float -> Company
-createCompany id_ name age cnpj actuation declaration code price trendIndicator minPrice maxPrice startPrice =
+createCompany :: Int -> String -> Int -> String -> String -> String -> String -> Float -> String -> Company
+createCompany id_ name age cnpj actuation declaration code price trendIndicator =
   Company
     { ident = id_,
       name = name,
@@ -34,7 +34,7 @@ createCompany id_ name age cnpj actuation declaration code price trendIndicator 
       trendIndicator = trendIndicator,
       row = 20,
       col = 3,
-      minPrice = minPrice,
-      maxPrice = maxPrice,
-      startPrice = startPrice
+      minPrice = price,
+      maxPrice = price,
+      startPrice = price
     }

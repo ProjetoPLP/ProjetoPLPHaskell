@@ -18,7 +18,7 @@ getAge = do
 
 getCPF :: IO String
 getCPF = do
-  putStr "Digite o seu CPF (apenas números): "
+  putStr "Digite o seu CPF (apenas números, 11 dígitos): "
   hFlush stdout
   input <- getLine
   return input

@@ -153,27 +153,23 @@ setTrendIndicator id trendIndicator = do
     else
         putStrLn "\nOcorreu um problema! A Empresa com este id não foi encontrada!"
 
-setMinPrice :: Int -> Float -> IO Bool
+setMinPrice :: Int -> Float -> IO ()
 setMinPrice id minPrice = do 
     let company = getCompany id
     if (ident company) /= (-1) then do
         let newCompany = company { minPrice = minPrice }
         editCompanyJSON "./Data/Companies.json" newCompany
-        return True
     else do
         putStrLn "\nOcorreu um problema! A Empresa com este id não foi encontrada!"
-        return False
 
-setMaxPrice :: Int -> Float -> IO Bool
+setMaxPrice :: Int -> Float -> IO ()
 setMaxPrice id maxPrice = do 
     let company = getCompany id
     if (ident company) /= (-1) then do
         let newCompany = company { maxPrice = maxPrice }
         editCompanyJSON "./Data/Companies.json" newCompany
-        return True
     else do
         putStrLn "\nOcorreu um problema! A Empresa com este id não foi encontrada!"
-        return False
 
 setStartPrice :: Int -> Float -> IO Bool
 setStartPrice id startPrice = do 

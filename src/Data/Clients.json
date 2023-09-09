@@ -1,1 +1,1 @@
-[{"age":21,"allAssets":[{"companyID":4,"qtd":7},{"companyID":1,"qtd":8},{"companyID":2,"qtd":4},{"companyID":3,"qtd":3}],"canDeposit":false,"cash":100,"col":51,"cpf":"08788733517","email":"daniel.soares@gmail.com","ident":1,"name":"Daniel Mantovani","password":12345,"patrimony":0,"row":19}]
+[{"age":21,"allAssets":[],"canDeposit":false,"cash":100,"col":51,"cpf":"08788733517","email":"daniel.soares@gmail.com","ident":1,"name":"Daniel Mantovani","password":12345,"patrimony":0,"row":19}]

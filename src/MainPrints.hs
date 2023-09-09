@@ -14,8 +14,8 @@ main = do
     -- updateClientWallet 1
     -- printMatrix "./Client/Wallet/wallet1.txt"
 
-    -- updateCompanyDescription 1 5
-    -- printMatrix "./MainMenu/CompanyDescription/companyDescription.txt"
+    updateCompanyDescription 1 1
+    printMatrix "./MainMenu/CompanyDescription/companyDescription.txt"
 
-    updateHomeBroker 1 4
-    printMatrix "./Company/HomeBroker/homebroker4.txt"
+    -- updateHomeBroker 1 2
+    -- printMatrix "./Company/HomeBroker/homebroker2.txt"
