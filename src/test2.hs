@@ -7,9 +7,9 @@ import Utils.MatrixUtils (printMatrix)
 
 import Company.GetSetAttrsCompany
 import Clock.ClockUpdate
-import HomeBroker.HomeBrokerGraphUpdate
+import HomeBroker.HomeBrokerLoopLogic (callLoop)
 
 
 main :: IO ()
 main = do
-    attStockPriceFor 1 10
+    callLoop 1 5

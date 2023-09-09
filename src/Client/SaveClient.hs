@@ -59,7 +59,7 @@ saveClientJSON jsonFilePath client = do
   let newID = length clientList + 1
   let clientsList = clientList ++ [giveIdForClient client (newID)]
 
-  textoContents <- readFile "./Sprites/wallet.txt"
+  textoContents <- readFile "./Sprites/Wallet/wallet_base.txt"
   let walletFileName = "./Client/Wallet/wallet" ++ (show newID) ++ ".txt"
   appendFile walletFileName textoContents
 

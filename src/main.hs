@@ -9,7 +9,7 @@ import Control.Concurrent (threadDelay)
 
 walletUser:: IO()
 walletUser = do
-   printMatrix "./Sprites/wallet.txt"
+   printMatrix "./Sprites/Wallet/wallet_base.txt"
 
 ehcadastrado:: Bool -> IO()
 ehcadastrado result = do
@@ -22,16 +22,17 @@ ehcadastrado result = do
 
 cadastroRealizado :: IO()
 cadastroRealizado = do
-   printMatrix "./Sprites/sign-in_menu_cadastro_realizado.txt"
+   printMatrix "./Sprites/StartMenu/sign-in_menu_cadastro_realizado.txt"
 
 menuPrincipal:: IO()
 menuPrincipal = do
-   printMatrix "./Sprites/main_menu.txt"
+   printMatrix "./Sprites/MainMenu/mainMenu_base.txt"
    putStr "Digite uma opção: "
    hFlush stdout
    respostaUser <- getLine
    if respostaUser == "W" ||respostaUser == "w"then
       walletUser
+      -- updateClientWallet
    else if respostaUser == "S" ||respostaUser == "s"then
       menuStart
    else do
@@ -40,7 +41,7 @@ menuPrincipal = do
 
 fazerLoginGeral :: IO ()
 fazerLoginGeral = do
-   printMatrix "./Sprites/login_menu.txt"
+   printMatrix "./Sprites/StartMenu/login_menu.txt"
    resposta <- querContinuarAOperacao
    if resposta then do
       resultadoLogin <- fazerLogin
@@ -53,7 +54,7 @@ fazerLoginGeral = do
 
 cadastraUsuario:: IO()
 cadastraUsuario = do
-   printMatrix "./Sprites/sign-in_menu_usuario.txt"
+   printMatrix "./Sprites/StartMenu/sign-in_menu_usuario.txt"
    resposta <- querContinuarAOperacao
    if resposta then do
       cadastraCliente <- cadastrarCliente
@@ -64,7 +65,7 @@ cadastraUsuario = do
 
 cadastraEmpresa:: IO()
 cadastraEmpresa = do
-   printMatrix "./Sprites/sign-in_menu_empresa.txt"
+   printMatrix "./Sprites/StartMenu/sign-in_menu_empresa.txt"
    resposta <- querContinuarAOperacao
    if resposta then do
       cadastraEmpresa <- cadastrarCompany
@@ -84,7 +85,7 @@ querContinuarAOperacao = do
 
 menuStart :: IO()
 menuStart = do
-   printMatrix "./Sprites/start_menu.txt"
+   printMatrix "./Sprites/StartMenu/start_menu.txt"
    putStr "Digite uma opção: "
    hFlush stdout
    input <- getLine

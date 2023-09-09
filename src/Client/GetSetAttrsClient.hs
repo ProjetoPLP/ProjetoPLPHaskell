@@ -68,11 +68,25 @@ getCol id = col (getClient id)
 getAllAssets :: Int -> [Asset]
 getAllAssets id = allAssets (getClient id)
 
+
+-- Retorna a quantidade de ações que um cliente X possui em uma empresa Y
+getQtdAssetsInCompany :: Int -> Int -> Int
+getQtdAssetsInCompany idClient = getAssetsInCompany (getAllAssets idClient)
+
+
+-- Retorna a quantidade de ações possuídas em uma empresa, usado em recursões
+getAssetsInCompany :: [Asset] -> Int -> Int
+getAssetsInCompany [] idComp = 0
+getAssetsInCompany (x:xs) idComp =
+    if companyID x == idComp then qtd x
+    else getAssetsInCompany xs idComp
+
+
 -- ====================== setNameOfClient ============================ --
 -- Entrada: id: Int / name: String
 -- TipoDeSaida: Bool
 setName :: Int -> String -> IO Bool
-setName id name = do 
+setName id name = do
     let client = getClient id
     if (length name) <= 18 then do
         if (ident client) /= -1 then do
@@ -99,7 +113,7 @@ setAge id age = do
         else do
             putStrLn "\nOcorreu um problema! O Cliente com este id não foi encontrado!"
             return False
-    else do 
+    else do
         putStrLn "\nOcorreu um problema! Proibido menores de 18 anos."
         return False
 
@@ -114,10 +128,10 @@ setCPF id cpf = do
             let newClient = client { cpf = cpf }
             editClientJSON "./Data/Clients.json" newClient
             return True
-        else do 
+        else do
             putStrLn "\nOcorreu um problema! O Cliente com este id não foi encontrado!"
             return False
-    else do 
+    else do
         putStrLn "\nOcorreu um problema! O CPF não contém 11 dígitos."
         return False
 
@@ -156,16 +170,14 @@ setPassword id password = do
 -- ====================== setCashOfClient ========================== --
 -- Entrada: id: Int / cash: Float
 -- TipoDeSaida: Bool
-setCash :: Int -> Float -> IO Bool
+setCash :: Int -> Float -> IO ()
 setCash id cash = do
     let client = getClient id
     if (ident client) /= -1 then do
         let newClient = client { cash = cash }
         editClientJSON "./Data/Clients.json" newClient
-        return True
     else do
         putStrLn "\nOcorreu um problema! O Cliente com este id não foi encontrado!"
-        return False
 
 -- ====================== setPatrimonyOfClient ========================== --
 -- Entrada: id: Int / patrimony: Float
@@ -226,16 +238,14 @@ setCol id col = do
 -- ====================== setAllAssetsOfClient ========================== --
 -- Entrada: id: Int / allAssets: [Asset]
 -- TipoDeSaida: Bool
-setAllAssets :: Int -> [Asset] -> IO Bool
+setAllAssets :: Int -> [Asset] -> IO ()
 setAllAssets id allAssets = do
     let client = getClient id
     if (ident client) /= -1 then do
         let newClient = client { allAssets = allAssets }
         editClientJSON "./Data/Clients.json" newClient
-        return True
     else do
         putStrLn "\nOcorreu um problema! O Cliente com este id não foi encontrado!"
-        return False
 
 -- ================================ OthersMethodsAux ================================= --
 
@@ -254,28 +264,20 @@ formatCPF cpf =
          in part1 ++ "." ++ part2 ++ "." ++ part3 ++ "-" ++ part4
        else "CPF inválido"
 
--- ====================== addCashClient: Remover em breve ===== --
+-- ====================== addCashClient ===== --
 -- Entrada: id: Int / cash: Float
 -- TipoDeSaida: None
-addCash :: Int -> Float -> IO()
+addCash :: Int -> Float -> IO ()
 addCash id cashAdd = do
     let client = getClientsByID id (getClientJSON "./Data/Clients.json")
     let newCash = fromIntegral (round ((cash client + cashAdd) * 10)) / 10
     let newClient = client {cash = newCash}
     editClientJSON "../Data/Clients.json" newClient
 
-getAllAssetsInCompany :: Int -> Int
-getAllAssetsInCompany idCompany = getAssetsClientInCompany (getClientJSON "./Data/Clients.json") idCompany
 
-getAssetsClientInCompany :: [Client] -> Int -> Int
-getAssetsClientInCompany [] _= 0
-getAssetsClientInCompany (x:xs) idCompany = (verifyAssetInClient x idCompany) + (getAssetsClientInCompany xs idCompany)
-
-verifyAssetInClient :: Client -> Int -> Int
-verifyAssetInClient client idCompany = getAssetValue (allAssets client) idCompany
-
-getAssetValue :: [Asset] -> Int -> Int
-getAssetValue [] _ = 0
-getAssetValue (x:xs) idCompany =
-    if (companyID x) == idCompany then (qtd x)
-    else getAssetValue xs idCompany
+removeCash :: Int -> Float -> IO ()
+removeCash id cashRemove = do
+    let client = getClientsByID id (getClientJSON "./Data/Clients.json")
+    let newCash = fromIntegral (round ((cash client - cashRemove) * 10)) / 10
+    let newClient = client {cash = newCash}
+    editClientJSON "../Data/Clients.json" newClient

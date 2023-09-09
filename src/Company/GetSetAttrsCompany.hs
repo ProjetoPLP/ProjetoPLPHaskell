@@ -42,6 +42,11 @@ getRow id = row (getCompany id)
 getCol :: Int -> Int
 getCol id = col (getCompany id)
 
+getIdent :: Company -> Int
+getIdent company = ident company;
+
+-- ==========================
+
 setName :: Int -> String -> IO Bool
 setName id name = do
     let company = getCompany id
@@ -139,38 +144,32 @@ setPrice id price = do
         putStrLn "\nOcorreu um problema! A Empresa com este id não foi encontrada!"
         return False
 
-setTrendIndicator:: Int -> String -> IO Bool
+setTrendIndicator:: Int -> String -> IO ()
 setTrendIndicator id trendIndicator = do
     let company = getCompany id
     if (ident company) /= (-1) then do
         let newCompany = company { trendIndicator = trendIndicator }
         editCompanyJSON "./Data/Companies.json" newCompany
-        return True
-    else do
+    else
         putStrLn "\nOcorreu um problema! A Empresa com este id não foi encontrada!"
-        return False
 
-setMinPrice :: Int -> Float -> IO Bool
+setMinPrice :: Int -> Float -> IO ()
 setMinPrice id minPrice = do 
     let company = getCompany id
     if (ident company) /= (-1) then do
         let newCompany = company { minPrice = minPrice }
         editCompanyJSON "./Data/Companies.json" newCompany
-        return True
     else do
         putStrLn "\nOcorreu um problema! A Empresa com este id não foi encontrada!"
-        return False
 
-setMaxPrice :: Int -> Float -> IO Bool
+setMaxPrice :: Int -> Float -> IO ()
 setMaxPrice id maxPrice = do 
     let company = getCompany id
     if (ident company) /= (-1) then do
         let newCompany = company { maxPrice = maxPrice }
         editCompanyJSON "./Data/Companies.json" newCompany
-        return True
     else do
         putStrLn "\nOcorreu um problema! A Empresa com este id não foi encontrada!"
-        return False
 
 setStartPrice :: Int -> Float -> IO Bool
 setStartPrice id startPrice = do 
@@ -217,12 +216,12 @@ updateCol id addCol = do
     let newCompany = company {col = (getCol id) + addCol}
     editCompanyJSON "./Data/Companies.json" newCompany
 
-addPrice :: Int -> Float -> IO()
-addPrice id acaoAdicional = do
-    let company = getCompaniesByID id (getCompanyJSON "./Data/Companies.json")
-    let newPrice = fromIntegral (round ((price company + acaoAdicional) * 10 )) / 10
-    let newCompany = company {price = newPrice}
-    editCompanyJSON "./Data/Companies.json" newCompany
+-- addPrice :: Int -> Float -> IO()
+-- addPrice id acaoAdicional = do
+--     let company = getCompaniesByID id (getCompanyJSON "./Data/Companies.json")
+--     let newPrice = fromIntegral (round ((price company + acaoAdicional) * 10 )) / 10    -- formata o valor para somente uma casa decimal
+--     let newCompany = company {price = newPrice}
+--     editCompanyJSON "./Data/Companies.json" newCompany
 
 formatCNPJ :: String -> String
 formatCNPJ cnpj =

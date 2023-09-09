@@ -3,6 +3,7 @@ module Clock.GetSetClock where
 import Data.Aeson
 import GHC.Generics
 import qualified Data.ByteString.Lazy as B
+import System.IO.Unsafe (unsafePerformIO)
 
 data Clock = Clock
   { minutes :: Int
@@ -11,13 +12,14 @@ data Clock = Clock
 instance ToJSON Clock
 instance FromJSON Clock
 
-getClock :: IO Int
+
+getClock :: Int 
 getClock = do
-    fileContent <- B.readFile "./Data/Clock.json"
-    let maybeClock = decode fileContent :: Maybe Clock
-    case maybeClock of
-        Just clock -> return (minutes clock)
-        Nothing    -> return (-1)
+    let file = unsafePerformIO (B.readFile "./Data/Clock.json")
+    let decodedFile = decode file :: Maybe Clock
+    case decodedFile of
+        Just clock -> minutes clock
+        Nothing -> -1
 
 
 addClock :: Int -> IO ()

@@ -36,7 +36,7 @@ createClient id_ name age cpf email password cash =
       patrimony = 0.00,
       canDeposit = False,
       row = 19,
-      col = 52,
+      col = 51,
       allAssets = []
     }
 

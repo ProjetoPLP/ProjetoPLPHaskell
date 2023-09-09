@@ -48,7 +48,7 @@ saveCompanyJSON jsonFilePath company = do
   let newID = length companyList + 1
   let companiesList = companyList ++ [giveIdForCompany company (newID)]
 
-  textoContents <- readFile "./Sprites/homebroker.txt"
+  textoContents <- readFile "./Sprites/HomeBroker/homebroker_base.txt"
   let walletFileName = "./Company/HomeBroker/homebroker" ++ (show newID) ++ ".txt"
   appendFile walletFileName textoContents
 
