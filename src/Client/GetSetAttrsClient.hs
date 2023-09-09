@@ -68,11 +68,23 @@ getCol id = col (getClient id)
 getAllAssets :: Int -> [Asset]
 getAllAssets id = allAssets (getClient id)
 
+
+-- getQtdAssetsInCompany :: Int -> Int -> Int
+-- getQtdAssetsInCompany idClient = getAssetsInCompany (getAllAssets idClient)
+
+
+getAssetsInCompany :: [Asset] -> Int -> Int
+getAssetsInCompany [] idComp = 0
+getAssetsInCompany (x:xs) idComp =
+    if companyID x == idComp then qtd x
+    else getAssetsInCompany xs idComp
+
+
 -- ====================== setNameOfClient ============================ --
 -- Entrada: id: Int / name: String
 -- TipoDeSaida: Bool
 setName :: Int -> String -> IO Bool
-setName id name = do 
+setName id name = do
     let client = getClient id
     if (length name) <= 18 then do
         if (ident client) /= -1 then do
@@ -99,7 +111,7 @@ setAge id age = do
         else do
             putStrLn "\nOcorreu um problema! O Cliente com este id não foi encontrado!"
             return False
-    else do 
+    else do
         putStrLn "\nOcorreu um problema! Proibido menores de 18 anos."
         return False
 
@@ -114,10 +126,10 @@ setCPF id cpf = do
             let newClient = client { cpf = cpf }
             editClientJSON "./Data/Clients.json" newClient
             return True
-        else do 
+        else do
             putStrLn "\nOcorreu um problema! O Cliente com este id não foi encontrado!"
             return False
-    else do 
+    else do
         putStrLn "\nOcorreu um problema! O CPF não contém 11 dígitos."
         return False
 
@@ -226,16 +238,14 @@ setCol id col = do
 -- ====================== setAllAssetsOfClient ========================== --
 -- Entrada: id: Int / allAssets: [Asset]
 -- TipoDeSaida: Bool
-setAllAssets :: Int -> [Asset] -> IO Bool
+setAllAssets :: Int -> [Asset] -> IO ()
 setAllAssets id allAssets = do
     let client = getClient id
     if (ident client) /= -1 then do
         let newClient = client { allAssets = allAssets }
         editClientJSON "./Data/Clients.json" newClient
-        return True
     else do
         putStrLn "\nOcorreu um problema! O Cliente com este id não foi encontrado!"
-        return False
 
 -- ================================ OthersMethodsAux ================================= --
 

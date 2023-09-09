@@ -7,11 +7,11 @@ import MainMenu.CompanyDescription.CompanyDescriptionUpdate (updateCompanyDescri
 main :: IO ()
 main = do
 
-    -- updateMainMenu 1
-    -- printMatrix "./MainMenu/mainMenu.txt"
+    updateMainMenu 1
+    printMatrix "./MainMenu/mainMenu.txt"
 
-    updateClientWallet 1
-    printMatrix "./Client/Wallet/wallet1.txt"
+    -- updateClientWallet 1
+    -- printMatrix "./Client/Wallet/wallet1.txt"
 
     -- updateCompanyDescription 1 5
     -- printMatrix "./MainMenu/CompanyDescription/companyDescription.txt"

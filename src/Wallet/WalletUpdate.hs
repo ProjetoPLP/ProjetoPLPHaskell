@@ -3,12 +3,13 @@ module Wallet.WalletUpdate where
 import Utils.MatrixUtils (writeMatrixValue)
 import Utils.UpdateUtils (fillLeft, fillRight, resetMenu)
 
-import Client.GetSetAttrsClient as Cli ( getCPF, getCash, getName, getPatrimony )
+import Client.GetSetAttrsClient as Cli ( getCPF, getCash, getName, getPatrimony, getAllAssets )
 
 import Clock.ClockUpdate
 import Company.GetSetAttrsCompany as Com (getCode, getIdent, getName, getPrice, getTrendIndicator)
 import Company.ModelCompany (Company)
 import Company.SaveCompany (getCompanyJSON)
+import Client.ModelClient (Asset (companyID, qtd))
 
 
 -- Aualiza todas as informações da carteira de cliente
@@ -23,7 +24,7 @@ updateClientWallet idClient = do
     updateWLUserCPF filePath (getCPF idClient)
     updateAllWLCompanyCode filePath jsonPath
     updateAllWLCompanyPrice filePath jsonPath
-    -- updateAllWLOwnedStocks
+    updateAllWLOwnedStocks filePath (getAllAssets idClient)
     where filePath = "./Client/Wallet/wallet" ++ show idClient ++ ".txt"
           jsonPath = getCompanyJSON "./Data/Companies.json"
 
@@ -82,6 +83,13 @@ updateWLCompanyPrice filePath id price trendInd = do
         val = fillLeft (trendInd ++ show price ++ "0") 7
     writeMatrixValue filePath val (head pos) (last pos - length val)
 
+updateAllWLOwnedStocks :: FilePath -> [Asset] -> IO ()
+updateAllWLOwnedStocks filePath [] = return ()
+updateAllWLOwnedStocks filePath (x:xs) = do
+    let id = companyID x
+        qtd_ = qtd x
+    updateWLOwnedStocks filePath id qtd_
+    updateAllWLOwnedStocks filePath xs
 
 updateWLOwnedStocks :: FilePath -> Int -> Int -> IO ()
 updateWLOwnedStocks filePath id num = do
