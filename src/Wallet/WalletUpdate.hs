@@ -6,7 +6,8 @@ import Utils.UpdateUtils (fillLeft, fillRight)
 import Client.GetSetAttrsClient
 
 updateClientWallet :: Int -> IO ()
-updateClientWallet idClient = do 
+updateClientWallet idClient = do
+    
     updateWLUserName path (getName idClient)
     updateWLCash path (getCash idClient)
     updateWLPatrimony path (getPatrimony idClient)
