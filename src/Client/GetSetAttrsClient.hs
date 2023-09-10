@@ -62,9 +62,8 @@ getRow id = row (getClient id)
 getCol :: Int -> Int
 getCol id = col (getClient id)
 
--- ====================== getAllAssetsOfClient ============================= --
--- Entrada: id: Int
--- TipoDeSaida: [Asset]
+
+-- Retorna uma lista com a quantidade de ações que o usuário possui de cada empresa
 getAllAssets :: Int -> [Asset]
 getAllAssets id = allAssets (getClient id)
 

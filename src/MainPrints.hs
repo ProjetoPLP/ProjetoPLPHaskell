@@ -12,10 +12,10 @@ main = do
     -- updateMainMenu 1
     -- printMatrix "./MainMenu/mainMenu.txt"
 
-    -- updateClientWallet 1
-    -- printMatrix "./Client/Wallet/wallet1.txt"
+    updateClientWallet 1
+    printMatrix "./Client/Wallet/wallet1.txt"
 
-    print (existCompany 3)
+    -- print (existCompany 3)
 
     -- updateCompanyDescription 1 3
     -- printMatrix "./MainMenu/CompanyDescription/companyDescription.txt"

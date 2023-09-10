@@ -6,7 +6,7 @@ import Utils.UpdateUtils (fillLeft, fillRight, resetMenu)
 import Client.GetSetAttrsClient as Cli ( getCPF, getCash, getName, getPatrimony, getAllAssets )
 
 import Clock.ClockUpdate
-import Company.GetSetAttrsCompany as Com (getCode, getIdent, getName, getPrice, getTrendIndicator)
+import Company.GetSetAttrsCompany as Com (getCode, getName, getPrice, getTrendIndicator)
 import Company.ModelCompany (Company)
 import Company.SaveCompany (getCompanyJSON)
 import Client.ModelClient (Asset (companyID, qtd))
@@ -15,7 +15,7 @@ import Client.ModelClient (Asset (companyID, qtd))
 -- Aualiza todas as informações da carteira do cliente
 updateClientWallet :: Int -> IO ()
 updateClientWallet idClient = do
-    resetMenu filePath "./Sprites/Wallet/wallet_base.txt"
+    -- resetMenu filePath "./Sprites/Wallet/wallet_base.txt"
     updateMatrixClock filePath
     updateWLCash filePath (getCash idClient)
     updateWLPatrimony filePath (getPatrimony idClient)
@@ -69,7 +69,6 @@ updateWLGraphCandle filePath row col = do
     writeMatrixValue filePath "❚" row col
 
 
--- refazer para wallet
 -- Reinicia o gráfico sobrescrevendo todos os espaços com caracteres vazios
 cleanWLGraph :: FilePath -> Int -> IO ()
 cleanWLGraph filepath 20 = writeMatrixValue filepath (replicate 47 ' ') 20 50

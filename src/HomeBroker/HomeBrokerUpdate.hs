@@ -24,7 +24,7 @@ updateHomeBroker idClient idComp = do
 
 updateHBStockPrice :: FilePath -> Float -> String -> IO ()
 updateHBStockPrice filePath price trendInd = do
-    let val = fillLeft (trendInd ++ show price ++ "0") 4
+    let val = fillLeft (trendInd ++ show price ++ "0") 6
     writeMatrixValue filePath val 11 (95 - length val)
 
 

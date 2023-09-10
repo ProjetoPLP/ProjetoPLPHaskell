@@ -10,6 +10,8 @@ import Company.GetSetAttrsCompany
 import Company.SaveCompany (getCompanyJSON)
 import HomeBroker.HomeBrokerAttPrice (attCurrentCompanyPriceGraph, attAllCompanyPriceGraph)
 import Utils.GraphUtils (checkCompanyColumn, checkAllCompanyColumn)
+import Wallet.WalletAttPatrimony ( attAllClientsWalletPatrimonyGraph )
+import Client.SaveClient (getClientJSON)
 
 
 -- Define, a partir da entrada do usuário, por quanto tempo o preço e o gráfico deve variar
@@ -32,5 +34,6 @@ loop id endTime = do
         else do
             attCurrentCompanyPriceGraph id
             attAllCompanyPriceGraph id (getCompanyJSON "./Data/Companies.json")
+            attAllClientsWalletPatrimonyGraph (getClientJSON "./Data/Clients.json")
             threadDelay (1 * 500000)
             loop id endTime
