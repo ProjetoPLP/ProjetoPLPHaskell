@@ -70,15 +70,14 @@ getAllAssets id = allAssets (getClient id)
 
 -- Retorna a quantidade de ações que um cliente X possui em uma empresa Y
 getQtdAssetsInCompany :: Int -> Int -> Int
-getQtdAssetsInCompany idClient = getAssetsInCompany (getAllAssets idClient)
+getQtdAssetsInCompany idClient = getQtdAssetsInCompanyAux (getAllAssets idClient)
 
 
--- Retorna a quantidade de ações possuídas em uma empresa, usado em recursões
-getAssetsInCompany :: [Asset] -> Int -> Int
-getAssetsInCompany [] idComp = 0
-getAssetsInCompany (x:xs) idComp =
+getQtdAssetsInCompanyAux :: [Asset] -> Int -> Int
+getQtdAssetsInCompanyAux [] idComp = 0
+getQtdAssetsInCompanyAux (x:xs) idComp =
     if companyID x == idComp then qtd x
-    else getAssetsInCompany xs idComp
+    else getQtdAssetsInCompanyAux xs idComp
 
 
 -- ====================== setNameOfClient ============================ --
@@ -181,16 +180,14 @@ setCash id cash = do
 -- ====================== setPatrimonyOfClient ========================== --
 -- Entrada: id: Int / patrimony: Float
 -- TipoDeSaida: Bool
-setPatrimony :: Int -> Float -> IO Bool
+setPatrimony :: Int -> Float -> IO ()
 setPatrimony id patrimony = do
     let client = getClient id
     if (ident client) /= -1 then do
         let newClient = client { patrimony = patrimony }
         editClientJSON "./Data/Clients.json" newClient
-        return True
     else do
         putStrLn "\nOcorreu um problema! O Cliente com este id não foi encontrado!"
-        return False
 
 -- ====================== setCanDepositOfClient =================== --
 -- Entrada: id: Int / canDeposit: Bool
@@ -271,7 +268,7 @@ addCash id cashAdd = do
     let client = getClientsByID id (getClientJSON "./Data/Clients.json")
     let newCash = fromIntegral (round ((cash client + cashAdd) * 10)) / 10
     let newClient = client {cash = newCash}
-    editClientJSON "../Data/Clients.json" newClient
+    editClientJSON "./Data/Clients.json" newClient
 
 
 removeCash :: Int -> Float -> IO ()
@@ -279,7 +276,7 @@ removeCash id cashRemove = do
     let client = getClientsByID id (getClientJSON "./Data/Clients.json")
     let newCash = fromIntegral (round ((cash client - cashRemove) * 10)) / 10
     let newClient = client {cash = newCash}
-    editClientJSON "../Data/Clients.json" newClient
+    editClientJSON "./Data/Clients.json" newClient
 
 getID :: IO Int
 getID = do

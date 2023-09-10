@@ -4,19 +4,18 @@ import Company.GetSetAttrsCompany (getPrice)
 import Client.GetSetAttrsClient (getAllAssets, setPatrimony)
 
 
-getNewPatrimony :: Int -> IO Float
-getNewPatrimony idClient = do 
-    let newPatri = getNewPatrimonyAux (getAllAssets idClient)
-    setPatrimony idClient newPatri
-    return newPatri
+-- Atualiza o patrimônio de um cliente
+attClientPatrimony :: Int -> IO ()
+attClientPatrimony idClient = do 
+    setPatrimony idClient (attClientPatrimonyAux (getAllAssets idClient))
 
 
-getNewPatrimonyAux :: [Asset] -> Float
-getNewPatrimonyAux [] = 0
-getNewPatrimonyAux (x:xs) = do
+attClientPatrimonyAux :: [Asset] -> Float
+attClientPatrimonyAux [] = 0
+attClientPatrimonyAux (x:xs) = do
     let id = companyID x
         qtd_ = qtd x
-    format (fromIntegral qtd_ * getPrice id + getNewPatrimonyAux xs)
+    format (fromIntegral qtd_ * getPrice id + attClientPatrimonyAux xs)
     where
         format :: Float -> Float
         format newPrice = fromIntegral (round (newPrice * 10 )) / 10
@@ -25,5 +24,8 @@ getNewPatrimonyAux (x:xs) = do
 attAllClientsWalletPatrimonyGraph :: [Client] -> IO ()
 attAllClientsWalletPatrimonyGraph [] = return ()
 attAllClientsWalletPatrimonyGraph (x:xs) = do
-    getNewPatrimony (ident x)
+    attClientPatrimony (ident x)
+    --
+    -- atualizar gráfico
+    --
     attAllClientsWalletPatrimonyGraph xs

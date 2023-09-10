@@ -41,8 +41,8 @@ createClient id_ name age cpf email password cash =
     }
 
 createAsset :: Int -> Int -> Asset
-createAsset companyID price = 
+createAsset companyID qtd = 
   Asset {
     companyID = companyID,
-    qtd = price
+    qtd = qtd
   }

@@ -22,6 +22,28 @@ updateHomeBroker idClient idComp = do
     where filePath = "./Company/HomeBroker/homebroker" ++ show idComp ++ ".txt"
 
 
+updateHomeBrokerBuy :: Int -> Int -> IO ()
+updateHomeBrokerBuy idClient idComp = do
+    updateMatrixClock filePath
+    updateHBCash filePath (getCash idClient)
+    updateHBCompanyName filePath (Com.getName idComp)
+    updateHBCompanyCode filePath (Com.getCode idComp)
+    updateHBStockPrice filePath (getPrice idComp) (getTrendIndicator idComp)
+    updateHBOwnedStocks filePath (getQtdAssetsInCompany idClient idComp)
+    where filePath = "./HomeBroker/BuySell/homebrokerBuy.txt"
+
+
+updateHomeBrokerSell :: Int -> Int -> IO ()
+updateHomeBrokerSell idClient idComp = do
+    updateMatrixClock filePath
+    updateHBCash filePath (getCash idClient)
+    updateHBCompanyName filePath (Com.getName idComp)
+    updateHBCompanyCode filePath (Com.getCode idComp)
+    updateHBStockPrice filePath (getPrice idComp) (getTrendIndicator idComp)
+    updateHBOwnedStocks filePath (getQtdAssetsInCompany idClient idComp)
+    where filePath = "./HomeBroker/BuySell/homebrokerSell.txt"
+
+
 updateHBStockPrice :: FilePath -> Float -> String -> IO ()
 updateHBStockPrice filePath price trendInd = do
     let val = fillLeft (trendInd ++ show price ++ "0") 6

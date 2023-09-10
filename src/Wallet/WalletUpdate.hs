@@ -10,6 +10,7 @@ import Company.GetSetAttrsCompany as Com (getCode, getName, getPrice, getTrendIn
 import Company.ModelCompany (Company)
 import Company.SaveCompany (getCompanyJSON)
 import Client.ModelClient (Asset (companyID, qtd))
+import Wallet.WalletAttPatrimony (attClientPatrimony)
 
 
 -- Aualiza todas as informações da carteira do cliente
@@ -18,6 +19,7 @@ updateClientWallet idClient = do
     -- resetMenu filePath "./Sprites/Wallet/wallet_base.txt"
     updateMatrixClock filePath
     updateWLCash filePath (getCash idClient)
+    attClientPatrimony idClient
     updateWLPatrimony filePath (getPatrimony idClient)
     updateWLUserName filePath (Cli.getName idClient)
     updateWLUserCPF filePath (getCPF idClient)
