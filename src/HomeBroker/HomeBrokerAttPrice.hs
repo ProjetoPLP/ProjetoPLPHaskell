@@ -26,42 +26,74 @@ getNewPrice oldPrice = do
     if last indexVar == 1 then return (format (([0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0] !! head indexVar) + oldPrice))
     else if last indexVar == (-1) then return (format (([-0.1, -0.2, -0.3, -0.4, -0.5, -0.6, -0.7, -0.8, -0.9, -1.0] !! head indexVar) + oldPrice))
     else return oldPrice
-    where 
+    where
         format :: Float -> Float
         format newPrice = fromIntegral (round (newPrice * 10 )) / 10
 
 
--- Atualiza em uma empresa, a partir do seu ID, o preço e o gráfico
-attCompanyPriceGraph :: Int -> IO ()
-attCompanyPriceGraph id = do
-    let oldPrice = getPrice id
-    newPrice <- getNewPrice oldPrice
-
-    setPrice id newPrice
-    attTrendIndicator id oldPrice newPrice
-    attCompanyLineRow id oldPrice newPrice
-    updateHBStockPrice path newPrice (getTrendIndicator id)
-    updateHBGraphCandle path (getRow id) (getCol id)
-    printMatrix path
-    where path = "./Company/HomeBroker/homebroker" ++ show id ++ ".txt"
-
-attCompanyPrice :: Int -> IO ()
-attCompanyPrice id = do
-    let oldPrice = getPrice id
-    newPrice <- getNewPrice oldPrice
-
-    setPrice id newPrice
-    attTrendIndicator id oldPrice newPrice
-    attCompanyLineRow id oldPrice newPrice
-    updateHBStockPrice path newPrice (getTrendIndicator id)
-    updateHBGraphCandle path (getRow id) (getCol id)
-    where path = "./Company/HomeBroker/homebroker" ++ show id ++ ".txt"
-
-attAllCompanyPrice :: Int -> [Company] -> IO ()
-attAllCompanyPrice _ [] = return ()
-attAllCompanyPrice id (x:xs) = do
-    if (getIdent x) == id then do
-        attAllCompanyPrice id xs
+getNewMaxPrice :: Int -> Float -> IO Float
+getNewMaxPrice idComp newPrice = do
+    let maxPrice = getMaxPrice idComp
+    if maxPrice >= newPrice then return maxPrice 
     else do
-        attCompanyPrice (getIdent x)
-        attAllCompanyPrice id xs
+        setMaxPrice idComp newPrice 
+        return newPrice
+
+
+getNewMinPrice :: Int -> Float -> IO Float
+getNewMinPrice idComp newPrice = do
+    let minPrice = getMinPrice idComp
+    if minPrice <= newPrice then return minPrice 
+    else do
+        setMinPrice idComp newPrice 
+        return newPrice
+
+
+-- Atualiza na empresa atual, a partir do seu ID, o preço e o gráfico
+attCurrentCompanyPriceGraph :: Int -> IO ()
+attCurrentCompanyPriceGraph id = do
+    let oldPrice = getPrice id
+    newPrice <- getNewPrice oldPrice
+    newMaxPrice <- getNewMaxPrice id newPrice
+    newMinPrice <- getNewMinPrice id newPrice
+
+    setPrice id newPrice
+    attTrendIndicator id oldPrice newPrice
+    attCompanyLineRow id oldPrice newPrice
+    updateHBStockPrice filePath newPrice (getTrendIndicator id)
+    updateHBStockMaxPrice filePath newMaxPrice
+    updateHBStockMinPrice filePath newMinPrice
+    updateHBStockStartPrice filePath (getStartPrice id)
+    updateHBGraphCandle filePath (getRow id) (getCol id)
+    printMatrix filePath
+    where filePath = "./Company/HomeBroker/homebroker" ++ show id ++ ".txt"
+
+
+-- Atualiza em uma empresa qualquer, a partir do seu ID, o preço e o gráfico
+attOthersCompanyPriceGraph :: Int -> IO ()
+attOthersCompanyPriceGraph id = do
+    let oldPrice = getPrice id
+    newPrice <- getNewPrice oldPrice
+    newMaxPrice <- getNewMaxPrice id newPrice
+    newMinPrice <- getNewMinPrice id newPrice
+
+    setPrice id newPrice
+    attTrendIndicator id oldPrice newPrice
+    attCompanyLineRow id oldPrice newPrice
+    updateHBStockPrice filePath newPrice (getTrendIndicator id)
+    updateHBStockMaxPrice filePath newMaxPrice
+    updateHBStockMinPrice filePath newMinPrice
+    updateHBStockStartPrice filePath (getStartPrice id)
+    updateHBGraphCandle filePath (getRow id) (getCol id)
+    where filePath = "./Company/HomeBroker/homebroker" ++ show id ++ ".txt"
+
+
+-- Atualiza o preço e o gráfico em todas as empresas cadastradas
+attAllCompanyPriceGraph :: Int -> [Company] -> IO ()
+attAllCompanyPriceGraph _ [] = return ()
+attAllCompanyPriceGraph id (x:xs) = do
+    if getIdent x == id then do
+        attAllCompanyPriceGraph id xs
+    else do
+        attOthersCompanyPriceGraph (getIdent x)
+        attAllCompanyPriceGraph id xs

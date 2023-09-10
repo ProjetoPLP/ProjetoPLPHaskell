@@ -19,7 +19,7 @@ getAgeFounded = do
 
 getCNPJ :: IO String
 getCNPJ = do
-  putStr "Digite o seu CNPJ da empresa (apenas números): "
+  putStr "Digite o seu CNPJ da empresa (apenas números, 14 dígitos): "
   hFlush stdout
   input <- getLine
   return input

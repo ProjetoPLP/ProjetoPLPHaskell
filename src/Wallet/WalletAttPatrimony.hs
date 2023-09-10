@@ -1,2 +1,2 @@
-module Wallet.WalletGraphUpdate where
+module Wallet.WalletAttPatrimony where
 

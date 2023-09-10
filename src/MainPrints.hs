@@ -1,20 +1,30 @@
 import Utils.MatrixUtils
-import Wallet.WalletUpdate
-import Company.GetSetAttrsCompany (getTrendIndicator)
-import Client.GetSetAttrsClient
+
+import MainMenu.MainMenuUpdate
+import Wallet.WalletUpdate (updateClientWallet, updateWalletDeposito, updateWalletSaque)
+import MainMenu.CompanyDescription.CompanyDescriptionUpdate (updateCompanyDescription)
+import HomeBroker.HomeBrokerUpdate
+import Utils.VerificationUtils (existCompany)
 
 main :: IO ()
 main = do
 
-    -- updateWLStockName "./Client/Wallet/wallet2.txt" 10 "VALE3"
+    -- updateMainMenu 1
+    -- printMatrix "./MainMenu/mainMenu.txt"
 
-    -- updateWLStockPrice "./Client/Wallet/wallet2.txt" 7 10 (getTrendIndicator 1)
+    -- updateClientWallet 1
+    -- printMatrix "./Client/Wallet/wallet1.txt"
 
-    -- updateWLOwnedStock "./Client/Wallet/wallet2.txt" 10 99999
+    print (existCompany 3)
 
-    updateClientWallet 1
+    -- updateCompanyDescription 1 3
+    -- printMatrix "./MainMenu/CompanyDescription/companyDescription.txt"
 
-    printMatrix "./Client/Wallet/wallet1.txt"
+    -- updateHomeBroker 1 2
+    -- printMatrix "./Company/HomeBroker/homebroker2.txt"
 
-    -- print (getCash 1)
+    -- updateWalletDeposito 1
+    -- printMatrix "./Wallet/DepositoSaque/walletDeposito.txt"
 
+    -- updateWalletSaque 1
+    -- printMatrix "./Wallet/DepositoSaque/walletSaque.txt"

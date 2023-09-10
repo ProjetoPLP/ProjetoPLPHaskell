@@ -4,11 +4,11 @@ import Control.Concurrent (threadDelay)
 import Data.Time.Clock (getCurrentTime, UTCTime, addUTCTime)
 
 import Clock.ClockUpdate
-import Clock.GetSetClock (addClock, getClock)
+import Clock.GetSetClock (addClock)
 
 import Company.GetSetAttrsCompany
 import Company.SaveCompany (getCompanyJSON)
-import HomeBroker.HomeBrokerAttPrice (attCompanyPriceGraph, attAllCompanyPrice)
+import HomeBroker.HomeBrokerAttPrice (attCurrentCompanyPriceGraph, attAllCompanyPriceGraph)
 import Utils.GraphUtils (checkCompanyColumn, checkAllCompanyColumn)
 
 
@@ -17,8 +17,7 @@ callLoop :: Int -> Int -> IO ()
 callLoop id seg = do
     startTime <- getCurrentTime
     addClock seg
-    newClockHour <- getClock
-    updateMatrixClock ("./Company/HomeBroker/homebroker" ++ show id ++ ".txt") newClockHour
+    updateMatrixClock ("./Company/HomeBroker/homebroker" ++ show id ++ ".txt")
     let endTime = addUTCTime (fromIntegral seg) startTime
     loop id endTime
 
@@ -31,7 +30,7 @@ loop id endTime = do
         checkAllCompanyColumn (getCompanyJSON "./Data/Companies.json")
         putStrLn "Tempo esgotado."
         else do
-            attCompanyPriceGraph id
-            attAllCompanyPrice id (getCompanyJSON "./Data/Companies.json")
+            attCurrentCompanyPriceGraph id
+            attAllCompanyPriceGraph id (getCompanyJSON "./Data/Companies.json")
             threadDelay (1 * 500000)
             loop id endTime

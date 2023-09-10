@@ -6,10 +6,17 @@ import Client.CreateClient
 import Client.CadastrarCliente
 import Company.CadastrarCompany
 import Control.Concurrent (threadDelay)
+import Client.GetSetAttrsClient
+import MainMenu.MainMenuUpdate
+import Client.SaveClient
+import MainMenu.CompanyDescription.CompanyDescriptionUpdate
+import Wallet.WalletUpdate
+import Utils.VerificationUtils (existCompany)
 
-walletUser:: IO()
-walletUser = do
-   printMatrix "./Sprites/wallet.txt"
+walletUser :: Int -> IO()
+walletUser id = do
+   updateClientWallet id
+   printMatrix ("./Client/Wallet/wallet" ++ (show id) ++ ".txt")
 
 ehcadastrado:: Bool -> IO()
 ehcadastrado result = do
@@ -22,25 +29,49 @@ ehcadastrado result = do
 
 cadastroRealizado :: IO()
 cadastroRealizado = do
-   printMatrix "./Sprites/sign-in_menu_cadastro_realizado.txt"
+   printMatrix "./Sprites/StartMenu/sign-in_menu_cadastro_realizado.txt"
+
+opcoesMenu :: String -> Int -> IO()
+opcoesMenu op id
+   | op == "W" || op == "w" = walletUser id
+   | op == "1" = descricaoDaEmpresa 1 id
+   | op == "2" = descricaoDaEmpresa 2 id
+   | op == "3" = descricaoDaEmpresa 3 id
+   | op == "4" = descricaoDaEmpresa 4 id
+   | op == "5" = descricaoDaEmpresa 5 id
+   | op == "6" = descricaoDaEmpresa 6 id
+   | op == "7" = descricaoDaEmpresa 7 id
+   | op == "8" = descricaoDaEmpresa 8 id
+   | op == "9" = descricaoDaEmpresa 9 id
+   | op == "A" = descricaoDaEmpresa 10 id
+   | op == "B" = descricaoDaEmpresa 11 id
+   | op == "C" = descricaoDaEmpresa 12 id
+   | op == "S" = menuStart
+   | otherwise = do
+           putStrLn "Opção inválida"
+           menuPrincipal
+      
+descricaoDaEmpresa :: Int -> Int -> IO()
+descricaoDaEmpresa idCompany idUser = do
+   if existCompany idCompany then do
+      updateCompanyDescription idUser idCompany
+      printMatrix "./MainMenu/CompanyDescription/companyDescription.txt"
+   else
+      menuPrincipal
 
 menuPrincipal:: IO()
 menuPrincipal = do
-   printMatrix "./Sprites/main_menu.txt"
+   myId <- getID
+   updateMainMenu myId
+   printMatrix "./MainMenu/mainMenu.txt"
    putStr "Digite uma opção: "
    hFlush stdout
    respostaUser <- getLine
-   if respostaUser == "W" ||respostaUser == "w"then
-      walletUser
-   else if respostaUser == "S" ||respostaUser == "s"then
-      menuStart
-   else do
-      putStrLn "Opção Inválida!"
-      menuPrincipal
+   opcoesMenu respostaUser myId
 
 fazerLoginGeral :: IO ()
 fazerLoginGeral = do
-   printMatrix "./Sprites/login_menu.txt"
+   printMatrix "./Sprites/StartMenu/login_menu.txt"
    resposta <- querContinuarAOperacao
    if resposta then do
       resultadoLogin <- fazerLogin
@@ -53,7 +84,7 @@ fazerLoginGeral = do
 
 cadastraUsuario:: IO()
 cadastraUsuario = do
-   printMatrix "./Sprites/sign-in_menu_usuario.txt"
+   printMatrix "./Sprites/StartMenu/sign-in_menu_usuario.txt"
    resposta <- querContinuarAOperacao
    if resposta then do
       cadastraCliente <- cadastrarCliente
@@ -64,7 +95,7 @@ cadastraUsuario = do
 
 cadastraEmpresa:: IO()
 cadastraEmpresa = do
-   printMatrix "./Sprites/sign-in_menu_empresa.txt"
+   printMatrix "./Sprites/StartMenu/sign-in_menu_empresa.txt"
    resposta <- querContinuarAOperacao
    if resposta then do
       cadastraEmpresa <- cadastrarCompany
@@ -84,7 +115,8 @@ querContinuarAOperacao = do
 
 menuStart :: IO()
 menuStart = do
-   printMatrix "./Sprites/start_menu.txt"
+   logoutClient
+   printMatrix "./Sprites/StartMenu/start_menu.txt"
    putStr "Digite uma opção: "
    hFlush stdout
    input <- getLine
@@ -94,7 +126,7 @@ menuStart = do
       cadastraUsuario
    else if input == "E" || input == "e"then
       cadastraEmpresa
-   else if input == "S" || input == "s"then
+   else if input == "S" || input == "s"then do
       return()
    else do
       putStrLn "Opção Inválida!"

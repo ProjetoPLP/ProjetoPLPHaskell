@@ -1,29 +1,67 @@
 module Wallet.WalletUpdate where
 
 import Utils.MatrixUtils (writeMatrixValue)
-import Utils.UpdateUtils (fillLeft, fillRight)
+import Utils.UpdateUtils (fillLeft, fillRight, resetMenu)
 
-import Client.GetSetAttrsClient
+import Client.GetSetAttrsClient as Cli ( getCPF, getCash, getName, getPatrimony, getAllAssets )
 
+import Clock.ClockUpdate
+import Company.GetSetAttrsCompany as Com (getCode, getIdent, getName, getPrice, getTrendIndicator)
+import Company.ModelCompany (Company)
+import Company.SaveCompany (getCompanyJSON)
+import Client.ModelClient (Asset (companyID, qtd))
+
+
+-- Aualiza todas as informações da carteira do cliente
 updateClientWallet :: Int -> IO ()
-updateClientWallet idClient = do 
-    updateWLUserName path (getName idClient)
-    updateWLCash path (getCash idClient)
-    updateWLPatrimony path (getPatrimony idClient)
-    updateWLUserName path (getName idClient)
-    updateWLUserCPF path (getCPF idClient)
-    where path = "./Client/Wallet/wallet" ++ show idClient ++ ".txt"
+updateClientWallet idClient = do
+    resetMenu filePath "./Sprites/Wallet/wallet_base.txt"
+    updateMatrixClock filePath
+    updateWLCash filePath (getCash idClient)
+    updateWLPatrimony filePath (getPatrimony idClient)
+    updateWLUserName filePath (Cli.getName idClient)
+    updateWLUserCPF filePath (getCPF idClient)
+    updateAllWLCompanyCode filePath ownedAssets
+    updateAllWLCompanyPrice filePath ownedAssets
+    updateAllWLOwnedStocks filePath ownedAssets
+    where filePath = "./Client/Wallet/wallet" ++ show idClient ++ ".txt"
+          ownedAssets = getAllAssets idClient
+
+
+-- Aualiza todas as informações no menu de depósito
+updateWalletDeposito :: Int -> IO ()
+updateWalletDeposito idClient = do
+    resetMenu filePath "./Sprites/Wallet/walletDeposito_base.txt"
+    updateMatrixClock filePath
+    updateWLCash filePath (getCash idClient)
+    updateWLPatrimony filePath (getPatrimony idClient)
+    updateWLUserName filePath (Cli.getName idClient)
+    updateWLUserCPF filePath (getCPF idClient)
+    where filePath = "./Wallet/DepositoSaque/walletDeposito.txt"
+
+
+-- Aualiza todas as informações no menu de saque
+updateWalletSaque :: Int -> IO ()
+updateWalletSaque idClient = do
+    resetMenu filePath "./Sprites/Wallet/walletSaque_base.txt"
+    updateMatrixClock filePath
+    updateWLCash filePath (getCash idClient)
+    updateWLPatrimony filePath (getPatrimony idClient)
+    updateWLUserName filePath (Cli.getName idClient)
+    updateWLUserCPF filePath (getCPF idClient)
+    where filePath = "./Wallet/DepositoSaque/walletSaque.txt"
+
 
 updateWLCash :: FilePath -> Float -> IO ()
-updateWLCash filePath num = do
-    let val = fillLeft (show num) 8
-    writeMatrixValue filePath val 13 (21 - length val)
+updateWLCash filePath cash = do
+    let val = fillLeft (show cash ++ "0") 9
+    writeMatrixValue filePath val 13 (22 - length val)
 
 
 updateWLPatrimony :: FilePath -> Float -> IO ()
-updateWLPatrimony filePath num = do
-    let val = fillLeft (show num) 8
-    writeMatrixValue filePath val 6 (23 - length val)
+updateWLPatrimony filePath patri = do
+    let val = fillLeft (show patri ++ "0") 9
+    writeMatrixValue filePath val 6 (24 - length val)
 
 
 updateWLGraphCandle :: FilePath -> Int -> Int -> IO ()
@@ -40,22 +78,47 @@ cleanWLGraph filepath row = do
     cleanWLGraph filepath (row + 1)
 
 
-updateWLStockName :: FilePath -> Int -> String -> IO ()
-updateWLStockName filePath id name = do
-    let pos = getStockNamePosition id
-    writeMatrixValue filePath name (head pos) (last pos)
+updateAllWLCompanyCode :: FilePath -> [Asset] -> IO ()
+updateAllWLCompanyCode filePath [] = return ()
+updateAllWLCompanyCode filePath (x:xs) = do
+    let id = companyID x
+    updateWLCompanyCode filePath id (getCode id)
+    updateAllWLCompanyCode filePath xs
 
 
-updateWLStockPrice :: FilePath -> Int -> Float -> String -> IO ()
-updateWLStockPrice filePath id num trendInd = do
-    let pos = getStockPricePosition id
-        val = fillLeft (trendInd ++ show num) 6
+updateWLCompanyCode :: FilePath -> Int -> String -> IO ()
+updateWLCompanyCode filePath id code = do
+    let pos = getCompanyCodePosition id
+    writeMatrixValue filePath code (head pos) (last pos)
+
+
+updateAllWLCompanyPrice :: FilePath -> [Asset] -> IO ()
+updateAllWLCompanyPrice filePath [] = return ()
+updateAllWLCompanyPrice filePath (x:xs) = do
+    let id = companyID x
+    updateWLCompanyPrice filePath id (getPrice id) (getTrendIndicator id)
+    updateAllWLCompanyPrice filePath xs
+
+
+updateWLCompanyPrice :: FilePath -> Int -> Float -> String -> IO ()
+updateWLCompanyPrice filePath id price trendInd = do
+    let pos = getCompanyPricePosition id
+        val = fillLeft (trendInd ++ show price ++ "0") 7
     writeMatrixValue filePath val (head pos) (last pos - length val)
 
 
-updateWLOwnedStock :: FilePath -> Int -> Int -> IO ()
-updateWLOwnedStock filePath id num = do
-    let pos = getOwnedStockPosition id
+updateAllWLOwnedStocks :: FilePath -> [Asset] -> IO ()
+updateAllWLOwnedStocks filePath [] = return ()
+updateAllWLOwnedStocks filePath (x:xs) = do
+    let id = companyID x
+        qtd_ = qtd x
+    updateWLOwnedStocks filePath id qtd_
+    updateAllWLOwnedStocks filePath xs
+
+
+updateWLOwnedStocks :: FilePath -> Int -> Int -> IO ()
+updateWLOwnedStocks filePath id num = do
+    let pos = getOwnedStocksPosition id
         val = fillLeft (show num) 5
     writeMatrixValue filePath val (head pos) (last pos - length val)
 
@@ -66,13 +129,13 @@ updateWLUserName filePath name = do
 
 
 updateWLUserCPF :: FilePath -> String -> IO ()
-updateWLUserCPF filePath name = do
-    writeMatrixValue filePath name 11 6
+updateWLUserCPF filePath cpf = do
+    writeMatrixValue filePath cpf 11 6
 
 
 updateWLNewsPercent :: FilePath -> Float -> IO ()
-updateWLNewsPercent filePath num = do
-    let val = fillLeft (show num) 4
+updateWLNewsPercent filePath perc = do
+    let val = fillLeft (show perc) 4
     writeMatrixValue filePath val 16 (33 - length val)
 
 
@@ -82,8 +145,8 @@ updateWLNewsText filePath text = do
     writeMatrixValue filePath val 14 29
 
 
-getStockNamePosition :: Int -> [Int]
-getStockNamePosition id
+getCompanyCodePosition :: Int -> [Int]
+getCompanyCodePosition id
     | id == 1 = [22, 3]
     | id == 2 = [24, 3]
     | id == 3 = [26, 3]
@@ -98,24 +161,24 @@ getStockNamePosition id
     | id == 12 = [26, 75]
 
 
-getStockPricePosition :: Int -> [Int]
-getStockPricePosition id
-    | id == 1 = [22, 15]
-    | id == 2 = [24, 15]
-    | id == 3 = [26, 15]
-    | id == 4 = [22, 39]
-    | id == 5 = [24, 39]
-    | id == 6 = [26, 39]
-    | id == 7 = [22, 63]
-    | id == 8 = [24, 63]
-    | id == 9 = [26, 63]
-    | id == 10 = [22, 87]
-    | id == 11 = [24, 87]
-    | id == 12 = [26, 87]
+getCompanyPricePosition :: Int -> [Int]
+getCompanyPricePosition id
+    | id == 1 = [22, 16]
+    | id == 2 = [24, 16]
+    | id == 3 = [26, 16]
+    | id == 4 = [22, 40]
+    | id == 5 = [24, 40]
+    | id == 6 = [26, 40]
+    | id == 7 = [22, 64]
+    | id == 8 = [24, 64]
+    | id == 9 = [26, 64]
+    | id == 10 = [22, 88]
+    | id == 11 = [24, 88]
+    | id == 12 = [26, 88]
 
 
-getOwnedStockPosition :: Int -> [Int]
-getOwnedStockPosition id
+getOwnedStocksPosition :: Int -> [Int]
+getOwnedStocksPosition id
     | id == 1 = [22, 23]
     | id == 2 = [24, 23]
     | id == 3 = [26, 23]
