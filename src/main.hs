@@ -11,6 +11,7 @@ import MainMenu.MainMenuUpdate
 import Client.SaveClient
 import MainMenu.CompanyDescription.CompanyDescriptionUpdate
 import Wallet.WalletUpdate
+import Utils.VerificationUtils (existCompany)
 
 walletUser :: Int -> IO()
 walletUser id = do
@@ -52,8 +53,11 @@ opcoesMenu op id
       
 descricaoDaEmpresa :: Int -> Int -> IO()
 descricaoDaEmpresa idCompany idUser = do
-   updateCompanyDescription idUser idCompany
-   printMatrix "./MainMenu/CompanyDescription/companyDescription.txt"
+   if existCompany idCompany then do
+      updateCompanyDescription idUser idCompany
+      printMatrix "./MainMenu/CompanyDescription/companyDescription.txt"
+   else
+      menuPrincipal
 
 menuPrincipal:: IO()
 menuPrincipal = do
