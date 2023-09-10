@@ -111,6 +111,7 @@ querContinuarAOperacao = do
 
 menuStart :: IO()
 menuStart = do
+   logoutClient
    printMatrix "./Sprites/StartMenu/start_menu.txt"
    putStr "Digite uma opção: "
    hFlush stdout
@@ -122,7 +123,6 @@ menuStart = do
    else if input == "E" || input == "e"then
       cadastraEmpresa
    else if input == "S" || input == "s"then do
-      logoutClient
       return()
    else do
       putStrLn "Opção Inválida!"

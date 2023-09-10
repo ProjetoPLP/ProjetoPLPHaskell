@@ -1,9 +1,8 @@
 module Utils.GraphUtils where
-import Company.GetSetAttrsCompany
+import Company.GetSetAttrsCompany (getCol, getIdent, getRow, setTrendIndicator, updateCol, updateRow)
 import Utils.MatrixUtils (writeMatrixValue)
 import HomeBroker.HomeBrokerUpdate (cleanHBGraph)
 import Company.ModelCompany (Company)
-import Company.GetSetAttrsCompany (getIdent)
 
 
 -- Atualiza em uma empresa, a partir do seu ID, a nova linha e coluna baseado no novo preço
@@ -25,6 +24,7 @@ checkCompanyColumn id = do
         updateCol id (-69)
     else
         updateCol id 3
+
 
 checkAllCompanyColumn :: [Company] -> IO()
 checkAllCompanyColumn [] = return ()
@@ -49,6 +49,7 @@ checkCompanyRowUnderflow id = do
             updateRow id (-20)
         else
             updateRow id 1
+
 
 -- Atualiza em uma empresa, a partir do seu ID, o novo trendIndicator
 attTrendIndicator :: Int -> Float -> Float -> IO ()
