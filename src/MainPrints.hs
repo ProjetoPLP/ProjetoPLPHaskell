@@ -20,11 +20,14 @@ main = do
     -- updateCompanyDescription 1 3
     -- printMatrix "./MainMenu/CompanyDescription/companyDescription.txt"
 
-    updateHomeBroker 1 1
-    printMatrix "./Company/HomeBroker/homebroker1.txt"
+    -- updateHomeBroker 1 1
+    -- printMatrix "./Company/HomeBroker/homebroker1.txt"
 
     -- updateWalletDeposito 1
     -- printMatrix "./Wallet/DepositoSaque/walletDeposito.txt"
 
     -- updateWalletSaque 1
     -- printMatrix "./Wallet/DepositoSaque/walletSaque.txt"
+
+    updateHomeBrokerSell 1 2
+    printMatrix "./HomeBroker/BuySell/homebrokerSell.txt"

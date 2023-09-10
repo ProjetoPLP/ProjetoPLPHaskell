@@ -16,7 +16,7 @@ import Wallet.WalletAttPatrimony (attClientPatrimony)
 -- Aualiza todas as informações da carteira do cliente
 updateClientWallet :: Int -> IO ()
 updateClientWallet idClient = do
-    -- resetMenu filePath "./Sprites/Wallet/wallet_base.txt"
+    resetStocks [1..12] idClient
     updateMatrixClock filePath
     updateWLCash filePath (getCash idClient)
     attClientPatrimony idClient
@@ -97,14 +97,14 @@ updateAllWLCompanyPrice :: FilePath -> [Asset] -> IO ()
 updateAllWLCompanyPrice filePath [] = return ()
 updateAllWLCompanyPrice filePath (x:xs) = do
     let id = companyID x
-    updateWLCompanyPrice filePath id (getPrice id) (getTrendIndicator id)
+    updateWLCompanyPrice filePath id (show (getPrice id) ++ "0") (getTrendIndicator id)
     updateAllWLCompanyPrice filePath xs
 
 
-updateWLCompanyPrice :: FilePath -> Int -> Float -> String -> IO ()
+updateWLCompanyPrice :: FilePath -> Int -> String -> String -> IO ()
 updateWLCompanyPrice filePath id price trendInd = do
     let pos = getCompanyPricePosition id
-        val = fillLeft (trendInd ++ show price ++ "0") 7
+        val = fillLeft (trendInd ++ price) 7
     writeMatrixValue filePath val (head pos) (last pos - length val)
 
 
@@ -113,14 +113,14 @@ updateAllWLOwnedStocks filePath [] = return ()
 updateAllWLOwnedStocks filePath (x:xs) = do
     let id = companyID x
         qtd_ = qtd x
-    updateWLOwnedStocks filePath id qtd_
+    updateWLOwnedStocks filePath id (show qtd_)
     updateAllWLOwnedStocks filePath xs
 
 
-updateWLOwnedStocks :: FilePath -> Int -> Int -> IO ()
+updateWLOwnedStocks :: FilePath -> Int -> String -> IO ()
 updateWLOwnedStocks filePath id num = do
     let pos = getOwnedStocksPosition id
-        val = fillLeft (show num) 5
+        val = fillLeft num 5
     writeMatrixValue filePath val (head pos) (last pos - length val)
 
 
@@ -144,6 +144,16 @@ updateWLNewsText :: FilePath -> String -> IO ()
 updateWLNewsText filePath text = do
     let val = fillRight text 3
     writeMatrixValue filePath val 14 29
+
+
+resetStocks :: [Int] -> Int -> IO ()
+resetStocks [] idCliet = return ()
+resetStocks (x:xs) idClient = do
+    updateWLCompanyCode filePath x "-----"
+    updateWLCompanyPrice filePath x "     " " "
+    updateWLOwnedStocks filePath x "-----"
+    resetStocks xs idClient
+    where filePath = "./Client/Wallet/wallet" ++ show idClient ++ ".txt"
 
 
 getCompanyCodePosition :: Int -> [Int]

@@ -17,13 +17,11 @@ addAsset clientID companyID qtd = do
             if (existAssetInClient (allAssets client) companyID) then do
                 let newExistentAssets = addExistentAssetInCompany recoveryAssetsClient companyID qtd
                 setAllAssets clientID newExistentAssets
-                putStrLn ("\nOlá " ++ (name client) ++ "! A compra da ação foi concluída e incrementada!")
 
             else do
                 let newAllAssets = [(createAsset companyID qtd)] ++ recoveryAssetsClient
                 if (length newAllAssets) <= 11 then do
                     setAllAssets clientID newAllAssets
-                    putStrLn ("\nOlá " ++ (name client) ++ "! A compra da ação foi concluída!")
                 else do
                     putStrLn "\nOcorreu um  probelama! Quantidade de ações excedida."
 

@@ -17,7 +17,7 @@ main = do
     -- putStrLn (show (getCol 1))
     -- putStrLn (show (getAllAssets 1))
 
-    addAsset 1 1 (-3)
+    addAsset 1 1 1
     print (getQtdAssetsInCompany 1 2)
     -- setName 1 "ok"
     -- setAge 1 2

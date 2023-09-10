@@ -1,7 +1,7 @@
 module HomeBroker.HomeBrokerUpdate where
 
 import Utils.MatrixUtils (writeMatrixValue)
-import Utils.UpdateUtils (fillLeft)
+import Utils.UpdateUtils (fillLeft, resetMenu)
 import Company.GetSetAttrsCompany as Com(getPrice, getTrendIndicator, getStartPrice, getMaxPrice, getMinPrice, getName, getCode)
 import Client.GetSetAttrsClient as Cli (getCash, getQtdAssetsInCompany)
 import Clock.ClockUpdate (updateMatrixClock)
@@ -24,6 +24,7 @@ updateHomeBroker idClient idComp = do
 
 updateHomeBrokerBuy :: Int -> Int -> IO ()
 updateHomeBrokerBuy idClient idComp = do
+    resetMenu filePath "./Sprites/HomeBroker/homebrokerBuy_base.txt"
     updateMatrixClock filePath
     updateHBCash filePath (getCash idClient)
     updateHBCompanyName filePath (Com.getName idComp)
@@ -35,6 +36,7 @@ updateHomeBrokerBuy idClient idComp = do
 
 updateHomeBrokerSell :: Int -> Int -> IO ()
 updateHomeBrokerSell idClient idComp = do
+    resetMenu filePath "./Sprites/HomeBroker/homebrokerSell_base.txt"
     updateMatrixClock filePath
     updateHBCash filePath (getCash idClient)
     updateHBCompanyName filePath (Com.getName idComp)
