@@ -21,11 +21,11 @@ updateClientWallet idClient = do
     updateWLPatrimony filePath (getPatrimony idClient)
     updateWLUserName filePath (Cli.getName idClient)
     updateWLUserCPF filePath (getCPF idClient)
-    updateAllWLCompanyCode filePath jsonPath
-    updateAllWLCompanyPrice filePath jsonPath
-    updateAllWLOwnedStocks filePath (getAllAssets idClient)
+    updateAllWLCompanyCode filePath ownedAssets
+    updateAllWLCompanyPrice filePath ownedAssets
+    updateAllWLOwnedStocks filePath ownedAssets
     where filePath = "./Client/Wallet/wallet" ++ show idClient ++ ".txt"
-          jsonPath = getCompanyJSON "./Data/Companies.json"
+          ownedAssets = getAllAssets idClient
 
 
 -- Aualiza todas as informações no menu de depósito
@@ -78,11 +78,11 @@ cleanWLGraph filepath row = do
     cleanWLGraph filepath (row + 1)
 
 
-updateAllWLCompanyCode :: FilePath -> [Company] -> IO ()
+updateAllWLCompanyCode :: FilePath -> [Asset] -> IO ()
 updateAllWLCompanyCode filePath [] = return ()
 updateAllWLCompanyCode filePath (x:xs) = do
-    let id = getIdent x
-    updateWLCompanyCode filePath id (Com.getCode id)
+    let id = companyID x
+    updateWLCompanyCode filePath id (getCode id)
     updateAllWLCompanyCode filePath xs
 
 
@@ -92,10 +92,10 @@ updateWLCompanyCode filePath id code = do
     writeMatrixValue filePath code (head pos) (last pos)
 
 
-updateAllWLCompanyPrice :: FilePath -> [Company] -> IO ()
+updateAllWLCompanyPrice :: FilePath -> [Asset] -> IO ()
 updateAllWLCompanyPrice filePath [] = return ()
 updateAllWLCompanyPrice filePath (x:xs) = do
-    let id = getIdent x
+    let id = companyID x
     updateWLCompanyPrice filePath id (getPrice id) (getTrendIndicator id)
     updateAllWLCompanyPrice filePath xs
 
