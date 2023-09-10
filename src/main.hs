@@ -6,10 +6,16 @@ import Client.CreateClient
 import Client.CadastrarCliente
 import Company.CadastrarCompany
 import Control.Concurrent (threadDelay)
+import Client.GetSetAttrsClient
+import MainMenu.MainMenuUpdate
+import Client.SaveClient
+import MainMenu.CompanyDescription.CompanyDescriptionUpdate
+import Wallet.WalletUpdate
 
-walletUser:: IO()
-walletUser = do
-   printMatrix "./Sprites/Wallet/wallet_base.txt"
+walletUser :: Int -> IO()
+walletUser id = do
+   updateClientWallet id
+   printMatrix ("./Client/Wallet/wallet" ++ (show id) ++ ".txt")
 
 ehcadastrado:: Bool -> IO()
 ehcadastrado result = do
@@ -24,20 +30,40 @@ cadastroRealizado :: IO()
 cadastroRealizado = do
    printMatrix "./Sprites/StartMenu/sign-in_menu_cadastro_realizado.txt"
 
+opcoesMenu :: String -> Int -> IO()
+opcoesMenu op id
+   | op == "W" || op == "w" = walletUser id
+   | op == "1" = descricaoDaEmpresa 1 id
+   | op == "2" = descricaoDaEmpresa 2 id
+   | op == "3" = descricaoDaEmpresa 3 id
+   | op == "4" = descricaoDaEmpresa 4 id
+   | op == "5" = descricaoDaEmpresa 5 id
+   | op == "6" = descricaoDaEmpresa 6 id
+   | op == "7" = descricaoDaEmpresa 7 id
+   | op == "8" = descricaoDaEmpresa 8 id
+   | op == "9" = descricaoDaEmpresa 9 id
+   | op == "A" = descricaoDaEmpresa 10 id
+   | op == "B" = descricaoDaEmpresa 11 id
+   | op == "C" = descricaoDaEmpresa 12 id
+   | op == "S" = menuStart
+   | otherwise = do
+           putStrLn "Opção inválida"
+           menuPrincipal
+      
+descricaoDaEmpresa :: Int -> Int -> IO()
+descricaoDaEmpresa idCompany idUser = do
+   updateCompanyDescription idUser idCompany
+   printMatrix "./MainMenu/CompanyDescription/companyDescription.txt"
+
 menuPrincipal:: IO()
 menuPrincipal = do
-   printMatrix "./Sprites/MainMenu/mainMenu_base.txt"
+   myId <- getID
+   updateMainMenu myId
+   printMatrix "./MainMenu/mainMenu.txt"
    putStr "Digite uma opção: "
    hFlush stdout
    respostaUser <- getLine
-   if respostaUser == "W" ||respostaUser == "w"then
-      walletUser
-      -- updateClientWallet
-   else if respostaUser == "S" ||respostaUser == "s"then
-      menuStart
-   else do
-      putStrLn "Opção Inválida!"
-      menuPrincipal
+   opcoesMenu respostaUser myId
 
 fazerLoginGeral :: IO ()
 fazerLoginGeral = do
@@ -95,7 +121,8 @@ menuStart = do
       cadastraUsuario
    else if input == "E" || input == "e"then
       cadastraEmpresa
-   else if input == "S" || input == "s"then
+   else if input == "S" || input == "s"then do
+      logoutClient
       return()
    else do
       putStrLn "Opção Inválida!"
