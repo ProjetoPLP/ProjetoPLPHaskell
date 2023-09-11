@@ -10,7 +10,7 @@ cadastrarCliente = do
     if length (name client) <= 18 then
         if age client >= 18 then do
             if length (cpf client) == 11 then do
-                if length (password client) >= 5 then do
+                if length (show (password client)) >= 5 then do
                     if not (existClientByEmail (email client)) then do
                         saveClientJSON "./Data/Clients.json" client
                         return True

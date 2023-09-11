@@ -8,9 +8,9 @@ getEmail = do
     input <- getLine
     return input
 
-getPassword :: IO String
+getPassword :: IO Int
 getPassword = do
     putStr "Digite a senha: "
     hFlush stdout
     input <- getLine
-    return (read input :: String)
+    return (read input :: Int)

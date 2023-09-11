@@ -29,7 +29,7 @@ getEmail id = email (getClient id)
 -- ====================== getPasswordOfClient ======================== --
 -- Entrada: id: Int
 -- TipoDeSaida: Int
-getPassword :: Int -> String
+getPassword :: Int -> Int
 getPassword id = password (getClient id)
 
 -- ====================== getCashOfClient ============================ --
@@ -150,11 +150,11 @@ setEmail id email = do
 -- ====================== setPasswordOfClient ====================== --
 -- Entrada: id: Int / password: Int
 -- TipoDeSaida: Bool
-setPassword :: Int -> String -> IO Bool
+setPassword :: Int -> Int -> IO Bool
 setPassword id password = do
     let client = getClient id
-    if length (show password) == 5 then do
-        if ident client /= -1 then do
+    if (length (show password) == 5) then do
+        if (ident client) /= -1 then do
             let newClient = client { password = password }
             editClientJSON "./Data/Clients.json" newClient
             return True
