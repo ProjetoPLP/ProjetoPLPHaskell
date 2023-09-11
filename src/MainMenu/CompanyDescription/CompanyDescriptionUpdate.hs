@@ -1,11 +1,12 @@
 module MainMenu.CompanyDescription.CompanyDescriptionUpdate where
-import Utils.UpdateUtils
+
+import Utils.UpdateUtils (fillLeft, resetMenu)
 import Utils.MatrixUtils (writeMatrixValue)
+
 import Clock.ClockUpdate (updateMatrixClock)
-import Clock.GetSetClock (getClock)
-import Company.SaveCompany (getCompanyJSON)
-import Client.GetSetAttrsClient (getCash)
+
 import Company.GetSetAttrsCompany (getCode, getName, getActuation, getPrice, getTrendIndicator, getDeclaration, getAge, getCNPJ)
+import Client.GetSetAttrsClient (getCash)
 
 
 -- Atualiza todas as informações de uma empresa em Company Description

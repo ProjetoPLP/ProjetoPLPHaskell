@@ -1,7 +1,9 @@
 module Wallet.WalletAttPatrimony where
+
 import Client.ModelClient (Asset (companyID, qtd), Client (ident))
-import Company.GetSetAttrsCompany (getPrice)
 import Client.GetSetAttrsClient (getAllAssets, setPatrimony)
+
+import Company.GetSetAttrsCompany (getPrice)
 
 
 -- Atualiza o patrimônio de um cliente

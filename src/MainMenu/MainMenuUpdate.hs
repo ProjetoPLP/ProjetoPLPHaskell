@@ -1,12 +1,14 @@
 module MainMenu.MainMenuUpdate where
 
-import Utils.UpdateUtils
+import Utils.UpdateUtils (fillLeft, resetMenu)
 import Utils.MatrixUtils (writeMatrixValue)
-import Clock.ClockUpdate (updateMatrixClock)
-import Client.GetSetAttrsClient (getCash)
+
 import Company.GetSetAttrsCompany (getCode, getIdent, getName, getPrice, getTrendIndicator)
 import Company.ModelCompany (Company)
 import Company.SaveCompany (getCompanyJSON)
+
+import Clock.ClockUpdate (updateMatrixClock)
+import Client.GetSetAttrsClient (getCash)
 
 
 -- Atualiza todas as informações no Main Menu
@@ -28,6 +30,7 @@ updateMMCash filePath num = do
     writeMatrixValue filePath val 3 (74 - length val)
 
 
+-- Atualiza o código de todas as empresas no Main Menu
 updateAllMMCompanyCode :: FilePath -> [Company] -> IO ()
 updateAllMMCompanyCode filePath [] = return ()
 updateAllMMCompanyCode filePath (x:xs) = do
@@ -41,6 +44,7 @@ updateMMCompanyCode filePath id = do
     writeMatrixValue filePath (getCode id) (head pos) (last pos)
 
 
+-- Atualiza o nome de todas as empresas no Main Menu
 updateAllMMCompanyName :: FilePath -> [Company] -> IO ()
 updateAllMMCompanyName filePath [] = return ()
 updateAllMMCompanyName filePath (x:xs) = do
@@ -55,6 +59,7 @@ updateMMCompanyName filePath id name = do
     writeMatrixValue filePath name (head pos) (getCompanyNameCol (length name) (last pos))
 
 
+-- Atualiza o preço de todas as empresas no Main Menu
 updateAllMMCompanyPrice :: FilePath -> [Company] -> IO ()
 updateAllMMCompanyPrice filePath [] = return ()
 updateAllMMCompanyPrice filePath (x:xs) = do
@@ -70,6 +75,7 @@ updateMMCompanyPrice filePath id num trendInd = do
     writeMatrixValue filePath val (head pos) (last pos - length val)
 
 
+-- Formata, a partir do tamanho do nome, a coluna na qual o nome será escrito 
 getCompanyNameCol :: Int -> Int -> Int
 getCompanyNameCol len col = col - ((len - 1) `div` 2)
 

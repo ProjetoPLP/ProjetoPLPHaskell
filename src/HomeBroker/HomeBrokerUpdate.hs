@@ -2,8 +2,8 @@ module HomeBroker.HomeBrokerUpdate where
 
 import Utils.MatrixUtils (writeMatrixValue)
 import Utils.UpdateUtils (fillLeft, resetMenu)
-import Company.GetSetAttrsCompany as Com(getPrice, getTrendIndicator, getStartPrice, getMaxPrice, getMinPrice, getName, getCode)
-import Client.GetSetAttrsClient as Cli (getCash, getQtdAssetsInCompany)
+import Company.GetSetAttrsCompany (getPrice, getTrendIndicator, getStartPrice, getMaxPrice, getMinPrice, getName, getCode)
+import Client.GetSetAttrsClient (getCash, getQtdAssetsInCompany)
 import Clock.ClockUpdate (updateMatrixClock)
 
 
@@ -12,8 +12,8 @@ updateHomeBroker :: Int -> Int -> IO ()
 updateHomeBroker idClient idComp = do
     updateMatrixClock filePath
     updateHBCash filePath (getCash idClient)
-    updateHBCompanyName filePath (Com.getName idComp)
-    updateHBCompanyCode filePath (Com.getCode idComp)
+    updateHBCompanyName filePath (getName idComp)
+    updateHBCompanyCode filePath (getCode idComp)
     updateHBStockPrice filePath (getPrice idComp) (getTrendIndicator idComp)
     updateHBStockStartPrice filePath (getStartPrice idComp)
     updateHBStockMaxPrice filePath (getMaxPrice idComp)
@@ -22,25 +22,27 @@ updateHomeBroker idClient idComp = do
     where filePath = "./Company/HomeBroker/homebroker" ++ show idComp ++ ".txt"
 
 
+-- Atualiza todas as informações do menu de compras em um Home Broker de uma determinada empresa
 updateHomeBrokerBuy :: Int -> Int -> IO ()
 updateHomeBrokerBuy idClient idComp = do
     resetMenu filePath "./Sprites/HomeBroker/homebrokerBuy_base.txt"
     updateMatrixClock filePath
     updateHBCash filePath (getCash idClient)
-    updateHBCompanyName filePath (Com.getName idComp)
-    updateHBCompanyCode filePath (Com.getCode idComp)
+    updateHBCompanyName filePath (getName idComp)
+    updateHBCompanyCode filePath (getCode idComp)
     updateHBStockPrice filePath (getPrice idComp) (getTrendIndicator idComp)
     updateHBOwnedStocks filePath (getQtdAssetsInCompany idClient idComp)
     where filePath = "./HomeBroker/BuySell/homebrokerBuy.txt"
 
 
+-- Atualiza todas as informações do menu de vendas em um Home Broker de uma determinada empresa
 updateHomeBrokerSell :: Int -> Int -> IO ()
 updateHomeBrokerSell idClient idComp = do
     resetMenu filePath "./Sprites/HomeBroker/homebrokerSell_base.txt"
     updateMatrixClock filePath
     updateHBCash filePath (getCash idClient)
-    updateHBCompanyName filePath (Com.getName idComp)
-    updateHBCompanyCode filePath (Com.getCode idComp)
+    updateHBCompanyName filePath (getName idComp)
+    updateHBCompanyCode filePath (getCode idComp)
     updateHBStockPrice filePath (getPrice idComp) (getTrendIndicator idComp)
     updateHBOwnedStocks filePath (getQtdAssetsInCompany idClient idComp)
     where filePath = "./HomeBroker/BuySell/homebrokerSell.txt"
@@ -57,7 +59,7 @@ updateHBGraphCandle filePath row col = do
     writeMatrixValue filePath "❚" row col
 
 
--- Reinicia o gráfico sobrescrevendo todos os espaços com caracteres vazios
+-- Reinicia o gráfico do Home Broker sobrescrevendo todos os espaços com caracteres vazios
 cleanHBGraph :: FilePath -> Int -> IO ()
 cleanHBGraph filepath 26 = writeMatrixValue filepath (replicate 74 ' ') 26 2
 cleanHBGraph filepath row = do
