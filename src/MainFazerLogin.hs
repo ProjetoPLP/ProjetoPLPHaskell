@@ -7,7 +7,7 @@ main :: IO()
 main = do
     -- result <- fazerLogin
 
-    client <- getID
+    client <- getCurrentUserID
 
     -- print (ident client)
 

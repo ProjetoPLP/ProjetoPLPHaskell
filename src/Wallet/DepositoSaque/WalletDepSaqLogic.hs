@@ -1,4 +1,5 @@
 module Wallet.DepositoSaque.WalletDepSaqLogic where
+    
 import Client.GetSetAttrsClient (addCash, setCash, removeCash, getCash, setCanDeposit)
 
 
@@ -12,10 +13,18 @@ depositar idClient canDeposit = do
 
 sacarTudo :: Int -> IO ()
 sacarTudo idClient = do
-    if getCash idClient >= 500 then do
+    if getCash idClient >= 200 then do
         setCash idClient 0
         setCanDeposit idClient True
-    else putStrLn "Saque negado. O cliente não possui um saldo de 500 reais ou mais."
+    else putStrLn "Saque negado. O cliente não possui um saldo de 200 reais ou mais."
+
+
+sacar200 :: Int -> IO ()
+sacar200 idClient = do
+    if getCash idClient >= 200 then do
+        removeCash idClient 200
+        setCanDeposit idClient True
+    else putStrLn "Saque negado. O cliente não possui um saldo de 200 reais ou mais."
 
 
 sacar500 :: Int -> IO ()
@@ -23,12 +32,4 @@ sacar500 idClient = do
     if getCash idClient >= 500 then do
         removeCash idClient 500
         setCanDeposit idClient True
-    else putStrLn "Saque negado. O cliente não possui um saldo de 500 reais ou mais."
-
-
-sacar1000 :: Int -> IO ()
-sacar1000 idClient = do
-    if getCash idClient >= 1000 then do
-        removeCash idClient 1000
-        setCanDeposit idClient True
-    else putStrLn "Saque negado. O cliente não possui um saldo de 500 reais ou mais."
+    else putStrLn "Saque negado. O cliente não possui um saldo de 200 reais ou mais."

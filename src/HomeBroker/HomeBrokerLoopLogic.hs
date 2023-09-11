@@ -3,14 +3,13 @@ module HomeBroker.HomeBrokerLoopLogic where
 import Control.Concurrent (threadDelay)
 import Data.Time.Clock (getCurrentTime, UTCTime, addUTCTime)
 
-import Clock.ClockUpdate
+import Clock.ClockUpdate (updateMatrixClock)
 import Clock.GetSetClock (addClock)
 
-import Company.GetSetAttrsCompany
+import Utils.GraphUtils (checkAllCompanyColumn)
 import Company.SaveCompany (getCompanyJSON)
 import HomeBroker.HomeBrokerAttPrice (attCurrentCompanyPriceGraph, attAllCompanyPriceGraph)
-import Utils.GraphUtils (checkCompanyColumn, checkAllCompanyColumn)
-import Wallet.WalletAttPatrimony ( attAllClientsWalletPatrimonyGraph )
+import Wallet.WalletAttPatrimony (attAllClientsWalletPatrimonyGraph)
 import Client.SaveClient (getClientJSON)
 
 

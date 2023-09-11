@@ -4,12 +4,10 @@ import Utils.MatrixUtils (writeMatrixValue)
 import Utils.UpdateUtils (fillLeft, fillRight, resetMenu)
 
 import Client.GetSetAttrsClient as Cli ( getCPF, getCash, getName, getPatrimony, getAllAssets )
-
-import Clock.ClockUpdate
-import Company.GetSetAttrsCompany as Com (getCode, getName, getPrice, getTrendIndicator)
-import Company.ModelCompany (Company)
-import Company.SaveCompany (getCompanyJSON)
 import Client.ModelClient (Asset (companyID, qtd))
+
+import Company.GetSetAttrsCompany as Com (getCode, getPrice, getTrendIndicator)
+import Clock.ClockUpdate ( updateMatrixClock )
 import Wallet.WalletAttPatrimony (attClientPatrimony)
 
 
@@ -30,7 +28,7 @@ updateClientWallet idClient = do
           ownedAssets = getAllAssets idClient
 
 
--- Aualiza todas as informações no menu de depósito
+-- Aualiza todas as informações do menu de depósito
 updateWalletDeposito :: Int -> IO ()
 updateWalletDeposito idClient = do
     resetMenu filePath "./Sprites/Wallet/walletDeposito_base.txt"
@@ -42,7 +40,7 @@ updateWalletDeposito idClient = do
     where filePath = "./Wallet/DepositoSaque/walletDeposito.txt"
 
 
--- Aualiza todas as informações no menu de saque
+-- Aualiza todas as informações do menu de saque
 updateWalletSaque :: Int -> IO ()
 updateWalletSaque idClient = do
     resetMenu filePath "./Sprites/Wallet/walletSaque_base.txt"
@@ -71,7 +69,7 @@ updateWLGraphCandle filePath row col = do
     writeMatrixValue filePath "❚" row col
 
 
--- Reinicia o gráfico sobrescrevendo todos os espaços com caracteres vazios
+-- Reinicia o gráfico da carteira sobrescrevendo todos os espaços com caracteres vazios
 cleanWLGraph :: FilePath -> Int -> IO ()
 cleanWLGraph filepath 20 = writeMatrixValue filepath (replicate 47 ' ') 20 50
 cleanWLGraph filepath row = do
@@ -79,6 +77,7 @@ cleanWLGraph filepath row = do
     cleanWLGraph filepath (row + 1)
 
 
+-- Atualiza o código de todas as empresas no carteira do usuário
 updateAllWLCompanyCode :: FilePath -> [Asset] -> IO ()
 updateAllWLCompanyCode filePath [] = return ()
 updateAllWLCompanyCode filePath (x:xs) = do
@@ -93,6 +92,7 @@ updateWLCompanyCode filePath id code = do
     writeMatrixValue filePath code (head pos) (last pos)
 
 
+-- Atualiza o preço de todas as empresas no carteira do usuário
 updateAllWLCompanyPrice :: FilePath -> [Asset] -> IO ()
 updateAllWLCompanyPrice filePath [] = return ()
 updateAllWLCompanyPrice filePath (x:xs) = do
@@ -108,6 +108,7 @@ updateWLCompanyPrice filePath id price trendInd = do
     writeMatrixValue filePath val (head pos) (last pos - length val)
 
 
+-- Atualiza a quantidade de ações que o usuário possui de cada empresa na sua carteira
 updateAllWLOwnedStocks :: FilePath -> [Asset] -> IO ()
 updateAllWLOwnedStocks filePath [] = return ()
 updateAllWLOwnedStocks filePath (x:xs) = do
@@ -146,6 +147,7 @@ updateWLNewsText filePath text = do
     writeMatrixValue filePath val 14 29
 
 
+-- Reseta todas as informações de ações do usuário
 resetStocks :: [Int] -> Int -> IO ()
 resetStocks [] idCliet = return ()
 resetStocks (x:xs) idClient = do

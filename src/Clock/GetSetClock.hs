@@ -1,18 +1,20 @@
 module Clock.GetSetClock where
 
-import Data.Aeson
-import GHC.Generics
+import Data.Aeson ( FromJSON, ToJSON, encode, decode )
+import GHC.Generics ( Generic )
 import qualified Data.ByteString.Lazy as B
 import System.IO.Unsafe (unsafePerformIO)
 
 data Clock = Clock
-  { minutes :: Int
+  { 
+    minutes :: Int
   } deriving (Show, Generic)
 
 instance ToJSON Clock
 instance FromJSON Clock
 
 
+-- Retorna os minutos totais do relógio no arquivo Clock.json
 getClock :: Int 
 getClock = do
     let file = unsafePerformIO (B.readFile "./Data/Clock.json")
@@ -22,6 +24,7 @@ getClock = do
         Nothing -> -1
 
 
+-- Soma ao relógio novos minutos
 addClock :: Int -> IO ()
 addClock increment = do 
     jsonContent <- B.readFile "./Data/Clock.json"

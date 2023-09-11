@@ -2,13 +2,13 @@ module HomeBroker.HomeBrokerAttPrice where
 
 import System.Random (randomRIO)
 
-import HomeBroker.HomeBrokerUpdate
-import Utils.MatrixUtils (printMatrix, writeMatrixValue)
-
-import Company.GetSetAttrsCompany
+import Utils.MatrixUtils (printMatrix)
 import Utils.GraphUtils (attCompanyLineRow, attTrendIndicator)
+
+import HomeBroker.HomeBrokerUpdate (updateHBGraphCandle, updateHBStockMaxPrice, updateHBStockMinPrice, updateHBStockPrice, updateHBStockStartPrice)
+
 import Company.ModelCompany (Company)
-import Text.Read (Lexeme(Ident))
+import Company.GetSetAttrsCompany (getCol, getIdent, getMaxPrice, getMinPrice, getPrice, getRow, getStartPrice, getTrendIndicator, setMaxPrice, setMinPrice, setPrice)
 
 
 -- Retorna um index e uma variação aleatória 
@@ -31,6 +31,7 @@ getNewPrice oldPrice = do
         format newPrice = fromIntegral (round (newPrice * 10 )) / 10
 
 
+-- Retorna o novo preço máximo baseado no novo preço
 getNewMaxPrice :: Int -> Float -> IO Float
 getNewMaxPrice idComp newPrice = do
     let maxPrice = getMaxPrice idComp
@@ -40,6 +41,7 @@ getNewMaxPrice idComp newPrice = do
         return newPrice
 
 
+-- Retorna o novo preço mínimo baseado no novo preço
 getNewMinPrice :: Int -> Float -> IO Float
 getNewMinPrice idComp newPrice = do
     let minPrice = getMinPrice idComp
