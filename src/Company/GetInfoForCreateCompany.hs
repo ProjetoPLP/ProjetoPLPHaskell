@@ -9,12 +9,12 @@ getName = do
   input <- getLine
   return input
 
-getAgeFounded :: IO String
+getAgeFounded :: IO Int
 getAgeFounded = do
   putStr "Digite o ano de fundação da empresa: "
   hFlush stdout
   input <- getLine
-  let age = (read input :: String)
+  let age = (read input :: Int)
   return age
 
 getCNPJ :: IO String

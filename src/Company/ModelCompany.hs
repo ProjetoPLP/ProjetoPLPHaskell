@@ -5,7 +5,7 @@ import GHC.Generics
 data Company = Company
   { ident :: Int,
     name :: String,
-    age :: String,
+    age :: Int,
     cnpj :: String,
     actuation :: String,
     declaration :: String,
@@ -20,7 +20,7 @@ data Company = Company
   }
   deriving (Show, Generic)
 
-createCompany :: Int -> String -> String -> String -> String -> String -> String -> Float -> String -> Company
+createCompany :: Int -> String -> Int -> String -> String -> String -> String -> Float -> String -> Company
 createCompany id_ name age cnpj actuation declaration code price trendIndicator =
   Company
     { ident = id_,
