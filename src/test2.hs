@@ -13,6 +13,7 @@ import Client.GetSetAttrsClient (getAllAssets)
 import HomeBroker.BuySell.HomeBrokerBuySellLogic (buy, sell)
 import Wallet.WalletUpdate (updateClientWallet)
 import Client.PostClient
+import Client.ModelClient (Client(canDeposit))
 
 
 main :: IO ()

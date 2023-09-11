@@ -192,16 +192,14 @@ setPatrimony id patrimony = do
 -- ====================== setCanDepositOfClient =================== --
 -- Entrada: id: Int / canDeposit: Bool
 -- TipoDeSaida: Bool
-setCanDeposit :: Int -> Bool -> IO Bool
+setCanDeposit :: Int -> Bool -> IO ()
 setCanDeposit id canDeposit = do
     let client = getClient id
     if (ident client) /= -1 then do
         let newClient = client { canDeposit = canDeposit }
         editClientJSON "./Data/Clients.json" newClient
-        return True
     else do
         putStrLn "\nOcorreu um problema! O Cliente com este id não foi encontrado!"
-        return False
 
 -- ====================== setRowOfClient ========================== --
 -- Entrada: id: Int / row: Int
