@@ -19,8 +19,8 @@
 ║  Só será permitido o  ║              │ Deseja depositar 100 reais na sua conta? │             ║
 ║     depósito após     ║              │                                          │             ║
 ║  o cliente realizar   ║              │                                          │             ║
-║      algum saque      ║              │                   Sim                    │             ║
-║                       ║              │                   ▔                      │             ║
+║      algum saque      ║              │                Sim    Não                │             ║
+║                       ║              │                ▔      ▔                  │             ║
 ║                       ║              └──────────────────────────────────────────┘             ║
 ║                       ║                                                                       ║
 ║                       ║                                                                       ║

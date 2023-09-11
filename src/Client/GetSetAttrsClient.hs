@@ -276,7 +276,7 @@ removeCash id cashRemove = do
     let newClient = client {cash = newCash}
     editClientJSON "./Data/Clients.json" newClient
 
-getID :: IO Int
-getID = do
-    result <- getClientLogged
-    return (ident result)
+
+getCurrentUserID :: IO Int
+getCurrentUserID = do
+    ident <$> getClientLogged
