@@ -13,6 +13,16 @@ import MainMenu.CompanyDescription.CompanyDescriptionUpdate
 import Wallet.WalletUpdate
 import Utils.VerificationUtils (existCompany)
 import Wallet.DepositoSaque.WalletDepSaqLogic
+import HomeBroker.HomeBrokerUpdate
+import HomeBroker.BuySell.HomeBrokerBuySellLogic
+import Data.Char (isDigit)
+import HomeBroker.HomeBrokerLoopLogic
+
+isNumber :: String -> Bool
+isNumber = all isDigit
+
+stringToInt :: String -> Int
+stringToInt str = read str
 
 operacaoSacar :: Int -> IO()
 operacaoSacar id = do
@@ -110,16 +120,86 @@ opcoesMenu op id
    | otherwise = do
            putStrLn "Opção inválida"
            menuPrincipal
-      
+
+opBuyMenu :: String -> Int -> Int -> IO()
+opBuyMenu respostaUser idUser idCompany
+   | isNumber respostaUser = do
+      buy idUser idCompany (stringToInt respostaUser)
+      buyMenu idUser idCompany
+   | respostaUser == "V" || respostaUser == "v" = homeBrokerUser idCompany idUser
+   | otherwise = do
+      putStrLn "Opção Inválida!"
+      buyMenu idUser idCompany
+
+buyMenu :: Int -> Int -> IO()
+buyMenu idUSer idCompany = do
+   updateHomeBrokerBuy idUSer idCompany
+   printMatrix "./HomeBroker/BuySell/homebrokerBuy.txt"
+   putStr "Digite quantas ações deseja comprar: "
+   hFlush stdout
+   respostaUser <- getLine
+   opBuyMenu respostaUser idUSer idCompany
+
+opSellMenu :: String -> Int -> Int -> IO()
+opSellMenu respostaUser idUser idCompany 
+   | isNumber respostaUser = do
+      sell idUser idCompany (stringToInt respostaUser)
+      sellMenu idUser idCompany
+   | respostaUser == "V" || respostaUser == "v" = homeBrokerUser idCompany idUser
+   | otherwise = do
+      putStrLn "Opção Inválida!"
+      sellMenu idUser idCompany
+
+sellMenu :: Int -> Int -> IO()
+sellMenu idUSer idCompany = do
+   updateHomeBrokerSell idUSer idCompany
+   printMatrix "./HomeBroker/BuySell/homebrokerSell.txt"
+   putStr "Digite quantas ações deseja vender: "
+   hFlush stdout
+   respostaUser <- getLine
+   opSellMenu respostaUser idUSer idCompany
+
+opHomeBrokerCompany :: String -> Int -> Int -> IO()
+opHomeBrokerCompany op idUser idCompany
+   | op == "B" || op == "b" = buyMenu idUser idCompany
+   | op == "S" || op == "s" = sellMenu idUser idCompany
+   | op == "V" || op == "v" = descricaoDaEmpresa idCompany idUser
+   | isNumber op = do
+      callLoop idCompany (stringToInt op)
+      homeBrokerUser idCompany idUser
+   | otherwise  = do
+           putStrLn "Opção inválida"
+           homeBrokerUser idCompany idUser
+
+homeBrokerUser :: Int -> Int -> IO()
+homeBrokerUser idCompany idUser = do
+   updateHomeBroker idUser idCompany
+   printMatrix  ("./Company/HomeBroker/homebroker" ++ (show idCompany) ++ ".txt")
+   putStr "Digite uma opção: "
+   hFlush stdout
+   respostaUser <- getLine
+   opHomeBrokerCompany respostaUser idUser idCompany
+   
+
 descricaoDaEmpresa :: Int -> Int -> IO()
 descricaoDaEmpresa idCompany idUser = do
    if existCompany idCompany then do
       updateCompanyDescription idUser idCompany
       printMatrix "./MainMenu/CompanyDescription/companyDescription.txt"
+      putStr "Digite uma opção: "
+      hFlush stdout
+      respostaUser <- getLine
+      if respostaUser == "H" || respostaUser  == "h" then
+         homeBrokerUser idCompany idUser
+      else if respostaUser == "V" || respostaUser == "v" then do
+         menuPrincipal   
+      else do
+         putStrLn "Opção Inválida!"
+         descricaoDaEmpresa idCompany idUser
    else
       menuPrincipal
 
-menuPrincipal:: IO()
+menuPrincipal :: IO()
 menuPrincipal = do
    myId <- getID
    updateMainMenu myId
