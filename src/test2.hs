@@ -14,6 +14,8 @@ import HomeBroker.BuySell.HomeBrokerBuySellLogic (buy, sell)
 import Wallet.WalletUpdate (updateClientWallet)
 import Client.PostClient
 import Client.ModelClient (Client(canDeposit))
+import HomeBroker.TrendingClose.TrendingCloseUpdate (updateTrendingClose)
+-- import HomeBroker.TrendingClose.TrendingCloseUpdate (getTrendVar)
 
 
 main :: IO ()
@@ -33,6 +35,11 @@ main = do
     -- updateClientWallet 1
     -- printMatrix "./Client/Wallet/wallet1.txt"
 
-    sell 1 1 2 
-    updateHomeBroker 1 1
-    printMatrix "./Company/HomeBroker/homebroker1.txt"
+    -- sell 1 1 2 
+    -- updateHomeBroker 1 1
+    -- printMatrix "./Company/HomeBroker/homebroker1.txt"
+
+    updateTrendingClose 1
+    printMatrix "./HomeBroker/TrendingClose/trendingClose.txt"
+
+

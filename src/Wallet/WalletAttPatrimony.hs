@@ -1,7 +1,7 @@
 module Wallet.WalletAttPatrimony where
 
 import Client.ModelClient (Asset (companyID, qtd), Client (ident))
-import Client.GetSetAttrsClient (getAllAssets, setPatrimony)
+import Client.GetSetAttrsClient (getAllAssets, setPatrimony, getPatrimony)
 
 import Company.GetSetAttrsCompany (getPrice)
 
@@ -11,6 +11,10 @@ attClientPatrimony :: Int -> IO ()
 attClientPatrimony idClient = do 
     setPatrimony idClient (attClientPatrimonyAux (getAllAssets idClient))
 
+
+getOldPatrimony :: Int -> IO Float
+getOldPatrimony idUser = do
+    return (getPatrimony idUser)
 
 attClientPatrimonyAux :: [Asset] -> Float
 attClientPatrimonyAux [] = 0

@@ -20,7 +20,7 @@ updateCompanyProfile idClient idComp = do
     updateCPCompanyActuation filePath (getActuation idComp)
     updateCPCompanyPrice filePath (getPrice idComp) (getTrendIndicator idComp)
     updateCPCompanyDeclaration filePath (getDeclaration idComp)
-    updateCPCompanyAge filePath (getAge idComp)
+    updateCPCompanyAge filePath (getAge idComp) 
     updateCPCompanyCNPJ filePath (getCNPJ idComp)
     where filePath = "./HomeBroker/CompanyProfile/companyProfile.txt"
 
