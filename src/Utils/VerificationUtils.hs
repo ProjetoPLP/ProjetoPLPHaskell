@@ -1,7 +1,6 @@
 module Utils.VerificationUtils where
 
-import Company.ModelCompany (Company)
-import Company.GetSetAttrsCompany (getIdent)
+import Company.ModelCompany (Company (ident))
 import Company.SaveCompany (getCompanyJSON)
 
 
@@ -12,4 +11,4 @@ existCompany id = existCompanyAux id (getCompanyJSON "./Data/Companies.json")
 
 existCompanyAux :: Int -> [Company] -> Bool
 existCompanyAux _ [] = False
-existCompanyAux id (x:xs) = (getIdent x == id) || existCompanyAux id xs
+existCompanyAux id (x:xs) = (ident x == id) || existCompanyAux id xs

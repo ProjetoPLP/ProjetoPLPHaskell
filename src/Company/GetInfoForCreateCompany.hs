@@ -40,7 +40,7 @@ getDeclaration = do
 
 getCode :: IO String
 getCode = do
-  putStr "Digite o código da empresa: "
+  putStr "Digite o código da empresa (apenas 5 dígitos): "
   hFlush stdout
   input <- getLine
   return (uppercaseString input)

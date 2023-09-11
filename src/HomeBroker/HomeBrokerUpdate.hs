@@ -1,7 +1,7 @@
 module HomeBroker.HomeBrokerUpdate where
 
 import Utils.MatrixUtils (writeMatrixValue)
-import Utils.UpdateUtils (fillLeft)
+import Utils.UpdateUtils (fillLeft, resetMenu)
 import Company.GetSetAttrsCompany as Com(getPrice, getTrendIndicator, getStartPrice, getMaxPrice, getMinPrice, getName, getCode)
 import Client.GetSetAttrsClient as Cli (getCash, getQtdAssetsInCompany)
 import Clock.ClockUpdate (updateMatrixClock)
@@ -22,9 +22,33 @@ updateHomeBroker idClient idComp = do
     where filePath = "./Company/HomeBroker/homebroker" ++ show idComp ++ ".txt"
 
 
+updateHomeBrokerBuy :: Int -> Int -> IO ()
+updateHomeBrokerBuy idClient idComp = do
+    resetMenu filePath "./Sprites/HomeBroker/homebrokerBuy_base.txt"
+    updateMatrixClock filePath
+    updateHBCash filePath (getCash idClient)
+    updateHBCompanyName filePath (Com.getName idComp)
+    updateHBCompanyCode filePath (Com.getCode idComp)
+    updateHBStockPrice filePath (getPrice idComp) (getTrendIndicator idComp)
+    updateHBOwnedStocks filePath (getQtdAssetsInCompany idClient idComp)
+    where filePath = "./HomeBroker/BuySell/homebrokerBuy.txt"
+
+
+updateHomeBrokerSell :: Int -> Int -> IO ()
+updateHomeBrokerSell idClient idComp = do
+    resetMenu filePath "./Sprites/HomeBroker/homebrokerSell_base.txt"
+    updateMatrixClock filePath
+    updateHBCash filePath (getCash idClient)
+    updateHBCompanyName filePath (Com.getName idComp)
+    updateHBCompanyCode filePath (Com.getCode idComp)
+    updateHBStockPrice filePath (getPrice idComp) (getTrendIndicator idComp)
+    updateHBOwnedStocks filePath (getQtdAssetsInCompany idClient idComp)
+    where filePath = "./HomeBroker/BuySell/homebrokerSell.txt"
+
+
 updateHBStockPrice :: FilePath -> Float -> String -> IO ()
 updateHBStockPrice filePath price trendInd = do
-    let val = fillLeft (trendInd ++ show price ++ "0") 4
+    let val = fillLeft (trendInd ++ show price ++ "0") 6
     writeMatrixValue filePath val 11 (95 - length val)
 
 

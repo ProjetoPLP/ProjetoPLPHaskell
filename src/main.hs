@@ -12,12 +12,72 @@ import Client.SaveClient
 import MainMenu.CompanyDescription.CompanyDescriptionUpdate
 import Wallet.WalletUpdate
 import Utils.VerificationUtils (existCompany)
+import Wallet.DepositoSaque.WalletDepSaqLogic
+
+operacaoSacar :: Int -> IO()
+operacaoSacar id = do
+   updateWalletSaque id
+   printMatrix "./Wallet/DepositoSaque/walletSaque.txt"
+   putStr "Digite uma opção: "
+   hFlush stdout
+   respostaUser <- getLine
+   opUserSacar id respostaUser
+
+
+opUserSacar :: Int -> String -> IO()
+opUserSacar id respostaUser 
+   | respostaUser == "5" = do
+      sacar500 id
+      operacaoSacar id
+   | respostaUser == "1" = do
+      sacar1000 id
+      operacaoSacar id
+   | respostaUser == "T" || respostaUser == "t" = do
+      sacarTudo id
+      operacaoSacar id
+   | respostaUser == "V" || respostaUser == "v" = walletUser id
+   | otherwise = do
+      putStrLn "Opção inválida"
+      operacaoSacar id
+      
+
+opUserDeposito :: Int -> String -> IO()
+opUserDeposito id respostaUser 
+   | respostaUser == "S" || respostaUser  == "s" = do
+       depositar id (getCanDeposit id)
+       operacaoDepositar id
+   | respostaUser == "V" || respostaUser  == "v" = walletUser id
+   | otherwise = do
+         putStrLn "Opção inválida"
+         operacaoDepositar id
+
+operacaoDepositar :: Int -> IO()
+operacaoDepositar id = do
+   updateWalletDeposito id
+   printMatrix "./Wallet/DepositoSaque/walletDeposito.txt"
+   putStr "Digite uma opção (S/V): "
+   hFlush stdout
+   respostaUser <- getLine
+   opUserDeposito id respostaUser
+
+opcoesWallet :: Int -> String -> IO()
+opcoesWallet id opcao 
+   | opcao == "S" || opcao == "s" = operacaoSacar id 
+   | opcao == "D" || opcao == "d" = operacaoDepositar id 
+   | opcao == "V" || opcao == "v" = menuPrincipal
+   | otherwise = do
+           putStrLn "Opção inválida"
+           walletUser id
 
 walletUser :: Int -> IO()
 walletUser id = do
    updateClientWallet id
    printMatrix ("./Client/Wallet/wallet" ++ (show id) ++ ".txt")
-
+   putStr "D - Depósito\nS - Saque\nV - Voltar\nDigite uma opção: "
+   hFlush stdout
+   respostaUser <- getLine
+   opcoesWallet id respostaUser
+ 
 ehcadastrado:: Bool -> IO()
 ehcadastrado result = do
    if result then do
