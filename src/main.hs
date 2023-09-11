@@ -23,17 +23,23 @@ operacaoSacar id = do
    respostaUser <- getLine
    opUserSacar id respostaUser
 
+
 opUserSacar :: Int -> String -> IO()
-opUserSacar id respostaUser = do
-   if elem respostaUser ["T", "t", "5", "1"] then do
-      sacar id respostaUser
+opUserSacar id respostaUser 
+   | respostaUser == "5" = do
+      sacar500 id
       operacaoSacar id
-   else if respostaUser == "V" || respostaUser == "v" then 
-      walletUser id
-   else do
+   | respostaUser == "1" = do
+      sacar1000 id
+      operacaoSacar id
+   | respostaUser == "T" || respostaUser == "t" = do
+      sacarTudo id
+      operacaoSacar id
+   | respostaUser == "V" || respostaUser == "v" = walletUser id
+   | otherwise = do
       putStrLn "Opção inválida"
       operacaoSacar id
-
+      
 
 opUserDeposito :: Int -> String -> IO()
 opUserDeposito id respostaUser 
