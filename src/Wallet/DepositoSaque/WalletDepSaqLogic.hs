@@ -1,5 +1,5 @@
 module Wallet.DepositoSaque.WalletDepSaqLogic where
-import Client.GetSetAttrsClient (addCash, setCash, removeCash, getCash)
+import Client.GetSetAttrsClient (addCash, setCash, removeCash, getCash, setCanDeposit)
 
 
 depositar :: Int -> Bool -> IO ()
@@ -22,13 +22,16 @@ sacar idClient input = do
 sacarTudo :: Int -> IO ()
 sacarTudo idClient = do
     setCash idClient 0
+    setCanDeposit idClient True
 
 
 sacar500 :: Int -> IO ()
 sacar500 idClient = do
     removeCash idClient 500
+    setCanDeposit idClient True
 
 
 sacar1000 :: Int -> IO ()
 sacar1000 idClient = do
     removeCash idClient 1000
+    setCanDeposit idClient True

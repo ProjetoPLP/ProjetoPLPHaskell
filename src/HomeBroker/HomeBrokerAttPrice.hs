@@ -49,43 +49,30 @@ getNewMinPrice idComp newPrice = do
         return newPrice
 
 
+-- Atualiza em uma empresa qualquer, a partir do seu ID, o preço e o gráfico
+attCompanyPriceGraph :: Int -> IO ()
+attCompanyPriceGraph id = do
+    let oldPrice = getPrice id
+    newPrice <- getNewPrice oldPrice
+    newMaxPrice <- getNewMaxPrice id newPrice
+    newMinPrice <- getNewMinPrice id newPrice
+
+    setPrice id newPrice
+    attTrendIndicator id oldPrice newPrice
+    attCompanyLineRow id oldPrice newPrice
+    updateHBStockPrice filePath newPrice (getTrendIndicator id)
+    updateHBStockMaxPrice filePath newMaxPrice
+    updateHBStockMinPrice filePath newMinPrice
+    updateHBStockStartPrice filePath (getStartPrice id)
+    updateHBGraphCandle filePath (getRow id) (getCol id)
+    where filePath = "./Company/HomeBroker/homebroker" ++ show id ++ ".txt"
+
+
 -- Atualiza na empresa atual, a partir do seu ID, o preço e o gráfico
 attCurrentCompanyPriceGraph :: Int -> IO ()
 attCurrentCompanyPriceGraph id = do
-    let oldPrice = getPrice id
-    newPrice <- getNewPrice oldPrice
-    newMaxPrice <- getNewMaxPrice id newPrice
-    newMinPrice <- getNewMinPrice id newPrice
-
-    setPrice id newPrice
-    attTrendIndicator id oldPrice newPrice
-    attCompanyLineRow id oldPrice newPrice
-    updateHBStockPrice filePath newPrice (getTrendIndicator id)
-    updateHBStockMaxPrice filePath newMaxPrice
-    updateHBStockMinPrice filePath newMinPrice
-    updateHBStockStartPrice filePath (getStartPrice id)
-    updateHBGraphCandle filePath (getRow id) (getCol id)
-    printMatrix filePath
-    where filePath = "./Company/HomeBroker/homebroker" ++ show id ++ ".txt"
-
-
--- Atualiza em uma empresa qualquer, a partir do seu ID, o preço e o gráfico
-attOthersCompanyPriceGraph :: Int -> IO ()
-attOthersCompanyPriceGraph id = do
-    let oldPrice = getPrice id
-    newPrice <- getNewPrice oldPrice
-    newMaxPrice <- getNewMaxPrice id newPrice
-    newMinPrice <- getNewMinPrice id newPrice
-
-    setPrice id newPrice
-    attTrendIndicator id oldPrice newPrice
-    attCompanyLineRow id oldPrice newPrice
-    updateHBStockPrice filePath newPrice (getTrendIndicator id)
-    updateHBStockMaxPrice filePath newMaxPrice
-    updateHBStockMinPrice filePath newMinPrice
-    updateHBStockStartPrice filePath (getStartPrice id)
-    updateHBGraphCandle filePath (getRow id) (getCol id)
-    where filePath = "./Company/HomeBroker/homebroker" ++ show id ++ ".txt"
+    attCompanyPriceGraph id
+    printMatrix ("./Company/HomeBroker/homebroker" ++ show id ++ ".txt")
 
 
 -- Atualiza o preço e o gráfico em todas as empresas cadastradas
@@ -95,5 +82,5 @@ attAllCompanyPriceGraph id (x:xs) = do
     if getIdent x == id then do
         attAllCompanyPriceGraph id xs
     else do
-        attOthersCompanyPriceGraph (getIdent x)
+        attCompanyPriceGraph (getIdent x)
         attAllCompanyPriceGraph id xs

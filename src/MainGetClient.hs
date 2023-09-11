@@ -17,8 +17,8 @@ main = do
     -- putStrLn (show (getCol 1))
     -- putStrLn (show (getAllAssets 1))
 
-    addAsset 1 1 7
-    print (getAssetsInCompany (getAllAssets 1) 3)
+    addAsset 1 1 1
+    print (getQtdAssetsInCompany 1 2)
     -- setName 1 "ok"
     -- setAge 1 2
     -- setCPF 1 "40404040404"

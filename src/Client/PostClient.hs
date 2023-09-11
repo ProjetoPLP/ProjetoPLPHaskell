@@ -10,20 +10,18 @@ addAsset :: Int -> Int -> Int -> IO ()
 addAsset clientID companyID qtd = do
     let client = getClient clientID
 
-    if (ident client) /= -1 then do    
+    if (ident client) /= -1 then do
         let recoveryAssetsClient = allAssets client
 
         if qtd >= 0 then do
             if (existAssetInClient (allAssets client) companyID) then do
                 let newExistentAssets = addExistentAssetInCompany recoveryAssetsClient companyID qtd
                 setAllAssets clientID newExistentAssets
-                putStrLn ("\nOlá" ++ (name client) ++ "! A compra da ação foi concluída e incrementada!")
 
             else do
                 let newAllAssets = [(createAsset companyID qtd)] ++ recoveryAssetsClient
                 if (length newAllAssets) <= 11 then do
                     setAllAssets clientID newAllAssets
-                    putStrLn ("\nOlá " ++ (name client) ++ "! A compra da ação foi concluída!")
                 else do
                     putStrLn "\nOcorreu um  probelama! Quantidade de ações excedida."
 
@@ -54,8 +52,8 @@ addExistentAssetInCompany (x:xs) idCompany qtd = [addQtd x idCompany qtd] ++ add
 
 addQtd :: Asset -> Int -> Int -> Asset
 addQtd asset idCompany qtd_ =
-    if (companyID asset) == idCompany then
-        asset { qtd = (qtd asset) + qtd_ }
+    if companyID asset == idCompany then
+        asset { qtd = qtd asset + qtd_ }
     else
         asset
 
@@ -64,6 +62,6 @@ removeAssetsNegative [] = []
 removeAssetsNegative (x:xs) = (remove x) ++ removeAssetsNegative xs
 
 remove :: Asset -> [Asset]
-remove asset = 
+remove asset =
     if (qtd asset) <= 0 then []
     else [asset]
