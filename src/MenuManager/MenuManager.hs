@@ -5,7 +5,7 @@ import Control.Concurrent (threadDelay)
 import Data.Char (isDigit)
 
 import Utils.MatrixUtils (printMatrix)
-import Utils.VerificationUtils (existCompany)
+import Utils.VerificationUtils (existCompany, isNumber)
 
 import Client.RealizarLogin (fazerLogin)
 import Client.CadastrarCliente (cadastrarCliente)
@@ -16,7 +16,7 @@ import Company.CadastrarCompany (cadastrarCompany)
 
 import MainMenu.MainMenuUpdate (updateMainMenu)
 
-import Wallet.DepositoSaque.WalletDepSaqLogic (depositar, sacar1000, sacar500, sacarTudo)
+import Wallet.DepositoSaque.WalletDepSaqLogic (depositar, sacar500, sacar200, sacarTudo)
 import Wallet.WalletUpdate (updateClientWallet, updateWalletDeposito, updateWalletSaque)
 
 import HomeBroker.HomeBrokerUpdate (updateHomeBroker, updateHomeBrokerBuy, updateHomeBrokerSell)
@@ -102,7 +102,7 @@ menuCadastroRealizado :: Bool -> IO ()
 menuCadastroRealizado cadastrou = do
    if cadastrou then do
       printMatrix "./Sprites/StartMenu/sign-in_menu_cadastro_realizado.txt"
-      threadDelay (1 * 2000000)
+      threadDelay 2000000
       startMenu
    else
       startMenu
@@ -258,11 +258,11 @@ saqueMenu idUser = do
 
 optionsSaqueMenu :: Int -> String -> IO ()
 optionsSaqueMenu idUser userChoice
+   | userChoice == "2" = do
+         sacar200 idUser
+         saqueMenu idUser
    | userChoice == "5" = do
          sacar500 idUser
-         saqueMenu idUser
-   | userChoice == "1" = do
-         sacar1000 idUser
          saqueMenu idUser
    | userChoice == "T" || userChoice == "t" = do
          sacarTudo idUser
@@ -292,7 +292,3 @@ optionsDepositoMenu idUser userChoice
    | otherwise = do
          putStrLn "Opção inválida"
          depositoMenu idUser
-
-
-isNumber :: String -> Bool
-isNumber = all isDigit

@@ -7,26 +7,25 @@ import Client.CreateClient
 cadastrarCliente :: IO Bool
 cadastrarCliente = do
     client <- getNewClient
-    if (length (name client) <= 18) then
-        if (age client) >= 18 then do
-            if (length (cpf client)) == 11 then do
-                if (length (show (password client))) == 5 then do 
+    if length (name client) <= 18 then
+        if age client >= 18 then do
+            if length (cpf client) == 11 then do
+                if length (password client) >= 5 then do
                     if not (existClientByEmail (email client)) then do
                         saveClientJSON "./Data/Clients.json" client
-                        putStrLn ("\n" ++ name client ++ " você foi cadastrado! Você iniciará com um saldo de R$100,00.")
                         return True
                     else do
-                        putStrLn "\nOcorreu um problema! O Cliente já está cadastrado!"
+                        putStrLn "Aviso: O e-mail já foi cadastrado."
                         return False
                 else do
-                    putStrLn "\nOcorreu um problema! A senha deve ter 5 digitos."
+                    putStrLn "Aviso: A senha deve ter no mínimo 5 digitos."
                     return False
             else do
-                putStrLn "\nOcorreu um problema! O CPF não contém 11 dígitos."
+                putStrLn "Aviso: O CPF não contém 11 dígitos."
                 return False
         else do
-            putStrLn "\nOcorreu um problema! Proibido menores de 18 anos."
+            putStrLn "Aviso: Proibido menores de 18 anos."
             return False
     else do
-        putStrLn "\nOcorreu um problema! O nome do cliente deve ter no máximo 18 caracteres."
+        putStrLn "Aviso: O nome do usuário deve ter no máximo 18 caracteres."
         return False

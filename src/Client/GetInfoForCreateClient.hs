@@ -30,10 +30,10 @@ getEmail = do
   input <- getLine
   return input
 
-getPassword :: IO Int
+getPassword :: IO String
 getPassword = do
   putStr "Digite a sua senha: "
   hFlush stdout
   input <- getLine
-  let password = (read input :: Int)
+  let password = (read input :: String)
   return password

@@ -7,30 +7,29 @@ import Company.CreateCompany
 cadastrarCompany :: IO Bool
 cadastrarCompany = do
     company <- getNewCompany
-    if (length (name company) <= 18) then
-        if (length (actuation company) <= 14) then do
-            if (length (declaration company) <= 86) then do
-                if (length (cnpj company)) == 14 then do
+    if length (name company) <= 18 then
+        if length (actuation company) <= 29 then do
+            if length (declaration company) <= 86 then do
+                if length (cnpj company) == 14 then do
                     if not (existCompanyByName (name company)) then do
                         if length (code company) == 5 then do
                             saveCompanyJSON "./Data/Companies.json" company
-                            putStrLn ("\nParabéns, a empresa " ++ name company ++ " foi cadastrada com sucesso!")
                             return True
                         else do
-                            putStrLn "\nOcorreu um problema! O código da Empresa deve ter 5 caracteres!"
+                            putStrLn "Aviso: O código da empresa deve possuir 5 caracteres."
                             return False
-                    else do 
-                        putStrLn "\nOcorreu um problema! A Empresa já está cadastrada!"
+                    else do
+                        putStrLn "Aviso: A empresa já foi cadastrada."
                         return False
                 else do
-                    putStrLn "\nOcorreu um problema! O CNPJ não contém 14 digitos."
+                    putStrLn "Aviso: O CNPJ não contém 14 digitos."
                     return False
             else do
-                putStrLn "\nOcorreu um problema! A declaração de missão da Empresa deve ter no máximo 86 caracteres!"
+                putStrLn "Aviso: A declaração de missão da empresa deve ter no máximo 86 caracteres."
                 return False
         else do
-            putStrLn "\nOcorreu um problema! A área de atuação da Empresa deve ter no máximo 14 caracteres!"
+            putStrLn "Aviso: A área de atuação da empresa deve ter no máximo 29 caracteres."
             return False
     else do
-        putStrLn "\nOcorreu um problema! O nome da empresa deve ter no máximo 18 caracteres."
+        putStrLn "Aviso: O nome da empresa deve ter no máximo 18 caracteres."
         return False

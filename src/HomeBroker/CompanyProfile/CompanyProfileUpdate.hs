@@ -43,7 +43,7 @@ updateCPCompanyName filePath name = do
 
 updateCPCompanyActuation :: FilePath -> String -> IO ()
 updateCPCompanyActuation filePath actuation = do
-    writeMatrixValue filePath actuation 9 61
+    writeMatrixValue filePath actuation 9 46
 
 
 updateCPCompanyPrice :: FilePath -> Float -> String -> IO ()
