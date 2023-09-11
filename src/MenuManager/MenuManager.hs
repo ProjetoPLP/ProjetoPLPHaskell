@@ -23,6 +23,7 @@ import HomeBroker.HomeBrokerUpdate (updateHomeBroker, updateHomeBrokerBuy, updat
 import HomeBroker.BuySell.HomeBrokerBuySellLogic (buy, sell)
 import HomeBroker.HomeBrokerLoopLogic (callLoop)
 import HomeBroker.CompanyProfile.CompanyProfileUpdate (updateCompanyProfile)
+import HomeBroker.TrendingClose.TrendingCloseUpdate (updateTrendingClose)
 
 
 startMenu :: IO ()
@@ -292,3 +293,13 @@ optionsDepositoMenu idUser userChoice
    | otherwise = do
          putStrLn "Opção inválida"
          depositoMenu idUser
+
+
+trendingCloseMenu :: Int -> IO ()
+trendingCloseMenu idUser = do
+   updateTrendingClose idUser
+   printMatrix "./HomeBroker/TrendingClose/trendingClose.txt"
+   putStr "Digite uma opção: "
+   hFlush stdout
+   userChoice <- getLine
+   mainMenu idUser

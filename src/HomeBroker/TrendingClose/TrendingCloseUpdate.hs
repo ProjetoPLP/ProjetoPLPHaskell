@@ -56,7 +56,7 @@ updateAllTCCompanyVar filePath (x:xs) = do
 updateTCCompanyVar :: FilePath -> Int -> IO ()
 updateTCCompanyVar filePath id = do
     let pos = getCompanyVarPosition id
-        val = fillLeft (getVar id) 7
+        val = fillLeft (getVar id) 8
     writeMatrixValue filePath val (head pos) (last pos - length val)
 
 
@@ -82,30 +82,30 @@ getVar idComp
 
 getCompanyCodePosition :: Int -> [Int]
 getCompanyCodePosition id
-    | id == 1 = [13, 11]
-    | id == 2 = [16, 11]
-    | id == 3 = [19, 11]
-    | id == 4 = [22, 11]
+    | id == 1 = [13, 12]
+    | id == 2 = [16, 12]
+    | id == 3 = [19, 12]
+    | id == 4 = [22, 12]
     | id == 5 = [13, 43]
     | id == 6 = [16, 43]
     | id == 7 = [19, 43]
     | id == 8 = [22, 43]
-    | id == 9 = [13, 75]
-    | id == 10 = [16, 75]
-    | id == 11 = [19, 75]
-    | id == 12 = [22, 75]
+    | id == 9 = [13, 74]
+    | id == 10 = [16, 74]
+    | id == 11 = [19, 74]
+    | id == 12 = [22, 74]
 
 
 getCompanyVarPosition :: Int -> [Int]
 getCompanyVarPosition id
-    | id == 1 = [13, 25]
-    | id == 2 = [16, 25]
-    | id == 3 = [19, 25]
-    | id == 4 = [22, 25]
-    | id == 5 = [13, 57]
-    | id == 6 = [16, 57]
-    | id == 7 = [19, 57]
-    | id == 8 = [22, 57]
+    | id == 1 = [13, 27]
+    | id == 2 = [16, 27]
+    | id == 3 = [19, 27]
+    | id == 4 = [22, 27]
+    | id == 5 = [13, 58]
+    | id == 6 = [16, 58]
+    | id == 7 = [19, 58]
+    | id == 8 = [22, 58]
     | id == 9 = [13, 89]
     | id == 10 = [16, 89]
     | id == 11 = [19, 89]
