@@ -19,7 +19,7 @@
 ║  Só serão permitidos  ║              │ Insira quanto deseja sacar da sua conta │              ║
 ║    saques quando o    ║              │                                         │              ║
 ║   cliente acumular    ║              │                                         │              ║
-║  500.0 reais ou mais  ║              │           Tudo    500    1000           │              ║
+║  200.0 reais ou mais  ║              │           Tudo    200    500            │              ║
 ║       em saldo        ║              │           ▔       ▔      ▔              │              ║
 ║                       ║              └─────────────────────────────────────────┘              ║
 ║                       ║                                                                       ║

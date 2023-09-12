@@ -10,7 +10,7 @@
 ║  ┃ Fulano da Silva    ║                      ___                                              ║
 ║  ┃ 123.456.789-01     ║                     / __| __ _  __ _  _  _  ___                       ║
 ║                       ║                     \__ \/ _` |/ _` || || |/ -_)                      ║
-║  ┃ Saldo:    470.00   ║                     |___/\__,_|\__, | \_,_|\___|                      ║
+║  ┃ Saldo:    170.00   ║                     |___/\__,_|\__, | \_,_|\___|                      ║
 ║                       ║                                   |_|                                 ║
 ║                       ║                                                                       ║
 ║                       ║                                                                       ║
@@ -19,7 +19,7 @@
 ║  Só serão permitidos  ║              │ Insira quanto deseja sacar da sua conta │              ║
 ║    saques quando o    ║              │                                         │              ║
 ║   cliente acumular    ║              │                                         │              ║
-║  500.0 reais ou mais  ║              │           Tudo    500    1000           │              ║
+║  200.0 reais ou mais  ║              │           Tudo    200    500            │              ║
 ║       em saldo        ║              │           ▔       ▔      ▔              │              ║
 ║                       ║              └─────────────────────────────────────────┘              ║
 ║                       ║                                                                       ║
