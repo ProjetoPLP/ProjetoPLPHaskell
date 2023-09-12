@@ -15,6 +15,7 @@ import Wallet.WalletUpdate (updateClientWallet)
 import Client.PostClient
 import Client.ModelClient (Client(canDeposit))
 import HomeBroker.TrendingClose.TrendingCloseUpdate (updateTrendingClose)
+import Client.SaveClient (getClientJSON)
 -- import HomeBroker.TrendingClose.TrendingCloseUpdate (getTrendVar)
 
 
@@ -39,7 +40,12 @@ main = do
     -- updateHomeBroker 1 1
     -- printMatrix "./Company/HomeBroker/homebroker1.txt"
 
-    updateTrendingClose 1
-    printMatrix "./HomeBroker/TrendingClose/trendingClose.txt"
+    -- updateTrendingClose 1
+    -- printMatrix "./HomeBroker/TrendingClose/trendingClose.txt"
+
+    -- removeCompanyJSON "./Data/Companies.json" 1
+
+
+    removeAllClientsAsset 1 (getClientJSON "./Data/Clients.json")
 
 

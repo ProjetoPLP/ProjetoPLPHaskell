@@ -65,3 +65,21 @@ remove :: Asset -> [Asset]
 remove asset =
     if (qtd asset) <= 0 then []
     else [asset]
+
+
+
+removeAllClientsAsset :: Int -> [Client] -> IO ()
+removeAllClientsAsset idComp [] = return ()
+removeAllClientsAsset idComp (x:xs) = do
+    let idUser = ident x
+    removeClientAsset idUser idComp (getAllAssets idUser)
+    removeAllClientsAsset idComp xs
+
+
+removeClientAsset :: Int -> Int -> [Asset] -> IO ()
+removeClientAsset idUser idComp [] = return ()
+removeClientAsset idUser idComp (x:xs) = do
+  if companyID x == idComp then
+    addAsset idUser idComp (-(qtd x))
+  else
+    removeClientAsset idUser idComp xs
