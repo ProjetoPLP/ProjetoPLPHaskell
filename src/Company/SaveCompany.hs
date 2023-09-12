@@ -76,18 +76,16 @@ editCompanyJSON jsonFilePath updatedCompany = do
  renameFile "./Data/ArquivoTemporario.json" jsonFilePath
 
 -- Remove uma empresa pelo ID
-removeCompanyJSON :: String -> Int -> IO ()
-removeCompanyJSON jsonFilePath ident = do
+removeCompany :: Int -> String -> IO ()
+removeCompany idComp jsonFilePath = do
  let companiesList = getCompanyJSON jsonFilePath
- let newCompaniesList = removeCompanyByID ident companiesList
+ let newCompaniesList = removeCompanyByID idComp companiesList
  B.writeFile "./Data/ArquivoTemporario.json" $ encode newCompaniesList
  removeFile jsonFilePath
  renameFile "./Data/ArquivoTemporario.json" jsonFilePath
- let filePathToDelete = "./Company/HomeBroker/homebroker" ++ show ident ++ ".txt"
+ let filePathToDelete = "./Company/HomeBroker/homebroker" ++ show idComp ++ ".txt"
  removeFile filePathToDelete
 
-deleteFile :: FilePath -> IO ()
-deleteFile path = removeFile path
 
 -- Verifica a existencia do cliente pelo email
 existCompanyByName :: String -> Bool

@@ -68,12 +68,17 @@ remove asset =
 
 
 
-removeAllClientsAsset :: Int -> [Client] -> IO ()
-removeAllClientsAsset idComp [] = return ()
-removeAllClientsAsset idComp (x:xs) = do
+-- Remove da carteira de todos os clientes uma empresa
+removeAllClientsAsset :: Int -> IO ()
+removeAllClientsAsset idComp = removeAllClientsAssetAux idComp (getClientJSON "./Data/Clients.json")
+
+
+removeAllClientsAssetAux :: Int -> [Client] -> IO ()
+removeAllClientsAssetAux idComp [] = return ()
+removeAllClientsAssetAux idComp (x:xs) = do
     let idUser = ident x
     removeClientAsset idUser idComp (getAllAssets idUser)
-    removeAllClientsAsset idComp xs
+    removeAllClientsAssetAux idComp xs
 
 
 removeClientAsset :: Int -> Int -> [Asset] -> IO ()

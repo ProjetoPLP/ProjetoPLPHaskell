@@ -24,6 +24,7 @@ import HomeBroker.BuySell.HomeBrokerBuySellLogic (buy, sell)
 import HomeBroker.HomeBrokerLoopLogic (callLoop)
 import HomeBroker.CompanyProfile.CompanyProfileUpdate (updateCompanyProfile)
 import HomeBroker.TrendingClose.TrendingCloseUpdate (updateTrendingClose)
+import HomeBroker.CompanyDown.CompanyDownUpdate (updateCompanyDown, isDown)
 import Company.SaveCompany (getCompanyJSON)
 
 
@@ -162,7 +163,8 @@ optionsHomeBrokerMenu idUser idComp userChoice
    | userChoice == "V" || userChoice == "v" = mainMenu idUser
    | isNumber userChoice = do
          callLoop idComp (read userChoice)
-         homeBrokerMenu idUser idComp
+         if isDown idComp then companyDownMenu idUser idComp
+         else homeBrokerMenu idUser idComp
    | otherwise = do
          putStrLn "Opção inválida"
          homeBrokerMenu idUser idComp
@@ -300,6 +302,16 @@ trendingCloseMenu :: Int -> IO ()
 trendingCloseMenu idUser = do
    updateTrendingClose idUser
    printMatrix "./HomeBroker/TrendingClose/trendingClose.txt"
+   putStr "Digite uma opção: "
+   hFlush stdout
+   userChoice <- getLine
+   mainMenu idUser
+
+
+companyDownMenu :: Int -> Int -> IO ()
+companyDownMenu idUser idComp = do
+   updateCompanyDown idUser idComp
+   printMatrix "./HomeBroker/CompanyDown/companyDown.txt"
    putStr "Digite uma opção: "
    hFlush stdout
    userChoice <- getLine
