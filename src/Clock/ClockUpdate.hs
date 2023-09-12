@@ -6,7 +6,7 @@ import Clock.GetSetClock (getClock)
 -- Atualiza no arquivo .txt o relógio
 updateMatrixClock :: FilePath -> IO ()
 updateMatrixClock filePath = do
-    let val = formatHour getClock
+    let val = formatHour (getClock "./Data/Clock.json")
     writeMatrixValue filePath val 3 88
 
 

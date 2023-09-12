@@ -15,9 +15,9 @@ instance FromJSON Clock
 
 
 -- Retorna os minutos totais do relógio no arquivo Clock.json
-getClock :: Int 
-getClock = do
-    let file = unsafePerformIO (B.readFile "./Data/Clock.json")
+getClock :: FilePath -> Int 
+getClock jsonFilePath = do
+    let file = unsafePerformIO (B.readFile jsonFilePath)
     let decodedFile = decode file :: Maybe Clock
     case decodedFile of
         Just clock -> minutes clock
