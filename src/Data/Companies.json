@@ -1,13 +1,1 @@
-[
-{"actuation":"1111","age":1111,"cnpj":"11111111111111","code":"11111","col":3,"declaration":"1111","ident":1,"maxPrice":22.6,"minPrice":22.6,"name":"Levi","price":22.6,"row":20,"startPrice":22.6,"trendIndicator":" "},
-{"actuation":"1111","age":1111,"cnpj":"11111111111111","code":"11111","col":3,"declaration":"1111","ident":2,"maxPrice":22.6,"minPrice":22.6,"name":"Levi","price":22.6,"row":20,"startPrice":22.6,"trendIndicator":" "},
-{"actuation":"1111","age":1111,"cnpj":"11111111111111","code":"11111","col":3,"declaration":"1111","ident":3,"maxPrice":22.6,"minPrice":22.6,"name":"Levi","price":22.6,"row":20,"startPrice":22.6,"trendIndicator":" "},
-{"actuation":"1111","age":1111,"cnpj":"11111111111111","code":"11111","col":3,"declaration":"1111","ident":4,"maxPrice":22.6,"minPrice":22.6,"name":"Levi","price":22.6,"row":20,"startPrice":22.6,"trendIndicator":" "},
-{"actuation":"1111","age":1111,"cnpj":"11111111111111","code":"11111","col":3,"declaration":"1111","ident":5,"maxPrice":22.6,"minPrice":22.6,"name":"Levi","price":22.6,"row":20,"startPrice":22.6,"trendIndicator":" "},
-{"actuation":"1111","age":1111,"cnpj":"11111111111111","code":"11111","col":3,"declaration":"1111","ident":6,"maxPrice":22.6,"minPrice":22.6,"name":"Levi","price":22.6,"row":20,"startPrice":22.6,"trendIndicator":" "},
-{"actuation":"1111","age":1111,"cnpj":"11111111111111","code":"11111","col":3,"declaration":"1111","ident":7,"maxPrice":22.6,"minPrice":22.6,"name":"Levi","price":22.6,"row":20,"startPrice":22.6,"trendIndicator":" "},
-{"actuation":"1111","age":1111,"cnpj":"11111111111111","code":"11111","col":3,"declaration":"1111","ident":8,"maxPrice":22.6,"minPrice":22.6,"name":"Levi","price":22.6,"row":20,"startPrice":22.6,"trendIndicator":" "},
-{"actuation":"1111","age":1111,"cnpj":"11111111111111","code":"11111","col":3,"declaration":"1111","ident":9,"maxPrice":22.6,"minPrice":22.6,"name":"Levi","price":22.6,"row":20,"startPrice":22.6,"trendIndicator":" "},
-{"actuation":"1111","age":1111,"cnpj":"11111111111111","code":"11111","col":3,"declaration":"1111","ident":10,"maxPrice":22.6,"minPrice":22.6,"name":"Levi","price":22.6,"row":20,"startPrice":22.6,"trendIndicator":" "},
-{"actuation":"1111","age":1111,"cnpj":"11111111111111","code":"11111","col":3,"declaration":"1111","ident":11,"maxPrice":22.6,"minPrice":22.6,"name":"Levi","price":22.6,"row":20,"startPrice":22.6,"trendIndicator":" "},
-]
+[]

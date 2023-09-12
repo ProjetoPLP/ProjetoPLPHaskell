@@ -1,4 +1,5 @@
 import Company.ModelCompany
+import Company.SaveCompany
 
 identifySequenceBreak :: [Company] -> Int
 identifySequenceBreak companies
@@ -20,4 +21,4 @@ main = do
     let comp6 = Company 6 "" 0 "" "" "" "" 0.00 "" 0.00 0.00 0.00 0 0
 
     let allComp = [comp1, comp2, comp3, comp4, comp6]
-    putStrLn (show (identifySequenceBreak allComp))
+    removeCompanyJSON "./Data/Companies.json" 3

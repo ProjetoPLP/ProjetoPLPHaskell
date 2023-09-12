@@ -83,6 +83,11 @@ removeCompanyJSON jsonFilePath ident = do
  B.writeFile "./Data/ArquivoTemporario.json" $ encode newCompaniesList
  removeFile jsonFilePath
  renameFile "./Data/ArquivoTemporario.json" jsonFilePath
+ let filePathToDelete = "./Company/HomeBroker/homebroker" ++ show ident ++ ".txt"
+ removeFile filePathToDelete
+
+deleteFile :: FilePath -> IO ()
+deleteFile path = removeFile path
 
 -- Verifica a existencia do cliente pelo email
 existCompanyByName :: String -> Bool
