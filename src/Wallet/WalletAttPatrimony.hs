@@ -13,10 +13,6 @@ attClientPatrimony idClient = do
     setPatrimony idClient (attClientPatrimonyAux (getAllAssets idClient))
 
 
-getOldPatrimony :: Int -> IO Float
-getOldPatrimony idUser = do
-    return (getPatrimony idUser)
-
 attClientPatrimonyAux :: [Asset] -> Float
 attClientPatrimonyAux [] = 0
 attClientPatrimonyAux (x:xs) = do
@@ -42,4 +38,3 @@ attClientWalletPatrimonyGraph :: Int -> Float -> Float -> IO ()
 attClientWalletPatrimonyGraph idClient oldPatrimony newPatrimony = do
     attClientLineRow idClient oldPatrimony newPatrimony
     updateWalletGraphCandle ("./Client/Wallet/wallet" ++ show idClient ++ ".txt") (getRow idClient) (getCol idClient)
-    
