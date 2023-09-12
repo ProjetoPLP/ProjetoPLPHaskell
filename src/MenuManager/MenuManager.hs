@@ -24,6 +24,7 @@ import HomeBroker.BuySell.HomeBrokerBuySellLogic (buy, sell)
 import HomeBroker.HomeBrokerLoopLogic (callLoop)
 import HomeBroker.CompanyProfile.CompanyProfileUpdate (updateCompanyProfile)
 import HomeBroker.TrendingClose.TrendingCloseUpdate (updateTrendingClose)
+import Company.SaveCompany (getCompanyJSON)
 
 
 startMenu :: IO ()
@@ -87,7 +88,7 @@ cadastraEmpresaMenu = do
    userChoice <- getLine
 
    if querContinuarAOperacao userChoice then do
-      cadastrou <- cadastrarCompany
+      cadastrou <- cadastrarCompany (length (getCompanyJSON "./Data/Companies.json"))
       menuCadastroRealizado cadastrou
    else do
       startMenu
