@@ -45,9 +45,9 @@ getCompanyJSON path = do
 saveCompanyJSON :: String -> Company -> IO ()
 saveCompanyJSON jsonFilePath company = do
   let companyList = getCompanyJSON jsonFilePath
-  let newID = length companyList + 1
+  let newID = identifySequenceBreak companyList
   let companiesList = companyList ++ [giveIdForCompany company (newID)]
-
+  
   textoContents <- readFile "./Sprites/HomeBroker/homebroker_base.txt"
   let walletFileName = "./Company/HomeBroker/homebroker" ++ (show newID) ++ ".txt"
   appendFile walletFileName textoContents
@@ -55,6 +55,16 @@ saveCompanyJSON jsonFilePath company = do
   B.writeFile "./Data/ArquivoTemporario.json" $ encode companiesList
   removeFile jsonFilePath
   renameFile "./Data/ArquivoTemporario.json" jsonFilePath
+
+identifySequenceBreak :: [Company] -> Int
+identifySequenceBreak companies
+  | null companies = 1
+  | otherwise = go 1 companies
+  where
+    go _ [] = length companies + 1
+    go n (Company i _ _ _ _ _ _ _ _ _ _ _ _ _ : rest)
+      | n == i = go (n + 1) rest
+      | otherwise = n
 
 -- Edita as ações da Empresa
 editCompanyJSON :: String -> Company -> IO ()
@@ -87,4 +97,3 @@ verifyExistNameCompany nameCompany (head:tail) =
 -- Atribui novo id ao cliente
 giveIdForCompany :: Company -> Int -> Company
 giveIdForCompany client newId = client { ident = newId }
-
