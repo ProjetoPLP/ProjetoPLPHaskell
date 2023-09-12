@@ -69,14 +69,6 @@ updateWLGraphCandle filePath row col = do
     writeMatrixValue filePath "❚" row col
 
 
--- Reinicia o gráfico da carteira sobrescrevendo todos os espaços com caracteres vazios
-cleanWLGraph :: FilePath -> Int -> IO ()
-cleanWLGraph filepath 20 = writeMatrixValue filepath (replicate 47 ' ') 20 50
-cleanWLGraph filepath row = do
-    writeMatrixValue filepath (replicate 47 ' ') row 50
-    cleanWLGraph filepath (row + 1)
-
-
 -- Atualiza o código de todas as empresas no carteira do usuário
 updateAllWLCompanyCode :: FilePath -> [Asset] -> IO ()
 updateAllWLCompanyCode filePath [] = return ()
