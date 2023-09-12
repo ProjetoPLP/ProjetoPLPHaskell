@@ -1,6 +1,7 @@
 module Client.GetSetAttrsClient where
 import Client.SaveClient
 import Client.ModelClient
+import Client.LoginClient (getLoggedClient)
 
 -- ====================== getNameOfClient ============================ --
 -- Entrada: id: Int
@@ -293,4 +294,4 @@ removeCash id cashRemove = do
 
 getCurrentUserID :: IO Int
 getCurrentUserID = do
-    ident <$> getClientLogged
+    ident <$> getLoggedClient

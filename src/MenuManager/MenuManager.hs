@@ -10,7 +10,7 @@ import Utils.VerificationUtils (existCompany, isNumber)
 import Client.RealizarLogin (fazerLogin)
 import Client.CadastrarCliente (cadastrarCliente)
 import Client.GetSetAttrsClient (getCanDeposit, getCurrentUserID)
-import Client.SaveClient (logoutClient)
+import Client.LoginClient (logoutClient)
 
 import Company.CadastrarCompany (cadastrarCompany)
 
