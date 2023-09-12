@@ -99,7 +99,7 @@ checkClientColumn id = do
         cleanWLGraph ("./Client/Wallet/wallet" ++ show id ++ ".txt") 10
         Cli.updateCol id (-45)
         else
-            Cli.updateCol id 1
+            Cli.updateCol id 2
 
 
 checkAllClientColumn :: [Client] -> IO()

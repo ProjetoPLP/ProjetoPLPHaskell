@@ -5,18 +5,18 @@ import Company.GetSetAttrsCompany (getStartPrice, getPrice, getCode, getIdent, s
 import Company.ModelCompany (Company)
 import Client.GetSetAttrsClient (getCash, getPatrimony)
 import Company.SaveCompany (getCompanyJSON)
+import Clock.ClockUpdate (updateMatrixClock)
 
 
 updateTrendingClose :: Int -> IO ()
 updateTrendingClose idUser = do
     resetMenu filePath "./Sprites/HomeBroker/trendingClose_base.txt"
+    updateMatrixClock filePath
     updateTCCash filePath (getCash idUser)
     updateTCPatrimony filePath (getPatrimony idUser)
     updateAllTCCompanyCode filePath jsonPath
     updateAllTCCompanyVar filePath jsonPath
-
-    -- updateAllCompaniesStartPrice jsonPath
-    
+    updateAllCompaniesStartPrice jsonPath
     where filePath = "./HomeBroker/TrendingClose/trendingClose.txt"
           jsonPath = getCompanyJSON "./Data/Companies.json"
 

@@ -26,6 +26,7 @@ import HomeBroker.CompanyProfile.CompanyProfileUpdate (updateCompanyProfile)
 import HomeBroker.TrendingClose.TrendingCloseUpdate (updateTrendingClose)
 import HomeBroker.CompanyDown.CompanyDownUpdate (updateCompanyDown, isDown)
 import Company.SaveCompany (getCompanyJSON)
+import Clock.GetSetClock (getClock, setClock)
 
 
 startMenu :: IO ()
@@ -55,11 +56,11 @@ fazerLoginMenu = do
    putStr "Deseja fazer login? (S/N): "
    hFlush stdout
    userChoice <- getLine
-   
+
    if querContinuarAOperacao userChoice then do
       resultadoLogin <- fazerLogin
       if resultadoLogin then do
-         idUser <- getCurrentUserID 
+         idUser <- getCurrentUserID
          mainMenu idUser
       else
          startMenu
@@ -73,7 +74,7 @@ cadastraUsuarioMenu = do
    putStr "Deseja cadastrar um novo usuário? (S/N): "
    hFlush stdout
    userChoice <- getLine
-   
+
    if querContinuarAOperacao userChoice then do
       cadastrou <- cadastrarCliente
       menuCadastroRealizado cadastrou
@@ -124,15 +125,15 @@ mainMenu idUser = do
 optionsMainMenu :: Int -> String -> IO ()
 optionsMainMenu idUser userChoice
    | userChoice == "W" || userChoice == "w" = walletMenu idUser
-   | userChoice == "1" = homeBrokerMenu idUser 1 
-   | userChoice == "2" = homeBrokerMenu idUser 2 
-   | userChoice == "3" = homeBrokerMenu idUser 3 
-   | userChoice == "4" = homeBrokerMenu idUser 4 
-   | userChoice == "5" = homeBrokerMenu idUser 5 
-   | userChoice == "6" = homeBrokerMenu idUser 6 
-   | userChoice == "7" = homeBrokerMenu idUser 7 
-   | userChoice == "8" = homeBrokerMenu idUser 8 
-   | userChoice == "9" = homeBrokerMenu idUser 9 
+   | userChoice == "1" = homeBrokerMenu idUser 1
+   | userChoice == "2" = homeBrokerMenu idUser 2
+   | userChoice == "3" = homeBrokerMenu idUser 3
+   | userChoice == "4" = homeBrokerMenu idUser 4
+   | userChoice == "5" = homeBrokerMenu idUser 5
+   | userChoice == "6" = homeBrokerMenu idUser 6
+   | userChoice == "7" = homeBrokerMenu idUser 7
+   | userChoice == "8" = homeBrokerMenu idUser 8
+   | userChoice == "9" = homeBrokerMenu idUser 9
    | userChoice == "A" || userChoice == "a" = homeBrokerMenu idUser 10
    | userChoice == "B" || userChoice == "b" = homeBrokerMenu idUser 11
    | userChoice == "C" || userChoice == "c" = homeBrokerMenu idUser 12
@@ -162,12 +163,19 @@ optionsHomeBrokerMenu idUser idComp userChoice
    | userChoice == "P" || userChoice == "p" = companyProfileMenu idUser idComp
    | userChoice == "V" || userChoice == "v" = mainMenu idUser
    | isNumber userChoice = do
-         callLoop idComp (read userChoice)
-         if isDown idComp then companyDownMenu idUser idComp
-         else homeBrokerMenu idUser idComp
+         let seg = formatInputToSeconds userChoice
+         callLoop idComp seg
+         checkAfterLoop idUser idComp seg
    | otherwise = do
          putStrLn "Opção inválida"
          homeBrokerMenu idUser idComp
+
+
+checkAfterLoop :: Int -> Int -> Int -> IO ()
+checkAfterLoop idUser idComp seg = do
+   if (seg + getClock "./Data/Clock.json") >= 720 then trendingCloseMenu idUser
+   else if isDown idComp then companyDownMenu idUser idComp
+   else homeBrokerMenu idUser idComp
 
 
 companyProfileMenu :: Int -> Int -> IO ()
@@ -301,6 +309,7 @@ optionsDepositoMenu idUser userChoice
 trendingCloseMenu :: Int -> IO ()
 trendingCloseMenu idUser = do
    updateTrendingClose idUser
+   setClock 420
    printMatrix "./HomeBroker/TrendingClose/trendingClose.txt"
    putStr "Digite uma opção: "
    hFlush stdout
@@ -316,3 +325,9 @@ companyDownMenu idUser idComp = do
    hFlush stdout
    userChoice <- getLine
    mainMenu idUser
+
+
+formatInputToSeconds :: String -> Int
+formatInputToSeconds seg
+   | read seg > 30 = 30
+   | otherwise = read seg
