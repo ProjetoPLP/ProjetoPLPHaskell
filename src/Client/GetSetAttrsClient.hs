@@ -63,6 +63,20 @@ getCol :: Int -> Int
 getCol id = col (getClient id)
 
 
+updateRow :: Int -> Int -> IO ()
+updateRow id addRow = do
+    let client = getClientsByID id (getClientJSON "./Data/Clients.json")
+    let newClient = client {row = getRow id + addRow}
+    editClientJSON "./Data/Clients.json" newClient
+
+
+updateCol :: Int -> Int -> IO ()
+updateCol id addCol = do
+    let client = getClientsByID id (getClientJSON "./Data/Clients.json")
+    let newClient = client {col = getCol id + addCol}
+    editClientJSON "./Data/Clients.json" newClient
+
+
 -- Retorna uma lista com a quantidade de ações que o usuário possui de cada empresa
 getAllAssets :: Int -> [Asset]
 getAllAssets id = allAssets (getClient id)
