@@ -11,6 +11,7 @@ import Company.SaveCompany (getCompanyJSON)
 import HomeBroker.HomeBrokerAttPrice (attCurrentCompanyPriceGraph, attAllCompanyPriceGraph)
 import Wallet.WalletAttPatrimony (attAllClientsWalletPatrimonyGraph)
 import Client.SaveClient (getClientJSON)
+import Utils.GraphUtils
 
 
 -- Define, a partir da entrada do usuário, por quanto tempo o preço e o gráfico deve variar
@@ -29,6 +30,7 @@ loop id endTime = do
     currentTime <- getCurrentTime
     if currentTime >= endTime then do
         checkAllCompanyColumn (getCompanyJSON "./Data/Companies.json")
+        checkAllClientColumn (getClientJSON "./Data/Clients.json")
         putStrLn "Tempo esgotado."
         else do
             attCurrentCompanyPriceGraph id
