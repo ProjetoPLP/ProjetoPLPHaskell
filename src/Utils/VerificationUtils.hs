@@ -18,4 +18,6 @@ existCompanyAux id (x:xs) = (ident x == id) || existCompanyAux id xs
 
 -- Verifica se uma String é um número
 isNumber :: String -> Bool
-isNumber = all isDigit
+isNumber "" = False
+isNumber "0" = False
+isNumber userChoice = all isDigit userChoice

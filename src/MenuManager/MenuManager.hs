@@ -162,17 +162,17 @@ optionsHomeBrokerMenu idUser idComp userChoice
    | userChoice == "S" || userChoice == "s" = sellMenu idUser idComp
    | userChoice == "P" || userChoice == "p" = companyProfileMenu idUser idComp
    | userChoice == "V" || userChoice == "v" = mainMenu idUser
-   | isNumber userChoice && userChoice /= "0" = do
+   | isNumber userChoice = do
          let seg = formatInputToSeconds userChoice
          callLoop idComp seg
-         checkAfterLoop idUser idComp seg
+         menuAfterLoop idUser idComp seg
    | otherwise = do
          putStrLn "Opção inválida"
          homeBrokerMenu idUser idComp
 
 
-checkAfterLoop :: Int -> Int -> Int -> IO ()
-checkAfterLoop idUser idComp seg = do
+menuAfterLoop :: Int -> Int -> Int -> IO ()
+menuAfterLoop idUser idComp seg = do
    if isDown idComp then companyDownMenu idUser idComp
    else if (seg + getClock "./Data/Clock.json") >= 720 then trendingCloseMenu idUser
    else homeBrokerMenu idUser idComp
