@@ -162,7 +162,7 @@ optionsHomeBrokerMenu idUser idComp userChoice
    | userChoice == "S" || userChoice == "s" = sellMenu idUser idComp
    | userChoice == "P" || userChoice == "p" = companyProfileMenu idUser idComp
    | userChoice == "V" || userChoice == "v" = mainMenu idUser
-   | isNumber userChoice = do
+   | isNumber userChoice && userChoice /= "0" = do
          let seg = formatInputToSeconds userChoice
          callLoop idComp seg
          checkAfterLoop idUser idComp seg
