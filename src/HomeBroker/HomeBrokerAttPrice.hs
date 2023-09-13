@@ -6,6 +6,7 @@ import Utils.MatrixUtils (printMatrix)
 import Utils.HomeBrokerGraphUtils (attCompanyLineRow, attTrendIndicator)
 
 import HomeBroker.HomeBrokerUpdate (updateHBGraphCandle, updateHBStockMaxPrice, updateHBStockMinPrice, updateHBStockPrice, updateHBStockStartPrice)
+import HomeBroker.CompanyDown.CompanyDownUpdate (isDown, removeComapanyFromExchange)
 
 import Company.ModelCompany (Company)
 import Company.GetSetAttrsCompany (getCol, getIdent, getMaxPrice, getMinPrice, getPrice, getRow, getStartPrice, getTrendIndicator, setMaxPrice, setMinPrice, setPrice)
@@ -16,7 +17,7 @@ getIndexAndVariation :: IO [Int]
 getIndexAndVariation = do
     index <- randomRIO (0,9 :: Int)
     var <- randomRIO (-1,1 :: Int)
-    return [index, var]
+    return [index, -1]
 
 
 -- Retorna um novo preço baseado na aleatóriedade da função getIndexAndVariation
@@ -51,6 +52,30 @@ getNewMinPrice idComp newPrice = do
         return newPrice
 
 
+-- Atualiza o preço e o gráfico em todas as empresas cadastradas
+attAllCompanyPriceGraph :: Int -> [Company] -> IO ()
+attAllCompanyPriceGraph _ [] = return ()
+attAllCompanyPriceGraph idComp (x:xs)
+    | randomId == idComp = do
+        attCurrentCompanyPriceGraph idComp
+        attAllCompanyPriceGraph idComp xs
+    | isDown randomId = do
+        removeComapanyFromExchange randomId
+        attAllCompanyPriceGraph idComp xs
+    | otherwise = do
+        attCompanyPriceGraph randomId
+        attAllCompanyPriceGraph idComp xs
+    where
+        randomId = getIdent x
+
+
+-- Atualiza na empresa atual, a partir do seu ID, o preço e o gráfico
+attCurrentCompanyPriceGraph :: Int -> IO ()
+attCurrentCompanyPriceGraph id = do
+    attCompanyPriceGraph id
+    printMatrix ("./Company/HomeBroker/homebroker" ++ show id ++ ".txt")
+
+
 -- Atualiza em uma empresa qualquer, a partir do seu ID, o preço e o gráfico
 attCompanyPriceGraph :: Int -> IO ()
 attCompanyPriceGraph id = do
@@ -68,21 +93,3 @@ attCompanyPriceGraph id = do
     updateHBStockStartPrice filePath (getStartPrice id)
     updateHBGraphCandle filePath (getRow id) (getCol id)
     where filePath = "./Company/HomeBroker/homebroker" ++ show id ++ ".txt"
-
-
--- Atualiza na empresa atual, a partir do seu ID, o preço e o gráfico
-attCurrentCompanyPriceGraph :: Int -> IO ()
-attCurrentCompanyPriceGraph id = do
-    attCompanyPriceGraph id
-    printMatrix ("./Company/HomeBroker/homebroker" ++ show id ++ ".txt")
-
-
--- Atualiza o preço e o gráfico em todas as empresas cadastradas
-attAllCompanyPriceGraph :: Int -> [Company] -> IO ()
-attAllCompanyPriceGraph _ [] = return ()
-attAllCompanyPriceGraph id (x:xs) = do
-    if getIdent x == id then do
-        attAllCompanyPriceGraph id xs
-    else do
-        attCompanyPriceGraph (getIdent x)
-        attAllCompanyPriceGraph id xs

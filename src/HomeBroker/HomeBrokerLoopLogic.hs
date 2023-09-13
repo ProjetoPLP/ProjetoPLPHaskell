@@ -9,7 +9,7 @@ import Clock.GetSetClock (addClock)
 import Utils.HomeBrokerGraphUtils (attAllCompanyColumn)
 import Utils.WalletGraphUtils (attAllClientColumn)
 import Company.SaveCompany (getCompanyJSON)
-import HomeBroker.HomeBrokerAttPrice (attCurrentCompanyPriceGraph, attAllCompanyPriceGraph)
+import HomeBroker.HomeBrokerAttPrice (attAllCompanyPriceGraph)
 import Wallet.WalletAttPatrimony (attAllClientsWalletPatrimonyGraph)
 import Client.SaveClient (getClientJSON)
 
@@ -32,7 +32,6 @@ loop idComp endTime = do
         attAllCompanyColumn (getCompanyJSON "./Data/Companies.json")
         attAllClientColumn (getClientJSON "./Data/Clients.json")
         else do
-            attCurrentCompanyPriceGraph idComp
             attAllCompanyPriceGraph idComp (getCompanyJSON "./Data/Companies.json")
             attAllClientsWalletPatrimonyGraph (getClientJSON "./Data/Clients.json")
             threadDelay 500000

@@ -173,8 +173,8 @@ optionsHomeBrokerMenu idUser idComp userChoice
 
 checkAfterLoop :: Int -> Int -> Int -> IO ()
 checkAfterLoop idUser idComp seg = do
-   if (seg + getClock "./Data/Clock.json") >= 720 then trendingCloseMenu idUser
-   else if isDown idComp then companyDownMenu idUser idComp
+   if isDown idComp then companyDownMenu idUser idComp
+   else if (seg + getClock "./Data/Clock.json") >= 720 then trendingCloseMenu idUser
    else homeBrokerMenu idUser idComp
 
 
