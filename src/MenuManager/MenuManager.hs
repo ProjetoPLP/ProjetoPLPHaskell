@@ -13,6 +13,9 @@ import Client.GetSetAttrsClient (getCanDeposit, getCurrentUserID)
 import Client.LoginClient (logoutClient)
 
 import Company.CadastrarCompany (cadastrarCompany)
+import Company.SaveCompany (getCompanyJSON)
+
+import Clock.GetSetClock (getClock, setClock)
 
 import MainMenu.MainMenuUpdate (updateMainMenu)
 
@@ -25,8 +28,6 @@ import HomeBroker.HomeBrokerLoopLogic (callLoop)
 import HomeBroker.CompanyProfile.CompanyProfileUpdate (updateCompanyProfile)
 import HomeBroker.TrendingClose.TrendingCloseUpdate (updateTrendingClose)
 import HomeBroker.CompanyDown.CompanyDownUpdate (updateCompanyDown, isDown)
-import Company.SaveCompany (getCompanyJSON)
-import Clock.GetSetClock (getClock, setClock)
 
 
 startMenu :: IO ()
@@ -165,16 +166,16 @@ optionsHomeBrokerMenu idUser idComp userChoice
    | isNumber userChoice = do
          let seg = formatInputToSeconds userChoice
          callLoop idComp seg
-         menuAfterLoop idUser idComp seg
+         menuAfterLoop idUser idComp
    | otherwise = do
          putStrLn "Opção inválida"
          homeBrokerMenu idUser idComp
 
 
-menuAfterLoop :: Int -> Int -> Int -> IO ()
-menuAfterLoop idUser idComp seg = do
+menuAfterLoop :: Int -> Int -> IO ()
+menuAfterLoop idUser idComp = do
    if isDown idComp then companyDownMenu idUser idComp
-   else if (seg + getClock "./Data/Clock.json") >= 720 then trendingCloseMenu idUser
+   else if getClock "./Data/Clock.json" >= 720 then trendingCloseMenu idUser
    else homeBrokerMenu idUser idComp
 
 
