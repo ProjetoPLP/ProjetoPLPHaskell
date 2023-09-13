@@ -4,6 +4,7 @@
 module Company.SaveCompany where
 
 import Data.Aeson
+import Data.List (sort)
 import qualified Data.ByteString.Lazy as B
 import qualified Data.ByteString.Lazy.Char8 as BC
 import GHC.Generics
@@ -45,7 +46,7 @@ getCompanyJSON path = do
 saveCompanyJSON :: String -> Company -> IO ()
 saveCompanyJSON jsonFilePath company = do
   let companyList = getCompanyJSON jsonFilePath
-  let newID = identifySequenceBreak companyList
+  let newID = identifySequenceBreak (getIds $ getCompanyJSON "./Data/Companies.json")
   let companiesList = companyList ++ [giveIdForCompany company (newID)]
   
   textoContents <- readFile "./Sprites/HomeBroker/homebroker_base.txt"
@@ -56,15 +57,20 @@ saveCompanyJSON jsonFilePath company = do
   removeFile jsonFilePath
   renameFile "./Data/ArquivoTemporario.json" jsonFilePath
 
-identifySequenceBreak :: [Company] -> Int
-identifySequenceBreak companies
-  | null companies = 1
-  | otherwise = go 1 companies
-  where
-    go _ [] = length companies + 1
-    go n (Company i _ _ _ _ _ _ _ _ _ _ _ _ _ : rest)
-      | n == i = go (n + 1) rest
-      | otherwise = n
+
+-- Identifica uma quebra em uma sequência numérica, retornando o primeiro valor ausente
+identifySequenceBreak :: [Int] -> Int
+identifySequenceBreak [] = 1
+identifySequenceBreak (x:xs)
+    | not (null xs) && x + 1 /= head xs = x + 1
+    | null xs = x + 1
+    | otherwise = identifySequenceBreak xs
+
+
+-- Retorna uma lista com todos os IDs das empresas
+getIds :: [Company] -> [Int]
+getIds companies = sort [ident x | x <- companies]
+
 
 -- Edita as ações da Empresa
 editCompanyJSON :: String -> Company -> IO ()
