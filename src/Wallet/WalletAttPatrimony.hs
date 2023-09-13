@@ -4,7 +4,7 @@ import Client.ModelClient (Asset (companyID, qtd), Client (ident))
 import Company.GetSetAttrsCompany (getPrice)
 import Client.GetSetAttrsClient (getAllAssets, setPatrimony, getRow, getCol, getPatrimony)
 import Utils.MatrixUtils (writeMatrixValue)
-import Utils.GraphUtils (updateWalletGraphCandle, attClientLineRow)
+import Utils.WalletGraphUtils (updateWalletGraphCandle, attClientLineRow)
 
 
 -- Atualiza o patrimônio de um cliente

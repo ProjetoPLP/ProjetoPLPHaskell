@@ -3,7 +3,7 @@ module HomeBroker.HomeBrokerAttPrice where
 import System.Random (randomRIO)
 
 import Utils.MatrixUtils (printMatrix)
-import Utils.GraphUtils (attCompanyLineRow, attTrendIndicator)
+import Utils.HomeBrokerGraphUtils (attCompanyLineRow, attTrendIndicator)
 
 import HomeBroker.HomeBrokerUpdate (updateHBGraphCandle, updateHBStockMaxPrice, updateHBStockMinPrice, updateHBStockPrice, updateHBStockStartPrice)
 

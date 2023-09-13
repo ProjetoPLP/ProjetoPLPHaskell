@@ -59,14 +59,6 @@ updateHBGraphCandle filePath row col = do
     writeMatrixValue filePath "❚" row col
 
 
--- Reinicia o gráfico do Home Broker sobrescrevendo todos os espaços com caracteres vazios
-cleanHBGraph :: FilePath -> Int -> IO ()
-cleanHBGraph filepath 26 = writeMatrixValue filepath (replicate 74 ' ') 26 2
-cleanHBGraph filepath row = do
-    writeMatrixValue filepath (replicate 74 ' ') row 2
-    cleanHBGraph filepath (row + 1)
-
-
 updateHBStockMaxPrice :: FilePath -> Float -> IO ()
 updateHBStockMaxPrice filePath price = do
     let val = fillLeft (show price ++ "0") 5

@@ -127,18 +127,6 @@ updateWLUserCPF filePath cpf = do
     writeMatrixValue filePath cpf 11 6
 
 
-updateWLNewsPercent :: FilePath -> Float -> IO ()
-updateWLNewsPercent filePath perc = do
-    let val = fillLeft (show perc) 4
-    writeMatrixValue filePath val 16 (33 - length val)
-
-
-updateWLNewsText :: FilePath -> String -> IO ()
-updateWLNewsText filePath text = do
-    let val = fillRight text 3
-    writeMatrixValue filePath val 14 29
-
-
 -- Reseta todas as informações de ações do usuário
 resetStocks :: [Int] -> Int -> IO ()
 resetStocks [] idCliet = return ()

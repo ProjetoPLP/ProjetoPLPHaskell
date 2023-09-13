@@ -6,7 +6,8 @@ import Data.Time.Clock (getCurrentTime, UTCTime, addUTCTime)
 import Clock.ClockUpdate (updateMatrixClock)
 import Clock.GetSetClock (addClock)
 
-import Utils.GraphUtils (checkAllCompanyColumn, checkAllClientColumn)
+import Utils.HomeBrokerGraphUtils (attAllCompanyColumn)
+import Utils.WalletGraphUtils (attAllClientColumn)
 import Company.SaveCompany (getCompanyJSON)
 import HomeBroker.HomeBrokerAttPrice (attCurrentCompanyPriceGraph, attAllCompanyPriceGraph)
 import Wallet.WalletAttPatrimony (attAllClientsWalletPatrimonyGraph)
@@ -28,8 +29,8 @@ loop :: Int -> UTCTime -> IO ()
 loop idComp endTime = do
     currentTime <- getCurrentTime
     if currentTime >= endTime then do
-        checkAllCompanyColumn (getCompanyJSON "./Data/Companies.json")
-        checkAllClientColumn (getClientJSON "./Data/Clients.json")
+        attAllCompanyColumn (getCompanyJSON "./Data/Companies.json")
+        attAllClientColumn (getClientJSON "./Data/Clients.json")
         else do
             attCurrentCompanyPriceGraph idComp
             attAllCompanyPriceGraph idComp (getCompanyJSON "./Data/Companies.json")
