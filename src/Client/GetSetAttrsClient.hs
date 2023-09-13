@@ -11,7 +11,7 @@ getName id = name (getClient id)
 -- ====================== getNameOfClient ============================ --
 -- Entrada: id: Int
 -- TipoDeSaida: Int
-getAge :: Int -> Int
+getAge :: Int -> String
 getAge id = age (getClient id)
 
 -- ====================== getCPFOfClient ============================= --
@@ -29,7 +29,7 @@ getEmail id = email (getClient id)
 -- ====================== getPasswordOfClient ======================== --
 -- Entrada: id: Int
 -- TipoDeSaida: Int
-getPassword :: Int -> Int
+getPassword :: Int -> String
 getPassword id = password (getClient id)
 
 -- ====================== getCashOfClient ============================ --
@@ -102,10 +102,10 @@ setName id name = do
 -- ====================== setAgeOfClient ============================ --
 -- Entrada: id: Int / age: Int
 -- TipoDeSaida: Bool
-setAge :: Int -> Int -> IO Bool
+setAge :: Int -> String -> IO Bool
 setAge id age = do
     let client = getClient id
-    if (age >= 18) then do
+    if (read age :: Int) >= 18 then do
         if (ident client) /= -1 then do
             let newClient = client { age = age }
             editClientJSON "./Data/Clients.json" newClient
@@ -152,10 +152,10 @@ setEmail id email = do
 -- ====================== setPasswordOfClient ====================== --
 -- Entrada: id: Int / password: Int
 -- TipoDeSaida: Bool
-setPassword :: Int -> Int -> IO Bool
+setPassword :: Int -> String -> IO Bool
 setPassword id password = do
     let client = getClient id
-    if (length (show password) == 5) then do
+    if (length password) == 5 then do
         if (ident client) /= -1 then do
             let newClient = client { password = password }
             editClientJSON "./Data/Clients.json" newClient

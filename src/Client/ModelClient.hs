@@ -5,10 +5,10 @@ import GHC.Generics
 data Client = Client
   { ident :: Int,
     name :: String,
-    age :: Int,
+    age :: String,
     cpf :: String,
     email :: String,
-    password :: Int,
+    password :: String,
     cash :: Float,
     patrimony :: Float,
     canDeposit :: Bool,
@@ -23,7 +23,7 @@ data Asset = Asset {
   qtd :: Int
 } deriving (Show, Generic)
 
-createClient :: Int -> String -> Int -> String -> String -> Int -> Float -> Client
+createClient :: Int -> String -> String -> String -> String -> String -> Float -> Client
 createClient id_ name age cpf email password cash =
   Client
     { ident = id_,

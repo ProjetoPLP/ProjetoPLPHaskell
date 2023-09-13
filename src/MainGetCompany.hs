@@ -17,7 +17,7 @@ main = do
     putStrLn (show(getCol 1))
 
     setName 1 "Empresa2"
-    setAge 1 2024
+    setAge 1 "2024"
     setCNPJ 1 "10101010101010"
     setActuation 1 "Algo"
     setDeclaration 1 "Declaro"

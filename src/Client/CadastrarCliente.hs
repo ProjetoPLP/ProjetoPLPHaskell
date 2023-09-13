@@ -8,9 +8,9 @@ cadastrarCliente :: IO Bool
 cadastrarCliente = do
     client <- getNewClient
     if (length (name client) <= 18) then
-        if (age client) >= 18 then do
+        if (read (age client) :: Int) >= 18 then do
             if (length (cpf client)) == 11 then do
-                if (length (show (password client))) == 5 then do 
+                if (length (password client)) == 5 then do 
                     if not (existClientByEmail (email client)) then do
                         saveClientJSON "./Data/Clients.json" client
                         putStrLn ("\n" ++ name client ++ " você foi cadastrado! Você iniciará com um saldo de R$100,00.")

@@ -8,13 +8,12 @@ getName = do
   input <- getLine
   return input
 
-getAge :: IO Int
+getAge :: IO String
 getAge = do
   putStr "Digite a sua idade: "
   hFlush stdout
   input <- getLine
-  let age = (read input :: Int)
-  return age
+  return input
 
 getCPF :: IO String
 getCPF = do
@@ -30,10 +29,9 @@ getEmail = do
   input <- getLine
   return input
 
-getPassword :: IO Int
+getPassword :: IO String
 getPassword = do
   putStr "Digite a sua senha: "
   hFlush stdout
   input <- getLine
-  let password = (read input :: Int)
-  return password
+  return input

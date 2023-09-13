@@ -6,7 +6,7 @@ import Data.Char (toUpper)
 getName :: Int -> String
 getName id = name (getCompany id)
     
-getAge :: Int -> Int
+getAge :: Int -> String
 getAge id = age (getCompany id)
 
 getCNPJ :: Int -> String
@@ -62,7 +62,7 @@ setName id name = do
         putStrLn "\nOcorreu um problema! O nome da empresa deve ter no máximo 18 caracteres."
         return False
 
-setAge :: Int -> Int -> IO Bool
+setAge :: Int -> String -> IO Bool
 setAge id age = do
     let company = getCompany id
     if (ident company) /= 0 then do

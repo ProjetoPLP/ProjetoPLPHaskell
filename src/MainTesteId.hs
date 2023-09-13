@@ -13,12 +13,12 @@ identifySequenceBreak companies
 
 main :: IO()
 main = do
-    let comp1 = Company 1 "" 0 "" "" "" "" 0.00 "" 0.00 0.00 0.00 0 0
-    let comp2 = Company 2 "" 0 "" "" "" "" 0.00 "" 0.00 0.00 0.00 0 0
-    let comp3 = Company 3 "" 0 "" "" "" "" 0.00 "" 0.00 0.00 0.00 0 0
-    let comp4 = Company 4 "" 0 "" "" "" "" 0.00 "" 0.00 0.00 0.00 0 0
-    let comp5 = Company 5 "" 0 "" "" "" "" 0.00 "" 0.00 0.00 0.00 0 0
-    let comp6 = Company 6 "" 0 "" "" "" "" 0.00 "" 0.00 0.00 0.00 0 0
+    let comp1 = Company 1 "" "" "" "" "" "" 0.00 "" 0.00 0.00 0.00 0 0
+    let comp2 = Company 2 "" "" "" "" "" "" 0.00 "" 0.00 0.00 0.00 0 0
+    let comp3 = Company 3 "" "" "" "" "" "" 0.00 "" 0.00 0.00 0.00 0 0
+    let comp4 = Company 4 "" "" "" "" "" "" 0.00 "" 0.00 0.00 0.00 0 0
+    let comp5 = Company 5 "" "" "" "" "" "" 0.00 "" 0.00 0.00 0.00 0 0
+    let comp6 = Company 6 "" "" "" "" "" "" 0.00 "" 0.00 0.00 0.00 0 0
 
     let allComp = [comp1, comp2, comp3, comp4, comp6]
     removeCompanyJSON "./Data/Companies.json" 3
