@@ -6,16 +6,16 @@
 ║ Patrimônio:           ║                                                                       ║
 ║                       ║                                                                       ║
 ╠═══════════════════════╬═══════════════════════╦═══════════════════════════════════════════════╣
-║                       ║         NEWS          ║ Variação Patrimonial                          ║
-║  ┃                    ║         ▔▔▔▔          ║                                               ║
+║                       ║                       ║ Variação Patrimonial                          ║
+║  ┃                    ║    Na sua carteira    ║                                               ║
 ║  ┃                    ║                       ║                                               ║
-║                       ║   As ações da bolsa   ║                                               ║
+║                       ║  você pode consultar  ║                                               ║
 ║  ┃ Saldo:             ║                       ║                                               ║
+║                       ║  todas as suas ações  ║                                               ║
 ║                       ║                       ║                                               ║
-║                       ║                       ║                                               ║
-║         Sacar         ║       % comparado     ║                                               ║
+║         Sacar         ║  e a variação do seu  ║                                               ║
 ║         ▔             ║                       ║                                               ║
-║       Depositar       ║   ao último pregão    ║                                               ║
+║       Depositar       ║      patrimônio.      ║                                               ║
 ║       ▔               ║                       ║                                               ║
 ║                       ║                       ║                                               ║
 ╠═══════════════════════╩═══════════════════════╩═══════════════════════════════════════════════╣
