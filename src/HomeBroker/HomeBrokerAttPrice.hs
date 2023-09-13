@@ -17,7 +17,7 @@ getIndexAndVariation :: IO [Int]
 getIndexAndVariation = do
     index <- randomRIO (0,9 :: Int)
     var <- randomRIO (-1,1 :: Int)
-    return [index, -1]
+    return [index, var]
 
 
 -- Retorna um novo preço baseado na aleatóriedade da função getIndexAndVariation

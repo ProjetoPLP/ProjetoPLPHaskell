@@ -50,7 +50,7 @@ updateHomeBrokerSell idClient idComp = do
 
 updateHBStockPrice :: FilePath -> Float -> String -> IO ()
 updateHBStockPrice filePath price trendInd = do
-    let val = fillLeft (trendInd ++ show price ++ "0") 6
+    let val = fillLeft (trendInd ++ show price ++ "0") 7
     writeMatrixValue filePath val 11 (95 - length val)
 
 
@@ -61,19 +61,19 @@ updateHBGraphCandle filePath row col = do
 
 updateHBStockMaxPrice :: FilePath -> Float -> IO ()
 updateHBStockMaxPrice filePath price = do
-    let val = fillLeft (show price ++ "0") 5
+    let val = fillLeft (show price ++ "0") 6
     writeMatrixValue filePath val 16 (95 - length val)
 
 
 updateHBStockMinPrice :: FilePath -> Float -> IO ()
 updateHBStockMinPrice filePath price = do
-    let val = fillLeft (show price ++ "0") 5
+    let val = fillLeft (show price ++ "0") 6
     writeMatrixValue filePath val 18 (95 - length val)
 
 
 updateHBStockStartPrice :: FilePath -> Float -> IO ()
 updateHBStockStartPrice filePath price = do
-    let val = fillLeft (show price ++ "0") 5
+    let val = fillLeft (show price ++ "0") 6
     writeMatrixValue filePath val 14 (95 - length val)
 
 
