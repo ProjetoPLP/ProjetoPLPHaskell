@@ -57,9 +57,9 @@ updateCPCompanyDeclaration filePath declaration = do
     writeMatrixValue filePath declaration 17 8
 
 
-updateCPCompanyAge :: FilePath -> Int -> IO ()
+updateCPCompanyAge :: FilePath -> String -> IO ()
 updateCPCompanyAge filePath age = do
-    writeMatrixValue filePath (show age) 20 23
+    writeMatrixValue filePath age 20 23
 
 
 updateCPCompanyCNPJ :: FilePath -> String -> IO ()
