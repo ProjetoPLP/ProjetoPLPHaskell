@@ -2,11 +2,11 @@ module Menus.HomeBroker.HomeBrokerAttPrice where
 
 import System.Random ( randomRIO )
 import Utils.MatrixUtils ( printMatrix )
-import Utils.GraphUtilsHomeBroker ( attCompanyLineRow, attTrendIndicator )
+import Utils.GraphUtilsHomeBroker ( attCompanyLineRow)
 import Menus.HomeBroker.HomeBrokerUpdate ( updateHBGraphCandle, updateHBStockMaxPrice, updateHBStockMinPrice, updateHBStockPrice, updateHBStockStartPrice )
 import Menus.HomeBroker.CompanyDown.CompanyDownUpdate ( isDown, removeComapanyFromExchange )
 import Models.Company.ModelCompany ( Company )
-import Models.Company.GetSetAttrsCompany ( getCol, getIdent, getMaxPrice, getMinPrice, getPrice, getRow, getStartPrice, getTrendIndicator, setMaxPrice, setMinPrice, setPrice )
+import Models.Company.GetSetAttrsCompany ( getCol, getIdent, getMaxPrice, getMinPrice, getPrice, getRow, getStartPrice, getTrendIndicator, setMaxPrice, setMinPrice, setPrice, setTrendIndicator )
 
 
 -- Retorna um novo preço baseado na aleatóriedade da função getIndexAndVariation
@@ -25,6 +25,14 @@ getNewPrice oldPrice = do
             index <- randomRIO (0,9 :: Int)
             var <- randomRIO (-1,1 :: Int)
             return [index, var]
+
+
+-- Atualiza em uma empresa, a partir do seu ID, o novo trendIndicator
+attTrendIndicator :: Int -> Float -> Float -> IO ()
+attTrendIndicator idComp oldPrice newPrice
+    | newPrice > oldPrice = setTrendIndicator idComp "▲"
+    | newPrice < oldPrice = setTrendIndicator idComp "▼"
+    | otherwise = setTrendIndicator idComp " "
 
 
 -- Retorna o novo preço máximo baseado no novo preço
@@ -49,7 +57,7 @@ getNewMinPrice idComp newPrice
         minPrice = getMinPrice idComp
 
 
--- Atualiza o preço e o gráfico em todas as empresas cadastradas
+-- Atualiza o preço e o gráfico de todas as empresas
 attAllCompanyPriceGraph :: Int -> [Company] -> IO ()
 attAllCompanyPriceGraph _ [] = return ()
 attAllCompanyPriceGraph idComp (x:xs)

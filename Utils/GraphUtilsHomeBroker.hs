@@ -1,7 +1,7 @@
 module Utils.GraphUtilsHomeBroker where
 
 import Utils.MatrixUtils ( writeMatrixValue )
-import Models.Company.GetSetAttrsCompany ( getCol, getIdent, getRow, setTrendIndicator, updateCol, updateRow )
+import Models.Company.GetSetAttrsCompany ( getCol, getIdent, getRow, updateCol, updateRow )
 import Models.Company.ModelCompany ( Company )
 
 
@@ -62,11 +62,3 @@ cleanHBGraph filepath 26 = writeMatrixValue filepath (replicate 74 ' ') 26 2
 cleanHBGraph filepath row = do
     writeMatrixValue filepath (replicate 74 ' ') row 2
     cleanHBGraph filepath (row + 1)
-
-
--- Atualiza em uma empresa, a partir do seu ID, o novo trendIndicator
-attTrendIndicator :: Int -> Float -> Float -> IO ()
-attTrendIndicator idComp oldPrice newPrice
-    | newPrice > oldPrice = setTrendIndicator idComp "▲"
-    | newPrice < oldPrice = setTrendIndicator idComp "▼"
-    | otherwise = setTrendIndicator idComp " "

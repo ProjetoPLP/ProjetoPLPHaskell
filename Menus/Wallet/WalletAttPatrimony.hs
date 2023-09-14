@@ -23,17 +23,20 @@ attClientPatrimonyAux (x:xs) = do
         format newPrice = fromIntegral (round (newPrice * 10 )) / 10
 
 
-attAllClientsWalletPatrimonyGraph :: [Client] -> IO ()
-attAllClientsWalletPatrimonyGraph [] = return ()
-attAllClientsWalletPatrimonyGraph (x:xs) = do
+-- Atualiza o gráfico da carteira de todos os clientes
+attAllClientsPatrimonyGraph :: [Client] -> IO ()
+attAllClientsPatrimonyGraph [] = return ()
+attAllClientsPatrimonyGraph (x:xs) = do
     let oldPatrimony = getPatrimony (ident x)
         newPatrimony = attClientPatrimonyAux (getAllAssets (ident x))
-    attClientWalletPatrimonyGraph (ident x) oldPatrimony newPatrimony
+    attClientPatrimonyGraph (ident x) oldPatrimony newPatrimony
     attClientPatrimony (ident x)
-    attAllClientsWalletPatrimonyGraph xs
+    attAllClientsPatrimonyGraph xs
 
 
-attClientWalletPatrimonyGraph :: Int -> Float -> Float -> IO ()
-attClientWalletPatrimonyGraph idClient oldPatrimony newPatrimony = do
+attClientPatrimonyGraph :: Int -> Float -> Float -> IO ()
+attClientPatrimonyGraph idClient oldPatrimony newPatrimony = do
     attClientLineRow idClient oldPatrimony newPatrimony
-    updateWalletGraphCandle ("./Models/Client/Wallets/wallet" ++ show idClient ++ ".txt") (getRow idClient) (getCol idClient)
+    updateWalletGraphCandle filePath (getRow idClient) (getCol idClient)
+    where
+        filePath = "./Models/Client/Wallets/wallet" ++ show idClient ++ ".txt"
