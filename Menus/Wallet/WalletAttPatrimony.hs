@@ -1,10 +1,9 @@
 module Menus.Wallet.WalletAttPatrimony where
 
-import Models.Client.ModelClient (Asset (companyID, qtd), Client (ident))
-import Models.Company.GetSetAttrsCompany (getPrice)
-import Models.Client.GetSetAttrsClient (getAllAssets, setPatrimony, getRow, getCol, getPatrimony)
-import Utils.MatrixUtils (writeMatrixValue)
-import Utils.GraphUtilsWallet (updateWalletGraphCandle, attClientLineRow)
+import Utils.GraphUtilsWallet ( updateWalletGraphCandle, attClientLineRow )
+import Models.Client.ModelClient ( Asset (companyID, qtd), Client (ident) )
+import Models.Company.GetSetAttrsCompany ( getPrice )
+import Models.Client.GetSetAttrsClient ( getAllAssets, setPatrimony, getRow, getCol, getPatrimony )
 
 
 -- Atualiza o patrimônio de um cliente
@@ -16,9 +15,9 @@ attClientPatrimony idClient = do
 attClientPatrimonyAux :: [Asset] -> Float
 attClientPatrimonyAux [] = 0
 attClientPatrimonyAux (x:xs) = do
-    let id = companyID x
+    let idUser = companyID x
         qtd_ = qtd x
-    format (fromIntegral qtd_ * getPrice id + attClientPatrimonyAux xs)
+    format (fromIntegral qtd_ * getPrice idUser + attClientPatrimonyAux xs)
     where
         format :: Float -> Float
         format newPrice = fromIntegral (round (newPrice * 10 )) / 10
@@ -28,7 +27,7 @@ attAllClientsWalletPatrimonyGraph :: [Client] -> IO ()
 attAllClientsWalletPatrimonyGraph [] = return ()
 attAllClientsWalletPatrimonyGraph (x:xs) = do
     let oldPatrimony = getPatrimony (ident x)
-    let newPatrimony = attClientPatrimonyAux (getAllAssets (ident x))
+        newPatrimony = attClientPatrimonyAux (getAllAssets (ident x))
     attClientWalletPatrimonyGraph (ident x) oldPatrimony newPatrimony
     attClientPatrimony (ident x)
     attAllClientsWalletPatrimonyGraph xs

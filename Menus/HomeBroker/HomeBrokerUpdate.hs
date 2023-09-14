@@ -1,7 +1,7 @@
 module Menus.HomeBroker.HomeBrokerUpdate where
 
 import Utils.MatrixUtils ( writeMatrixValue )
-import Utils.UpdateUtils ( fillLeft, resetMenu )
+import Utils.UpdateUtils ( fillLeft, resetMenu, getCompanyNameCol )
 import Models.Company.GetSetAttrsCompany ( getPrice, getTrendIndicator, getStartPrice, getMaxPrice, getMinPrice, getName, getCode )
 import Models.Client.GetSetAttrsClient ( getCash, getQtdAssetsInCompany )
 import Models.Clock.ClockUpdate ( updateMatrixClock )
@@ -96,9 +96,4 @@ updateHBCompanyCode filePath name = do
 
 updateHBCompanyName :: FilePath -> String -> IO ()
 updateHBCompanyName filePath name = do
-    writeMatrixValue filePath name 7 (getCompanyNameCol (length name))
-
-
--- Formata, a partir do tamanho do nome, a coluna na qual o nome será escrito 
-getCompanyNameCol :: Int -> Int
-getCompanyNameCol len = 86 - ((len - 1) `div` 2)
+    writeMatrixValue filePath name 7 (getCompanyNameCol 86 (length name))

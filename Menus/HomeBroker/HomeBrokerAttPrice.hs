@@ -29,22 +29,24 @@ getNewPrice oldPrice = do
 
 -- Retorna o novo preço máximo baseado no novo preço
 getNewMaxPrice :: Int -> Float -> IO Float
-getNewMaxPrice idComp newPrice = do
-    let maxPrice = getMaxPrice idComp
-    if maxPrice >= newPrice then return maxPrice 
-    else do
+getNewMaxPrice idComp newPrice
+    | maxPrice >= newPrice = return maxPrice 
+    | otherwise = do
         setMaxPrice idComp newPrice 
         return newPrice
+    where
+        maxPrice = getMaxPrice idComp
 
 
 -- Retorna o novo preço mínimo baseado no novo preço
 getNewMinPrice :: Int -> Float -> IO Float
-getNewMinPrice idComp newPrice = do
-    let minPrice = getMinPrice idComp
-    if minPrice <= newPrice then return minPrice 
-    else do
+getNewMinPrice idComp newPrice
+    | minPrice <= newPrice = return minPrice 
+    | otherwise = do
         setMinPrice idComp newPrice 
         return newPrice
+    where
+        minPrice = getMinPrice idComp
 
 
 -- Atualiza o preço e o gráfico em todas as empresas cadastradas

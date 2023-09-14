@@ -1,14 +1,12 @@
 module Menus.MainMenu.MainMenuUpdate where
 
-import Utils.UpdateUtils (fillLeft, resetMenu)
-import Utils.MatrixUtils (writeMatrixValue)
-
-import Models.Company.GetSetAttrsCompany (getCode, getIdent, getName, getPrice, getTrendIndicator)
-import Models.Company.ModelCompany (Company)
-import Models.Company.SaveCompany (getCompanyJSON)
-
-import Models.Clock.ClockUpdate (updateMatrixClock)
-import Models.Client.GetSetAttrsClient (getCash)
+import Utils.UpdateUtils ( fillLeft, resetMenu, getCompanyNameCol )
+import Utils.MatrixUtils ( writeMatrixValue )
+import Models.Company.GetSetAttrsCompany ( getCode, getIdent, getName, getPrice, getTrendIndicator )
+import Models.Company.ModelCompany ( Company )
+import Models.Company.SaveCompany ( getCompanyJSON )
+import Models.Client.GetSetAttrsClient ( getCash )
+import Models.Clock.ClockUpdate ( updateMatrixClock )
 
 
 -- Atualiza todas as informações no Main Menu
@@ -73,11 +71,6 @@ updateMMCompanyPrice filePath id num trendInd = do
     let pos = getCompanyPricePosition id
         val = fillLeft (trendInd ++ show num ++ "0") 7
     writeMatrixValue filePath val (head pos) (last pos - length val)
-
-
--- Formata, a partir do tamanho do nome, a coluna na qual o nome será escrito 
-getCompanyNameCol :: Int -> Int -> Int
-getCompanyNameCol len col = col - ((len - 1) `div` 2)
 
 
 getCompanyCodePosition :: Int -> [Int]
