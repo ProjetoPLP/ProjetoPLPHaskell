@@ -96,4 +96,4 @@ updateHBCompanyCode filePath name = do
 
 updateHBCompanyName :: FilePath -> String -> IO ()
 updateHBCompanyName filePath name = do
-    writeMatrixValue filePath name 7 (getCompanyNameCol 86 (length name))
+    writeMatrixValue filePath name 7 (getCompanyNameCol (length name) 86)

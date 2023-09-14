@@ -25,8 +25,8 @@ updateCompanyProfile idClient idComp = do
 
 updateCPCash :: FilePath -> Float -> IO ()
 updateCPCash filePath num = do
-    let val = fillLeft (show num) 8
-    writeMatrixValue filePath val 3 (74 - length val)
+    let val = fillLeft (show num ++ "0") 9
+    writeMatrixValue filePath val 3 (75 - length val)
 
 
 updateCPCompanyCode :: FilePath -> String -> IO ()
