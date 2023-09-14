@@ -68,11 +68,11 @@ getDeclaration = do
 
 getCode :: IO String
 getCode = do
-    putStr "Digite o código da empresa (apenas 5 dígitos): "
+    putStr "Digite o código da ação (deve seguir o modelo VALE3): "
     hFlush stdout
     code <- getLine
     if length code /= 5 then do
-        putStrLn "\nAviso: O código da empresa deve possuir 5 caracteres."
+        putStrLn "\nAviso: O código da ação deve possuir 5 caracteres."
         getCode
     else return (uppercaseString code)
 
