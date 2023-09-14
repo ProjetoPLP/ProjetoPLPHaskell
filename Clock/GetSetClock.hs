@@ -1,17 +1,9 @@
 module Clock.GetSetClock where
 
-import Data.Aeson ( FromJSON, ToJSON, encode, decode )
-import GHC.Generics ( Generic )
 import qualified Data.ByteString.Lazy as B
+import Data.Aeson (encode, decode)
 import System.IO.Unsafe (unsafePerformIO)
-
-data Clock = Clock
-  { 
-    minutes :: Int
-  } deriving (Show, Generic)
-
-instance ToJSON Clock
-instance FromJSON Clock
+import Clock.ModelClock (Clock (Clock, minutes))
 
 
 -- Retorna os minutos totais do relógio no arquivo Clock.json
@@ -33,10 +25,11 @@ addClock increment = do
         Just oldClock -> do
             let newMinutes = minutes oldClock + increment
                 newClock = Clock { minutes = newMinutes }
-            saveClockToFile newClock
+            B.writeFile "./Data/Clock.json" $ encode newClock
         Nothing -> putStrLn "Erro ao ler o arquivo JSON"
 
 
+-- Substitui os minutos do relógio
 setClock :: Int -> IO ()
 setClock increment = do 
     jsonContent <- B.readFile "./Data/Clock.json"
@@ -44,10 +37,5 @@ setClock increment = do
     case maybeClock of
         Just oldClock -> do
             let newClock = Clock { minutes = increment }
-            saveClockToFile newClock
+            B.writeFile "./Data/Clock.json" $ encode newClock
         Nothing -> putStrLn "Erro ao ler o arquivo JSON"
-
-
-saveClockToFile :: Clock -> IO ()
-saveClockToFile clock = do
-    B.writeFile "./Data/Clock.json" $ encode clock
