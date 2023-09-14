@@ -1,8 +1,8 @@
-module Client.CadastrarCliente where
+module Models.Client.CadastrarCliente where
 
-import Client.SaveClient ( saveClientJSON )
-import Client.ModelClient ( createClient, Client )
-import Client.GetInfoForCreateClient (getName, getAge, getCPF, getEmail, getPassword)
+import Models.Client.SaveClient ( saveClientJSON )
+import Models.Client.ModelClient ( createClient, Client )
+import Models.Client.GetInfoForCreateClient (getName, getAge, getCPF, getEmail, getPassword)
 
 
 cadastrarCliente :: IO ()

@@ -1,8 +1,8 @@
 module Menus.HomeBroker.BuySell.HomeBrokerBuySellLogic where
 
-import Client.GetSetAttrsClient (getQtdAssetsInCompany, getCash, removeCash, addCash)
-import Client.PostClient (addAsset)
-import Company.GetSetAttrsCompany (getPrice)
+import Models.Client.GetSetAttrsClient (getQtdAssetsInCompany, getCash, removeCash, addCash)
+import Models.Client.PostClient (addAsset)
+import Models.Company.GetSetAttrsCompany (getPrice)
 
 
 buy :: Int -> Int -> Int -> IO ()

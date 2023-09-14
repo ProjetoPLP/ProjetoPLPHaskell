@@ -1,4 +1,5 @@
-module Client.GetInfoForMakeLogin where
+module Models.Client.GetInfoForMakeLogin where
+    
 import System.IO (hFlush, stdout)
 
 getEmail :: IO String

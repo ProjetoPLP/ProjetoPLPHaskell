@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE DeriveGeneric #-}
 
-module Client.SaveClient where
+module Models.Client.SaveClient where
 
 import Data.Aeson
 import qualified Data.ByteString.Lazy as B
@@ -10,7 +10,7 @@ import GHC.Generics
 import System.IO.Unsafe ( unsafePerformIO )
 import System.IO
 import System.Directory
-import Client.ModelClient
+import Models.Client.ModelClient
 import Data.Maybe
 
 instance FromJSON Client
@@ -60,7 +60,7 @@ saveClientJSON jsonFilePath client = do
   let clientsList = clientList ++ [giveIdForClient client (newID)]
 
   textoContents <- readFile "./Sprites/Wallet/wallet_base.txt"
-  let walletFileName = "./Client/Wallet/wallet" ++ (show newID) ++ ".txt"
+  let walletFileName = "./Models/Client/Wallets/wallet" ++ (show newID) ++ ".txt"
   appendFile walletFileName textoContents
 
   B.writeFile "./Data/ArquivoTemporario.json" $ encode clientsList

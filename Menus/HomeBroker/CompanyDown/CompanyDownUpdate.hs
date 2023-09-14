@@ -1,12 +1,12 @@
 module Menus.HomeBroker.CompanyDown.CompanyDownUpdate where
 
 import Utils.UpdateUtils (resetMenu)
-import Clock.ClockUpdate (updateMatrixClock)
+import Models.Clock.ClockUpdate (updateMatrixClock)
 import Menus.HomeBroker.HomeBrokerUpdate (updateHBCash, updateHBCompanyName, updateHBCompanyCode)
-import Client.GetSetAttrsClient (getCash)
-import Company.GetSetAttrsCompany (getName, getCode, getPrice)
-import Company.SaveCompany (removeCompany)
-import Client.PostClient (removeAllClientsAsset)
+import Models.Client.GetSetAttrsClient (getCash)
+import Models.Company.GetSetAttrsCompany (getName, getCode, getPrice)
+import Models.Company.SaveCompany (removeCompany)
+import Models.Client.PostClient (removeAllClientsAsset)
 
 
 -- Atualiza todas as informações do menu de falência de uma empresa

@@ -1,5 +1,6 @@
 {-# LANGUAGE DeriveGeneric #-}
-module Company.ModelCompany where
+module Models.Company.ModelCompany where
+
 import GHC.Generics
 
 data Company = Company

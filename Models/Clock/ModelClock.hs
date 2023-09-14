@@ -1,4 +1,4 @@
-module Clock.ModelClock where
+module Models.Clock.ModelClock where
 
 import Data.Aeson (FromJSON, ToJSON)
 import GHC.Generics (Generic)

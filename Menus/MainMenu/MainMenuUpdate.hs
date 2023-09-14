@@ -3,12 +3,12 @@ module Menus.MainMenu.MainMenuUpdate where
 import Utils.UpdateUtils (fillLeft, resetMenu)
 import Utils.MatrixUtils (writeMatrixValue)
 
-import Company.GetSetAttrsCompany (getCode, getIdent, getName, getPrice, getTrendIndicator)
-import Company.ModelCompany (Company)
-import Company.SaveCompany (getCompanyJSON)
+import Models.Company.GetSetAttrsCompany (getCode, getIdent, getName, getPrice, getTrendIndicator)
+import Models.Company.ModelCompany (Company)
+import Models.Company.SaveCompany (getCompanyJSON)
 
-import Clock.ClockUpdate (updateMatrixClock)
-import Client.GetSetAttrsClient (getCash)
+import Models.Clock.ClockUpdate (updateMatrixClock)
+import Models.Client.GetSetAttrsClient (getCash)
 
 
 -- Atualiza todas as informações no Main Menu

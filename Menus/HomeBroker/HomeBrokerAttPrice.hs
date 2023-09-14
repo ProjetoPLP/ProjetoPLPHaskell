@@ -8,8 +8,8 @@ import Utils.GraphUtilsHomeBroker (attCompanyLineRow, attTrendIndicator)
 import Menus.HomeBroker.HomeBrokerUpdate (updateHBGraphCandle, updateHBStockMaxPrice, updateHBStockMinPrice, updateHBStockPrice, updateHBStockStartPrice)
 import Menus.HomeBroker.CompanyDown.CompanyDownUpdate (isDown, removeComapanyFromExchange)
 
-import Company.ModelCompany (Company)
-import Company.GetSetAttrsCompany (getCol, getIdent, getMaxPrice, getMinPrice, getPrice, getRow, getStartPrice, getTrendIndicator, setMaxPrice, setMinPrice, setPrice)
+import Models.Company.ModelCompany (Company)
+import Models.Company.GetSetAttrsCompany (getCol, getIdent, getMaxPrice, getMinPrice, getPrice, getRow, getStartPrice, getTrendIndicator, setMaxPrice, setMinPrice, setPrice)
 
 
 -- Retorna um index e uma variação aleatória 
@@ -73,7 +73,7 @@ attAllCompanyPriceGraph idComp (x:xs)
 attCurrentCompanyPriceGraph :: Int -> IO ()
 attCurrentCompanyPriceGraph id = do
     attCompanyPriceGraph id
-    printMatrix ("./Company/HomeBroker/homebroker" ++ show id ++ ".txt")
+    printMatrix ("./Models/Company/HomeBrokers/homebroker" ++ show id ++ ".txt")
 
 
 -- Atualiza em uma empresa qualquer, a partir do seu ID, o preço e o gráfico
@@ -92,4 +92,4 @@ attCompanyPriceGraph id = do
     updateHBStockMinPrice filePath newMinPrice
     updateHBStockStartPrice filePath (getStartPrice id)
     updateHBGraphCandle filePath (getRow id) (getCol id)
-    where filePath = "./Company/HomeBroker/homebroker" ++ show id ++ ".txt"
+    where filePath = "./Models/Company/HomeBrokers/homebroker" ++ show id ++ ".txt"

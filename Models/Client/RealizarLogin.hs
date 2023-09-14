@@ -1,8 +1,9 @@
-module Client.RealizarLogin where
-import Client.GetInfoForMakeLogin
-import Client.SaveClient
-import Client.ModelClient
-import Client.LoginClient (saveLogin)
+module Models.Client.RealizarLogin where
+
+import Models.Client.GetInfoForMakeLogin
+import Models.Client.SaveClient
+import Models.Client.ModelClient
+import Models.Client.LoginClient (saveLogin)
 
 fazerLogin :: IO Bool
 fazerLogin = do

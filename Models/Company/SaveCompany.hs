@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE DeriveGeneric #-}
 
-module Company.SaveCompany where
+module Models.Company.SaveCompany where
 
 import Data.Aeson
 import Data.List (sort)
@@ -11,7 +11,7 @@ import GHC.Generics
 import System.IO.Unsafe ( unsafePerformIO )
 import System.IO
 import System.Directory
-import Company.ModelCompany
+import Models.Company.ModelCompany
 
 instance FromJSON Company
 instance ToJSON Company
@@ -50,7 +50,7 @@ saveCompanyJSON jsonFilePath company = do
   let companiesList = companyList ++ [giveIdForCompany company (newID)]
   
   textoContents <- readFile "./Sprites/HomeBroker/homebroker_base.txt"
-  let walletFileName = "./Company/HomeBroker/homebroker" ++ (show newID) ++ ".txt"
+  let walletFileName = "./Models/Company/HomeBrokers/homebroker" ++ (show newID) ++ ".txt"
   appendFile walletFileName textoContents
 
   B.writeFile "./Data/ArquivoTemporario.json" $ encode companiesList
@@ -89,7 +89,7 @@ removeCompany idComp jsonFilePath = do
  B.writeFile "./Data/ArquivoTemporario.json" $ encode newCompaniesList
  removeFile jsonFilePath
  renameFile "./Data/ArquivoTemporario.json" jsonFilePath
- let filePathToDelete = "./Company/HomeBroker/homebroker" ++ show idComp ++ ".txt"
+ let filePathToDelete = "./Models/Company/HomeBrokers/homebroker" ++ show idComp ++ ".txt"
  removeFile filePathToDelete
 
 

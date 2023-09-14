@@ -2,11 +2,11 @@ module Menus.HomeBroker.TrendingClose.TrendingCloseUpdate where
 
 import Utils.MatrixUtils (writeMatrixValue)
 import Utils.UpdateUtils (fillLeft, resetMenu)
-import Company.GetSetAttrsCompany (getStartPrice, getPrice, getCode, getIdent, setStartPrice)
-import Company.ModelCompany (Company)
-import Client.GetSetAttrsClient (getCash, getPatrimony)
-import Company.SaveCompany (getCompanyJSON)
-import Clock.ClockUpdate (updateMatrixClock)
+import Models.Company.GetSetAttrsCompany (getStartPrice, getPrice, getCode, getIdent, setStartPrice)
+import Models.Company.ModelCompany (Company)
+import Models.Client.GetSetAttrsClient (getCash, getPatrimony)
+import Models.Company.SaveCompany (getCompanyJSON)
+import Models.Clock.ClockUpdate (updateMatrixClock)
 
 
 updateTrendingClose :: Int -> IO ()

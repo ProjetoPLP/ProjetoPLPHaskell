@@ -1,7 +1,7 @@
-module Clock.ClockUpdate where
+module Models.Clock.ClockUpdate where
 
 import Utils.MatrixUtils (writeMatrixValue)
-import Clock.GetSetClock (getClock)
+import Models.Clock.GetSetClock (getClock)
 
 -- Atualiza no arquivo .txt o relógio
 updateMatrixClock :: FilePath -> IO ()

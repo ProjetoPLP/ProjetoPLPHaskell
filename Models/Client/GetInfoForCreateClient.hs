@@ -1,7 +1,8 @@
-module Client.GetInfoForCreateClient where
+module Models.Client.GetInfoForCreateClient where
+
 import System.IO (hFlush, stdout)
 import Utils.VerificationUtils (isNumber)
-import Client.SaveClient (existClientByEmail)
+import Models.Client.SaveClient (existClientByEmail)
 
 
 getName :: IO String

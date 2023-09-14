@@ -1,8 +1,8 @@
 module Utils.GraphUtilsHomeBroker where
 
-import Company.GetSetAttrsCompany as Com (getCol, getIdent, getRow, setTrendIndicator, updateCol, updateRow)
+import Models.Company.GetSetAttrsCompany as Com (getCol, getIdent, getRow, setTrendIndicator, updateCol, updateRow)
 import Utils.MatrixUtils (writeMatrixValue)
-import Company.ModelCompany (Company)
+import Models.Company.ModelCompany (Company)
 
 
 -- Atualiza em uma empresa, a partir do seu ID, a nova linha e coluna baseado no novo preço
@@ -24,7 +24,7 @@ attCompanyLineRow idComp oldPrice newPrice = do
 checkCompanyColumn :: Int -> IO ()
 checkCompanyColumn idComp
     | Com.getCol idComp > 74 = do
-        cleanHBGraph ("./Company/HomeBroker/homebroker" ++ show idComp ++ ".txt") 6
+        cleanHBGraph ("./Models/Company/HomeBrokers/homebroker" ++ show idComp ++ ".txt") 6
         Com.updateCol idComp (-72)
     | otherwise = 
         Com.updateCol idComp 0
@@ -33,7 +33,7 @@ checkCompanyColumn idComp
 checkCompanyRowOverflow :: Int -> IO ()
 checkCompanyRowOverflow idComp
     | Com.getRow idComp < 6 = do
-        cleanHBGraph ("./Company/HomeBroker/homebroker" ++ show idComp ++ ".txt") 6
+        cleanHBGraph ("./Models/Company/HomeBrokers/homebroker" ++ show idComp ++ ".txt") 6
         Com.updateRow idComp 21
     | otherwise = 
         Com.updateRow idComp 0
@@ -42,7 +42,7 @@ checkCompanyRowOverflow idComp
 checkCompanyRowUnderflow :: Int -> IO ()
 checkCompanyRowUnderflow idComp
     | Com.getRow idComp > 26 = do
-        cleanHBGraph ("./Company/HomeBroker/homebroker" ++ show idComp ++ ".txt") 6
+        cleanHBGraph ("./Models/Company/HomeBrokers/homebroker" ++ show idComp ++ ".txt") 6
         Com.updateRow idComp (-21)
     | otherwise =
         Com.updateRow idComp 0

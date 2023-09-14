@@ -1,7 +1,8 @@
-module Client.PostClient where
-import Client.SaveClient
-import Client.ModelClient
-import Client.GetSetAttrsClient
+module Models.Client.PostClient where
+
+import Models.Client.SaveClient
+import Models.Client.ModelClient
+import Models.Client.GetSetAttrsClient
 
 -- ====================== addAsset =========================== --
 -- Entrada: id: int / companyID: Int / price: Float

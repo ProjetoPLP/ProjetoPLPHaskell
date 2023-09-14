@@ -1,6 +1,6 @@
 module Menus.Wallet.DepositoSaque.WalletDepSaqLogic where
     
-import Client.GetSetAttrsClient (addCash, setCash, removeCash, getCash, setCanDeposit)
+import Models.Client.GetSetAttrsClient (addCash, setCash, removeCash, getCash, setCanDeposit)
 
 
 depositar :: Int -> Bool -> IO ()

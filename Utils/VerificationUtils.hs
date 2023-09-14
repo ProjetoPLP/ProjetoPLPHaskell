@@ -2,8 +2,8 @@ module Utils.VerificationUtils where
 
 import Data.Char (isDigit)
 
-import Company.ModelCompany (Company (ident))
-import Company.SaveCompany (getCompanyJSON)
+import Models.Company.ModelCompany (Company (ident))
+import Models.Company.SaveCompany (getCompanyJSON)
 
 
 -- Verifica se existe uma empresa cadastrada a bolsa a partir do seu ID

@@ -1,6 +1,7 @@
-module Company.GetSetAttrsCompany where
-import Company.SaveCompany
-import Company.ModelCompany
+module Models.Company.GetSetAttrsCompany where
+
+import Models.Company.SaveCompany
+import Models.Company.ModelCompany
 import Data.Char (toUpper)
 
 getName :: Int -> String

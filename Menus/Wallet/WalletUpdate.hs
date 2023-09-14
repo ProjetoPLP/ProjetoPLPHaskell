@@ -3,11 +3,11 @@ module Menus.Wallet.WalletUpdate where
 import Utils.MatrixUtils (writeMatrixValue)
 import Utils.UpdateUtils (fillLeft, fillRight, resetMenu)
 
-import Client.GetSetAttrsClient as Cli ( getCPF, getCash, getName, getPatrimony, getAllAssets )
-import Client.ModelClient (Asset (companyID, qtd))
+import Models.Client.GetSetAttrsClient as Cli ( getCPF, getCash, getName, getPatrimony, getAllAssets )
+import Models.Client.ModelClient (Asset (companyID, qtd))
 
-import Company.GetSetAttrsCompany as Com (getCode, getPrice, getTrendIndicator)
-import Clock.ClockUpdate ( updateMatrixClock )
+import Models.Company.GetSetAttrsCompany as Com (getCode, getPrice, getTrendIndicator)
+import Models.Clock.ClockUpdate ( updateMatrixClock )
 import Menus.Wallet.WalletAttPatrimony (attClientPatrimony)
 
 
@@ -24,7 +24,7 @@ updateClientWallet idClient = do
     updateAllWLCompanyCode filePath ownedAssets
     updateAllWLCompanyPrice filePath ownedAssets
     updateAllWLOwnedStocks filePath ownedAssets
-    where filePath = "./Client/Wallet/wallet" ++ show idClient ++ ".txt"
+    where filePath = "./Models/Client/Wallets/wallet" ++ show idClient ++ ".txt"
           ownedAssets = getAllAssets idClient
 
 
@@ -135,7 +135,7 @@ resetStocks (x:xs) idClient = do
     updateWLCompanyPrice filePath x "     " " "
     updateWLOwnedStocks filePath x "-----"
     resetStocks xs idClient
-    where filePath = "./Client/Wallet/wallet" ++ show idClient ++ ".txt"
+    where filePath = "./Models/Client/Wallets/wallet" ++ show idClient ++ ".txt"
 
 
 getCompanyCodePosition :: Int -> [Int]

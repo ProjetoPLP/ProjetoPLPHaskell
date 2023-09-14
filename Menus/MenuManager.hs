@@ -7,15 +7,15 @@ import Data.Char (isDigit)
 import Utils.MatrixUtils (printMatrix)
 import Utils.VerificationUtils (existCompany, isNumber)
 
-import Client.RealizarLogin (fazerLogin)
-import Client.CadastrarCliente (cadastrarCliente)
-import Client.GetSetAttrsClient (getCanDeposit, getCurrentUserID)
-import Client.LoginClient (logoutClient)
+import Models.Client.RealizarLogin (fazerLogin)
+import Models.Client.CadastrarCliente (cadastrarCliente)
+import Models.Client.GetSetAttrsClient (getCanDeposit, getCurrentUserID)
+import Models.Client.LoginClient (logoutClient)
 
-import Company.CadastrarCompany (cadastrarCompany)
-import Company.SaveCompany (getCompanyJSON)
+import Models.Company.CadastrarCompany (cadastrarCompany)
+import Models.Company.SaveCompany (getCompanyJSON)
 
-import Clock.GetSetClock (getClock, setClock)
+import Models.Clock.GetSetClock (getClock, setClock)
 
 import Menus.MainMenu.MainMenuUpdate (updateMainMenu)
 
@@ -145,7 +145,7 @@ homeBrokerMenu :: Int -> Int -> IO ()
 homeBrokerMenu idUser idComp = do
    if existCompany idComp then do
       updateHomeBroker idUser idComp
-      printMatrix  ("./Company/HomeBroker/homebroker" ++ show idComp ++ ".txt")
+      printMatrix  ("./Models/Company/HomeBrokers/homebroker" ++ show idComp ++ ".txt")
       putStr "Digite por quantos segundos a ação deve variar: "
       hFlush stdout
       userChoice <- getLine
@@ -239,7 +239,7 @@ optionsSellMenu idUser idComp userChoice
 walletMenu :: Int -> IO ()
 walletMenu idUser = do
    updateClientWallet idUser
-   printMatrix ("./Client/Wallet/wallet" ++ show idUser ++ ".txt")
+   printMatrix ("./Models/Client/Wallets/wallet" ++ show idUser ++ ".txt")
    putStr "Digite uma opção: "
    hFlush stdout
    userChoice <- getLine

@@ -1,9 +1,9 @@
-module Company.CadastrarCompany where
+module Models.Company.CadastrarCompany where
 
 import System.Random (randomRIO)
-import Company.SaveCompany ( saveCompanyJSON )
-import Company.ModelCompany ( createCompany, Company )
-import Company.GetInfoForCreateCompany (getAgeFounded, getCNPJ, getActuation, getDeclaration, getCode, getName)
+import Models.Company.SaveCompany ( saveCompanyJSON )
+import Models.Company.ModelCompany ( createCompany, Company )
+import Models.Company.GetInfoForCreateCompany (getAgeFounded, getCNPJ, getActuation, getDeclaration, getCode, getName)
 
 
 cadastrarCompany :: Int -> IO Bool

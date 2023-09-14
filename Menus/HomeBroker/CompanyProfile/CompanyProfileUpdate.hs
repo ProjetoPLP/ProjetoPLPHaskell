@@ -3,10 +3,10 @@ module Menus.HomeBroker.CompanyProfile.CompanyProfileUpdate where
 import Utils.UpdateUtils (fillLeft, resetMenu)
 import Utils.MatrixUtils (writeMatrixValue)
 
-import Clock.ClockUpdate (updateMatrixClock)
+import Models.Clock.ClockUpdate (updateMatrixClock)
 
-import Company.GetSetAttrsCompany (getCode, getName, getActuation, getPrice, getTrendIndicator, getDeclaration, getAge, getCNPJ)
-import Client.GetSetAttrsClient (getCash)
+import Models.Company.GetSetAttrsCompany (getCode, getName, getActuation, getPrice, getTrendIndicator, getDeclaration, getAge, getCNPJ)
+import Models.Client.GetSetAttrsClient (getCash)
 
 
 -- Atualiza todas as informações de uma empresa em Company Description

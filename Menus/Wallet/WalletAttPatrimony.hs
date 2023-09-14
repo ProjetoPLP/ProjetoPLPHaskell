@@ -1,8 +1,8 @@
 module Menus.Wallet.WalletAttPatrimony where
 
-import Client.ModelClient (Asset (companyID, qtd), Client (ident))
-import Company.GetSetAttrsCompany (getPrice)
-import Client.GetSetAttrsClient (getAllAssets, setPatrimony, getRow, getCol, getPatrimony)
+import Models.Client.ModelClient (Asset (companyID, qtd), Client (ident))
+import Models.Company.GetSetAttrsCompany (getPrice)
+import Models.Client.GetSetAttrsClient (getAllAssets, setPatrimony, getRow, getCol, getPatrimony)
 import Utils.MatrixUtils (writeMatrixValue)
 import Utils.GraphUtilsWallet (updateWalletGraphCandle, attClientLineRow)
 
@@ -37,4 +37,4 @@ attAllClientsWalletPatrimonyGraph (x:xs) = do
 attClientWalletPatrimonyGraph :: Int -> Float -> Float -> IO ()
 attClientWalletPatrimonyGraph idClient oldPatrimony newPatrimony = do
     attClientLineRow idClient oldPatrimony newPatrimony
-    updateWalletGraphCandle ("./Client/Wallet/wallet" ++ show idClient ++ ".txt") (getRow idClient) (getCol idClient)
+    updateWalletGraphCandle ("./Models/Client/Wallets/wallet" ++ show idClient ++ ".txt") (getRow idClient) (getCol idClient)

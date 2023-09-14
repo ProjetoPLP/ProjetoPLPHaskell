@@ -2,9 +2,9 @@ module Menus.HomeBroker.HomeBrokerUpdate where
 
 import Utils.MatrixUtils (writeMatrixValue)
 import Utils.UpdateUtils (fillLeft, resetMenu)
-import Company.GetSetAttrsCompany (getPrice, getTrendIndicator, getStartPrice, getMaxPrice, getMinPrice, getName, getCode)
-import Client.GetSetAttrsClient (getCash, getQtdAssetsInCompany)
-import Clock.ClockUpdate (updateMatrixClock)
+import Models.Company.GetSetAttrsCompany (getPrice, getTrendIndicator, getStartPrice, getMaxPrice, getMinPrice, getName, getCode)
+import Models.Client.GetSetAttrsClient (getCash, getQtdAssetsInCompany)
+import Models.Clock.ClockUpdate (updateMatrixClock)
 
 
 -- Atualiza todas as informações do Home Broker de uma determinada empresa
@@ -19,7 +19,7 @@ updateHomeBroker idClient idComp = do
     updateHBStockMaxPrice filePath (getMaxPrice idComp)
     updateHBStockMinPrice filePath (getMinPrice idComp)
     updateHBOwnedStocks filePath (getQtdAssetsInCompany idClient idComp)
-    where filePath = "./Company/HomeBroker/homebroker" ++ show idComp ++ ".txt"
+    where filePath = "./Models/Company/HomeBrokers/homebroker" ++ show idComp ++ ".txt"
 
 
 -- Atualiza todas as informações do menu de compras em um Home Broker de uma determinada empresa

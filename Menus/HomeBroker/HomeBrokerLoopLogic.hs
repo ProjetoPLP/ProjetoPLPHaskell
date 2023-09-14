@@ -3,15 +3,15 @@ module Menus.HomeBroker.HomeBrokerLoopLogic where
 import Control.Concurrent (threadDelay)
 import Data.Time.Clock (getCurrentTime, UTCTime, addUTCTime)
 
-import Clock.ClockUpdate (updateMatrixClock)
-import Clock.GetSetClock (addClock)
+import Models.Clock.ClockUpdate (updateMatrixClock)
+import Models.Clock.GetSetClock (addClock)
 
 import Utils.GraphUtilsHomeBroker (attAllCompanyColumn)
 import Utils.GraphUtilsWallet (attAllClientColumn)
-import Company.SaveCompany (getCompanyJSON)
+import Models.Company.SaveCompany (getCompanyJSON)
 import Menus.HomeBroker.HomeBrokerAttPrice (attAllCompanyPriceGraph)
 import Menus.Wallet.WalletAttPatrimony (attAllClientsWalletPatrimonyGraph)
-import Client.SaveClient (getClientJSON)
+import Models.Client.SaveClient (getClientJSON)
 
 
 -- Define, a partir da entrada do usuário, por quanto tempo o preço e o gráfico deve variar
@@ -19,7 +19,7 @@ callLoop :: Int -> Int -> IO ()
 callLoop idComp seg = do
     startTime <- getCurrentTime
     addClock seg
-    updateMatrixClock ("./Company/HomeBroker/homebroker" ++ show idComp ++ ".txt")
+    updateMatrixClock ("./Models/Company/HomeBrokers/homebroker" ++ show idComp ++ ".txt")
     let endTime = addUTCTime (fromIntegral seg) startTime
     loop idComp endTime
 

@@ -1,7 +1,8 @@
-module Client.GetSetAttrsClient where
-import Client.SaveClient
-import Client.ModelClient
-import Client.LoginClient (getLoggedClient)
+module Models.Client.GetSetAttrsClient where
+
+import Models.Client.SaveClient
+import Models.Client.ModelClient
+import Models.Client.LoginClient (getLoggedClient)
 
 -- ====================== getNameOfClient ============================ --
 -- Entrada: id: Int

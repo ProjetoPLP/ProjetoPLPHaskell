@@ -1,4 +1,4 @@
-module Client.LoginClient where
+module Models.Client.LoginClient where
 
 import System.IO ( withFile, IOMode(WriteMode) )
 import System.Directory ( removeFile, renameFile )
@@ -7,7 +7,7 @@ import Data.Aeson ( FromJSON, ToJSON, eitherDecodeFileStrict, encode, decode )
 import Data.Maybe ( isJust )
 import qualified Data.ByteString.Lazy as B
 
-import Client.ModelClient ( Client(Client, email, ident), Asset )
+import Models.Client.ModelClient ( Client(Client, email, ident), Asset )
 
 instance FromJSON Client
 instance ToJSON Client
