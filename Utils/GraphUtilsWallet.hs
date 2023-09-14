@@ -1,59 +1,62 @@
 module Utils.GraphUtilsWallet where
 
-import Models.Client.GetSetAttrsClient as Cli (getCol, getRow, updateCol, updateRow)
-import Utils.MatrixUtils (writeMatrixValue)
+import Utils.MatrixUtils ( writeMatrixValue )
+import Models.Client.GetSetAttrsClient ( getCol, getRow, updateCol, updateRow )
 import Models.Client.ModelClient ( Client(ident) )
 
 
+-- Atualiza em uma carteira, a partir do seu ID, a nova linha e coluna baseado no novo patrimônio
 attClientLineRow :: Int -> Float -> Float -> IO ()
 attClientLineRow idUser oldPatrimony newPatrimony = do
     checkClientColumn idUser
-
     if newPatrimony > oldPatrimony then do
-        Cli.updateRow idUser (-1)
+        updateRow idUser (-1)
         checkClientRowOverflow idUser
-
     else if newPatrimony < oldPatrimony then do
-        Cli.updateRow idUser 1
+        updateRow idUser 1
         checkClientRowUnderflow idUser
+    else updateRow idUser 0
 
-    else Cli.updateRow idUser 0
 
-
+-- Verifica se a coluna do gráfico chegou no limite
 checkClientColumn :: Int -> IO ()
 checkClientColumn idUser
-    | Cli.getCol idUser > 95 = do
+    | getCol idUser > 95 = do
         cleanWLGraph ("./Models/Client/Wallets/wallet" ++ show idUser ++ ".txt") 11
-        Cli.updateCol idUser (-46)
+        updateCol idUser (-46)
     | otherwise =
-        Cli.updateCol idUser 0
+        updateCol idUser 0
 
 
+-- Verifica se a linha do gráfico chegou no limite superior
 checkClientRowOverflow :: Int -> IO ()
 checkClientRowOverflow idUser
-    | Cli.getRow idUser <= 10 = do
+    | getRow idUser <= 10 = do
         cleanWLGraph ("./Models/Client/Wallets/wallet" ++ show idUser ++ ".txt") 11
-        Cli.updateRow idUser 10
+        updateRow idUser 10
     | otherwise =
-        Cli.updateRow idUser 0
+        updateRow idUser 0
 
 
+-- Verifica se a linha do gráfico chegou no limite inferior
 checkClientRowUnderflow :: Int -> IO ()
 checkClientRowUnderflow idUser
-    | Cli.getRow idUser > 20 = do
+    | getRow idUser > 20 = do
         cleanWLGraph ("./Models/Client/Wallets/wallet" ++ show idUser ++ ".txt") 11
-        Cli.updateRow idUser (-10)
+        updateRow idUser (-10)
     | otherwise =
-        Cli.updateRow idUser 0
+        updateRow idUser 0
 
 
+-- Atualiza a próxima coluna em todos os gráficos
 attAllClientColumn :: [Client] -> IO ()
 attAllClientColumn [] = return ()
 attAllClientColumn (x:xs) = do
-    Cli.updateCol (ident x) 2
+    updateCol (ident x) 2
     attAllClientColumn xs
 
 
+-- Reinicia o gráfico da carteira sobrescrevendo todos os espaços com caracteres vazios
 cleanWLGraph :: FilePath -> Int -> IO ()
 cleanWLGraph filepath 20 = writeMatrixValue filepath (replicate 47 ' ') 20 50
 cleanWLGraph filepath row = do
