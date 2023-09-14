@@ -1,4 +1,4 @@
-module Utils.HomeBrokerGraphUtils where
+module Utils.GraphUtilsHomeBroker where
 
 import Company.GetSetAttrsCompany as Com (getCol, getIdent, getRow, setTrendIndicator, updateCol, updateRow)
 import Utils.MatrixUtils (writeMatrixValue)

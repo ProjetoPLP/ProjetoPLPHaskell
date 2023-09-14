@@ -3,7 +3,7 @@ module Menus.HomeBroker.HomeBrokerAttPrice where
 import System.Random (randomRIO)
 
 import Utils.MatrixUtils (printMatrix)
-import Utils.HomeBrokerGraphUtils (attCompanyLineRow, attTrendIndicator)
+import Utils.GraphUtilsHomeBroker (attCompanyLineRow, attTrendIndicator)
 
 import Menus.HomeBroker.HomeBrokerUpdate (updateHBGraphCandle, updateHBStockMaxPrice, updateHBStockMinPrice, updateHBStockPrice, updateHBStockStartPrice)
 import Menus.HomeBroker.CompanyDown.CompanyDownUpdate (isDown, removeComapanyFromExchange)

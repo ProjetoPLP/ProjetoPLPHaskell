@@ -1,4 +1,4 @@
-module Utils.WalletGraphUtils where
+module Utils.GraphUtilsWallet where
 
 import Client.GetSetAttrsClient as Cli (getCol, getRow, updateCol, updateRow)
 import Utils.MatrixUtils (writeMatrixValue)
