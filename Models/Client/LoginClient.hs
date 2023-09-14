@@ -30,7 +30,7 @@ getLoggedClient :: IO Client
 getLoggedClient = do
     result <- readClientFromFile "./Data/Login.json"
     case result of
-        Left _ -> return (Client (-1) "" "" "" "" "" 0 0.00 False 19 52 [])
+        Left _ -> return (Client (-1) "" "" "" "" "" 0 0 " " False 19 52 [])
         Right client -> return client
 
 

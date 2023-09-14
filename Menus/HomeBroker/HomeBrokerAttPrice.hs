@@ -28,8 +28,8 @@ getNewPrice oldPrice = do
 
 
 -- Atualiza em uma empresa, a partir do seu ID, o novo trendIndicator
-attTrendIndicator :: Int -> Float -> Float -> IO ()
-attTrendIndicator idComp oldPrice newPrice
+attCompanyTrendIndicator :: Int -> Float -> Float -> IO ()
+attCompanyTrendIndicator idComp oldPrice newPrice
     | newPrice > oldPrice = setTrendIndicator idComp "▲"
     | newPrice < oldPrice = setTrendIndicator idComp "▼"
     | otherwise = setTrendIndicator idComp " "
@@ -90,7 +90,7 @@ attCompanyPriceGraph id = do
     newMinPrice <- getNewMinPrice id newPrice
 
     setPrice id newPrice
-    attTrendIndicator id oldPrice newPrice
+    attCompanyTrendIndicator id oldPrice newPrice
     attCompanyLineRow id oldPrice newPrice
     updateHBStockPrice filePath newPrice (getTrendIndicator id)
     updateHBStockMaxPrice filePath newMaxPrice

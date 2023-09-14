@@ -2,51 +2,51 @@ module Menus.Wallet.WalletUpdate where
 
 import Utils.MatrixUtils ( writeMatrixValue )
 import Utils.UpdateUtils ( fillLeft, resetMenu )
-import Models.Client.GetSetAttrsClient as Cli ( getCPF, getCash, getName, getPatrimony, getAllAssets )
+import Models.Client.GetSetAttrsClient as Cli ( getCPF, getCash, getName, getPatrimony, getAllAssets, getTrendIndicator )
 import Models.Client.ModelClient ( Asset (companyID, qtd) )
-import Models.Company.GetSetAttrsCompany as Com ( getCode, getPrice, getTrendIndicator )
+import Models.Company.GetSetAttrsCompany as Com ( getCode, getPrice )
 import Models.Clock.ClockUpdate ( updateMatrixClock )
 import Menus.Wallet.WalletAttPatrimony ( attClientPatrimony )
 
 
 -- Aualiza todas as informações da carteira do cliente
 updateClientWallet :: Int -> IO ()
-updateClientWallet idClient = do
-    resetStocks [1..12] idClient
+updateClientWallet idUser = do
+    resetStocks [1..12] idUser
     updateMatrixClock filePath
-    updateWLCash filePath (getCash idClient)
-    attClientPatrimony idClient
-    updateWLPatrimony filePath (getPatrimony idClient)
-    updateWLUserName filePath (Cli.getName idClient)
-    updateWLUserCPF filePath (getCPF idClient)
+    updateWLCash filePath (getCash idUser)
+    attClientPatrimony idUser
+    updateWLPatrimony filePath (getPatrimony idUser) (getTrendIndicator idUser)
+    updateWLUserName filePath (Cli.getName idUser)
+    updateWLUserCPF filePath (getCPF idUser)
     updateAllWLCompanyCode filePath ownedAssets
     updateAllWLCompanyPrice filePath ownedAssets
     updateAllWLOwnedStocks filePath ownedAssets
-    where filePath = "./Models/Client/Wallets/wallet" ++ show idClient ++ ".txt"
-          ownedAssets = getAllAssets idClient
+    where filePath = "./Models/Client/Wallets/wallet" ++ show idUser ++ ".txt"
+          ownedAssets = getAllAssets idUser
 
 
 -- Aualiza todas as informações do menu de depósito
 updateWalletDeposito :: Int -> IO ()
-updateWalletDeposito idClient = do
+updateWalletDeposito idUser = do
     resetMenu filePath "./Sprites/Wallet/walletDeposito_base.txt"
     updateMatrixClock filePath
-    updateWLCash filePath (getCash idClient)
-    updateWLPatrimony filePath (getPatrimony idClient)
-    updateWLUserName filePath (Cli.getName idClient)
-    updateWLUserCPF filePath (getCPF idClient)
+    updateWLCash filePath (getCash idUser)
+    updateWLPatrimony filePath (getPatrimony idUser) (getTrendIndicator idUser)
+    updateWLUserName filePath (Cli.getName idUser)
+    updateWLUserCPF filePath (getCPF idUser)
     where filePath = "./Menus/Wallet/DepositoSaque/walletDeposito.txt"
 
 
 -- Aualiza todas as informações do menu de saque
 updateWalletSaque :: Int -> IO ()
-updateWalletSaque idClient = do
+updateWalletSaque idUser = do
     resetMenu filePath "./Sprites/Wallet/walletSaque_base.txt"
     updateMatrixClock filePath
-    updateWLCash filePath (getCash idClient)
-    updateWLPatrimony filePath (getPatrimony idClient)
-    updateWLUserName filePath (Cli.getName idClient)
-    updateWLUserCPF filePath (getCPF idClient)
+    updateWLCash filePath (getCash idUser)
+    updateWLPatrimony filePath (getPatrimony idUser) (getTrendIndicator idUser)
+    updateWLUserName filePath (Cli.getName idUser)
+    updateWLUserCPF filePath (getCPF idUser)
     where filePath = "./Menus/Wallet/DepositoSaque/walletSaque.txt"
 
 
@@ -56,9 +56,9 @@ updateWLCash filePath cash = do
     writeMatrixValue filePath val 13 (22 - length val)
 
 
-updateWLPatrimony :: FilePath -> Float -> IO ()
-updateWLPatrimony filePath patri = do
-    let val = fillLeft (show patri ++ "0") 9
+updateWLPatrimony :: FilePath -> Float -> String -> IO ()
+updateWLPatrimony filePath patri trendInd = do
+    let val = fillLeft (trendInd ++ show patri ++ "0") 10
     writeMatrixValue filePath val 6 (24 - length val)
 
 
@@ -127,13 +127,13 @@ updateWLUserCPF filePath cpf = do
 
 -- Reseta todas as informações de ações do usuário
 resetStocks :: [Int] -> Int -> IO ()
-resetStocks [] idCliet = return ()
-resetStocks (x:xs) idClient = do
+resetStocks [] idUser = return ()
+resetStocks (x:xs) idUser = do
     updateWLCompanyCode filePath x "-----"
     updateWLCompanyPrice filePath x "     " " "
     updateWLOwnedStocks filePath x "-----"
-    resetStocks xs idClient
-    where filePath = "./Models/Client/Wallets/wallet" ++ show idClient ++ ".txt"
+    resetStocks xs idUser
+    where filePath = "./Models/Client/Wallets/wallet" ++ show idUser ++ ".txt"
 
 
 getCompanyCodePosition :: Int -> [Int]

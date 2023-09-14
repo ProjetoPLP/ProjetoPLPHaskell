@@ -46,6 +46,10 @@ getCash id = cash (getClient id)
 getPatrimony :: Int -> Float
 getPatrimony id = patrimony (getClient id)
 
+
+getTrendIndicator :: Int -> String
+getTrendIndicator id = trendIndicator (getClient id)
+
 -- ====================== getCanDepositOfClient ====================== --
 -- Entrada: id: Int
 -- TipoDeSaida: Bool
@@ -201,6 +205,16 @@ setPatrimony id patrimony = do
     let client = getClient id
     if (ident client) /= -1 then do
         let newClient = client { patrimony = patrimony }
+        editClientJSON "./Data/Clients.json" newClient
+    else do
+        putStrLn "\nOcorreu um problema! O Cliente com este id não foi encontrado!"
+
+
+setTrendIndicator :: Int -> String -> IO ()
+setTrendIndicator id trendIndicator = do
+    let client = getClient id
+    if ident client /= -1 then do
+        let newClient = client { trendIndicator = trendIndicator }
         editClientJSON "./Data/Clients.json" newClient
     else do
         putStrLn "\nOcorreu um problema! O Cliente com este id não foi encontrado!"
