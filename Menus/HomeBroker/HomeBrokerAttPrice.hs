@@ -1,23 +1,12 @@
 module Menus.HomeBroker.HomeBrokerAttPrice where
 
-import System.Random (randomRIO)
-
-import Utils.MatrixUtils (printMatrix)
-import Utils.GraphUtilsHomeBroker (attCompanyLineRow, attTrendIndicator)
-
-import Menus.HomeBroker.HomeBrokerUpdate (updateHBGraphCandle, updateHBStockMaxPrice, updateHBStockMinPrice, updateHBStockPrice, updateHBStockStartPrice)
-import Menus.HomeBroker.CompanyDown.CompanyDownUpdate (isDown, removeComapanyFromExchange)
-
-import Models.Company.ModelCompany (Company)
-import Models.Company.GetSetAttrsCompany (getCol, getIdent, getMaxPrice, getMinPrice, getPrice, getRow, getStartPrice, getTrendIndicator, setMaxPrice, setMinPrice, setPrice)
-
-
--- Retorna um index e uma variação aleatória 
-getIndexAndVariation :: IO [Int]
-getIndexAndVariation = do
-    index <- randomRIO (0,9 :: Int)
-    var <- randomRIO (-1,1 :: Int)
-    return [index, var]
+import System.Random ( randomRIO )
+import Utils.MatrixUtils ( printMatrix )
+import Utils.GraphUtilsHomeBroker ( attCompanyLineRow, attTrendIndicator )
+import Menus.HomeBroker.HomeBrokerUpdate ( updateHBGraphCandle, updateHBStockMaxPrice, updateHBStockMinPrice, updateHBStockPrice, updateHBStockStartPrice )
+import Menus.HomeBroker.CompanyDown.CompanyDownUpdate ( isDown, removeComapanyFromExchange )
+import Models.Company.ModelCompany ( Company )
+import Models.Company.GetSetAttrsCompany ( getCol, getIdent, getMaxPrice, getMinPrice, getPrice, getRow, getStartPrice, getTrendIndicator, setMaxPrice, setMinPrice, setPrice )
 
 
 -- Retorna um novo preço baseado na aleatóriedade da função getIndexAndVariation
@@ -30,6 +19,12 @@ getNewPrice oldPrice = do
     where
         format :: Float -> Float
         format newPrice = fromIntegral (round (newPrice * 10 )) / 10
+        
+        getIndexAndVariation :: IO [Int]
+        getIndexAndVariation = do
+            index <- randomRIO (0,9 :: Int)
+            var <- randomRIO (-1,1 :: Int)
+            return [index, var]
 
 
 -- Retorna o novo preço máximo baseado no novo preço

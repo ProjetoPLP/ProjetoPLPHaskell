@@ -1,10 +1,10 @@
 module Menus.HomeBroker.HomeBrokerUpdate where
 
-import Utils.MatrixUtils (writeMatrixValue)
-import Utils.UpdateUtils (fillLeft, resetMenu)
-import Models.Company.GetSetAttrsCompany (getPrice, getTrendIndicator, getStartPrice, getMaxPrice, getMinPrice, getName, getCode)
-import Models.Client.GetSetAttrsClient (getCash, getQtdAssetsInCompany)
-import Models.Clock.ClockUpdate (updateMatrixClock)
+import Utils.MatrixUtils ( writeMatrixValue )
+import Utils.UpdateUtils ( fillLeft, resetMenu )
+import Models.Company.GetSetAttrsCompany ( getPrice, getTrendIndicator, getStartPrice, getMaxPrice, getMinPrice, getName, getCode )
+import Models.Client.GetSetAttrsClient ( getCash, getQtdAssetsInCompany )
+import Models.Clock.ClockUpdate ( updateMatrixClock )
 
 
 -- Atualiza todas as informações do Home Broker de uma determinada empresa

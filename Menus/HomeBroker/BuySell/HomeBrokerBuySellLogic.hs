@@ -1,13 +1,15 @@
 module Menus.HomeBroker.BuySell.HomeBrokerBuySellLogic where
 
-import Models.Client.GetSetAttrsClient (getQtdAssetsInCompany, getCash, removeCash, addCash)
-import Models.Client.PostClient (addAsset)
-import Models.Company.GetSetAttrsCompany (getPrice)
+import Models.Client.GetSetAttrsClient ( getQtdAssetsInCompany, getCash, removeCash, addCash )
+import Models.Client.PostClient ( addAsset )
+import Models.Company.GetSetAttrsCompany ( getPrice )
 
 
+-- Compra X ações para um cliente de uma determinada empresa
 buy :: Int -> Int -> Int -> IO ()
 buy idClient idComp num = do
-    if num <= 0 then return () else do
+    if num <= 0 then return ()
+    else do
         let cash = getCash idClient
             totalPrice = getPrice idComp * fromIntegral num
 
@@ -17,9 +19,11 @@ buy idClient idComp num = do
             addAsset idClient idComp num
 
 
+-- Vende X ações de um cliente de uma determinada empresa
 sell :: Int -> Int -> Int -> IO ()
 sell idClient idComp num = do
-    if num <= 0 then return () else do
+    if num <= 0 then return ()
+    else do
         let cash = getCash idClient
             totalPrice = getPrice idComp * fromIntegral num
 

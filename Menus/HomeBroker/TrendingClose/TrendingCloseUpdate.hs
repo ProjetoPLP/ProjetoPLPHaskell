@@ -1,14 +1,15 @@
 module Menus.HomeBroker.TrendingClose.TrendingCloseUpdate where
 
-import Utils.MatrixUtils (writeMatrixValue)
-import Utils.UpdateUtils (fillLeft, resetMenu)
-import Models.Company.GetSetAttrsCompany (getStartPrice, getPrice, getCode, getIdent, setStartPrice)
-import Models.Company.ModelCompany (Company)
-import Models.Client.GetSetAttrsClient (getCash, getPatrimony)
-import Models.Company.SaveCompany (getCompanyJSON)
-import Models.Clock.ClockUpdate (updateMatrixClock)
+import Utils.MatrixUtils ( writeMatrixValue )
+import Utils.UpdateUtils ( fillLeft, resetMenu )
+import Models.Company.GetSetAttrsCompany ( getStartPrice, getPrice, getCode, getIdent, setStartPrice )
+import Models.Company.ModelCompany ( Company )
+import Models.Client.GetSetAttrsClient ( getCash, getPatrimony )
+import Models.Company.SaveCompany ( getCompanyJSON )
+import Models.Clock.ClockUpdate ( updateMatrixClock )
 
 
+-- Atualiza todas as informações no menu de fechamento do pregão
 updateTrendingClose :: Int -> IO ()
 updateTrendingClose idUser = do
     resetMenu filePath "./Sprites/HomeBroker/trendingClose_base.txt"

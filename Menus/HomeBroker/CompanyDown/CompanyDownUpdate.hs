@@ -1,12 +1,12 @@
 module Menus.HomeBroker.CompanyDown.CompanyDownUpdate where
 
-import Utils.UpdateUtils (resetMenu)
-import Models.Clock.ClockUpdate (updateMatrixClock)
-import Menus.HomeBroker.HomeBrokerUpdate (updateHBCash, updateHBCompanyName, updateHBCompanyCode)
-import Models.Client.GetSetAttrsClient (getCash)
-import Models.Company.GetSetAttrsCompany (getName, getCode, getPrice)
-import Models.Company.SaveCompany (removeCompany)
-import Models.Client.PostClient (removeAllClientsAsset)
+import Utils.UpdateUtils ( resetMenu )
+import Menus.HomeBroker.HomeBrokerUpdate ( updateHBCash, updateHBCompanyName, updateHBCompanyCode )
+import Models.Client.GetSetAttrsClient ( getCash )
+import Models.Client.PostClient ( removeAllClientsAsset )
+import Models.Company.GetSetAttrsCompany ( getName, getCode, getPrice )
+import Models.Company.SaveCompany ( removeCompany )
+import Models.Clock.ClockUpdate ( updateMatrixClock )
 
 
 -- Atualiza todas as informações do menu de falência de uma empresa
@@ -18,7 +18,6 @@ updateCompanyDown idUser idComp = do
     updateHBCompanyName filePath (getName idComp)
     updateHBCompanyCode filePath (getCode idComp)
     removeComapanyFromExchange idComp
-
     where filePath = "./Menus/HomeBroker/CompanyDown/companyDown.txt"
 
 
