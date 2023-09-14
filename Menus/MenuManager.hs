@@ -1,4 +1,4 @@
-module Menus.MenuManager.MenuManager where
+module Menus.MenuManager where
 
 import System.IO (hFlush, stdout)
 import Control.Concurrent (threadDelay)
@@ -33,7 +33,7 @@ import Menus.HomeBroker.CompanyDown.CompanyDownUpdate (updateCompanyDown, isDown
 startMenu :: IO ()
 startMenu = do
    logoutClient
-   printMatrix "./Sprites/StartMenu/start_menu.txt"
+   printMatrix "./Menus/StartMenu/startMenu.txt"
    putStr "Digite uma opção: "
    hFlush stdout
    userChoice <- getLine
@@ -53,7 +53,7 @@ optionsStartMenu userChoice
 
 fazerLoginMenu :: IO ()
 fazerLoginMenu = do
-   printMatrix "./Sprites/StartMenu/login_menu.txt"
+   printMatrix "./Menus/StartMenu/loginMenu.txt"
    putStr "Deseja fazer login? (S/N): "
    hFlush stdout
    userChoice <- getLine
@@ -71,7 +71,7 @@ fazerLoginMenu = do
 
 cadastraUsuarioMenu :: IO ()
 cadastraUsuarioMenu = do
-   printMatrix "./Sprites/StartMenu/sign-in_menu_usuario.txt"
+   printMatrix "./Menus/StartMenu/cadastroUsuario.txt"
    putStr "Deseja cadastrar um novo usuário? (S/N): "
    hFlush stdout
    userChoice <- getLine
@@ -85,7 +85,7 @@ cadastraUsuarioMenu = do
 
 cadastraEmpresaMenu :: IO ()
 cadastraEmpresaMenu = do
-    printMatrix "./Sprites/StartMenu/sign-in_menu_empresa.txt"
+    printMatrix "./Menus/StartMenu/cadastroEmpresa.txt"
     putStr "Deseja cadastrar uma nova empresa? (S/N): "
     hFlush stdout
     userChoice <- getLine
@@ -105,7 +105,7 @@ querContinuarAOperacao userChoice
 
 menuCadastroRealizado :: Bool -> IO ()
 menuCadastroRealizado cadastrou = do
-    printMatrix "./Sprites/StartMenu/sign-in_menu_cadastro_realizado.txt"
+    printMatrix "./Menus/StartMenu/cadastroRealizado.txt"
     threadDelay 2000000
     startMenu
 

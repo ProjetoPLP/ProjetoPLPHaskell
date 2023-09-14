@@ -1,4 +1,4 @@
-import Menus.MenuManager.MenuManager (startMenu)
+import Menus.MenuManager (startMenu)
 
 main :: IO ()
 main = do

@@ -29,5 +29,3 @@ Instale a biblioteca `random`
 Após isso, execute o programa no seu diretório
 
     runhaskell Main.hs
-
-> 
