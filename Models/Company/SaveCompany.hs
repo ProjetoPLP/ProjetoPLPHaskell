@@ -47,7 +47,7 @@ getCompanyJSON path = do
 saveCompanyJSON :: String -> Company -> IO ()
 saveCompanyJSON jsonFilePath company = do
     let companyList = getCompanyJSON jsonFilePath
-        newID = identifySequenceBreak (getIds $ getCompanyJSON "./Data/Companies.json")
+        newID = identifyIDSequenceBreak [1 .. 12]
         companiesList = companyList ++ [giveIdForCompany company newID]
 
     textoContents <- readFile "./Sprites/HomeBroker/homebroker_base.txt"
@@ -59,18 +59,14 @@ saveCompanyJSON jsonFilePath company = do
     renameFile "./Data/ArquivoTemporario.json" jsonFilePath
 
 
--- Identifica uma quebra em uma sequência numérica, retornando o primeiro valor ausente
-identifySequenceBreak :: [Int] -> Int
-identifySequenceBreak [] = 1
-identifySequenceBreak (x:xs)
-    | not (null xs) && x + 1 /= head xs = x + 1
-    | null xs = x + 1
-    | otherwise = identifySequenceBreak xs
-
-
--- Retorna uma lista com todos os IDs das empresas
-getIds :: [Company] -> [Int]
-getIds companies = sort [ident x | x <- companies]
+-- Identifica uma quebra na sequência de IDs das empresas, retornando o primeiro valor ausente
+identifyIDSequenceBreak :: [Int] -> Int
+identifyIDSequenceBreak [] = 1
+identifyIDSequenceBreak (x:xs)
+    | x `notElem` ids = x
+    | otherwise = identifyIDSequenceBreak xs
+    where
+        ids = sort [ident x | x <- getCompanyJSON "./Data/Companies.json"]
 
 
 -- Edita as ações da Empresa

@@ -96,10 +96,14 @@ querContinuarAOperacao userChoice
 
 
 menuCadastroRealizado :: Bool -> IO ()
-menuCadastroRealizado cadastrou = do
-    printMatrix "./Menus/StartMenu/cadastroRealizado.txt"
-    threadDelay 2000000
-    startMenu
+menuCadastroRealizado cadastrou
+    | cadastrou = do
+        printMatrix "./Menus/StartMenu/cadastroRealizado.txt"
+        threadDelay 2000000
+        startMenu
+    | otherwise = do
+        putStrLn "Aviso: limite máximo de empresas cadastradas atingido."
+        startMenu
 
 
 mainMenu :: Int -> IO ()
