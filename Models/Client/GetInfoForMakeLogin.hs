@@ -1,6 +1,7 @@
 module Models.Client.GetInfoForMakeLogin where
     
-import System.IO (hFlush, stdout)
+import System.IO ( hFlush, stdout )
+
 
 getEmail :: IO String
 getEmail = do
@@ -8,6 +9,7 @@ getEmail = do
     hFlush stdout
     input <- getLine
     return input
+
 
 getPassword :: IO String
 getPassword = do

@@ -1,13 +1,9 @@
 module Models.Client.LoginClient where
 
-import System.IO ( withFile, IOMode(WriteMode) )
-import System.Directory ( removeFile, renameFile )
-
-import Data.Aeson ( FromJSON, ToJSON, eitherDecodeFileStrict, encode, decode )
-import Data.Maybe ( isJust )
+import Data.Aeson ( FromJSON, ToJSON, eitherDecodeFileStrict, encode )
 import qualified Data.ByteString.Lazy as B
 
-import Models.Client.ModelClient ( Client(Client, email, ident), Asset )
+import Models.Client.ModelClient ( Client(Client), Asset )
 
 instance FromJSON Client
 instance ToJSON Client
@@ -17,8 +13,8 @@ instance ToJSON Asset
 
 saveLogin :: Client -> IO ()
 saveLogin client = do
-  B.writeFile jsonFilePath $ encode client
-  where jsonFilePath = "./Data/Login.json"
+    B.writeFile jsonFilePath $ encode client
+    where jsonFilePath = "./Data/Login.json"
 
 
 logoutClient :: IO ()

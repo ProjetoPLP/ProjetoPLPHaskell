@@ -1,6 +1,6 @@
 module Menus.HomeBroker.BuySell.HomeBrokerBuySellLogic where
 
-import Models.Client.GetSetAttrsClient ( getQtdAssetsInCompany, getCash, removeCash, addCash )
+import Models.Client.GetSetAttrsClient ( getQtdAssetsInCompany, getCash, addCash )
 import Models.Client.PostClient ( addAsset )
 import Models.Company.GetSetAttrsCompany ( getPrice )
 
@@ -15,7 +15,7 @@ buy idClient idComp num = do
 
         if totalPrice > cash then return ()
         else do
-            removeCash idClient totalPrice
+            addCash idClient (-totalPrice)
             addAsset idClient idComp num
 
 

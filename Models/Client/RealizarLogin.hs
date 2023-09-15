@@ -1,9 +1,10 @@
 module Models.Client.RealizarLogin where
 
-import Models.Client.GetInfoForMakeLogin
-import Models.Client.SaveClient
-import Models.Client.ModelClient
-import Models.Client.LoginClient (saveLogin)
+import Models.Client.GetInfoForMakeLogin ( getEmail, getPassword )
+import Models.Client.SaveClient ( getClientJSON )
+import Models.Client.ModelClient ( Client(Client, email, ident, password) )
+import Models.Client.LoginClient ( saveLogin )
+
 
 fazerLogin :: IO Bool
 fazerLogin = do
@@ -22,11 +23,13 @@ fazerLogin = do
         putStrLn "Aviso: E-mail não cadastrado."
         return False
 
+
 searchAndGetClientByEmail :: String -> Client
 searchAndGetClientByEmail email = verifingIfExistEmailClient email (getClientJSON "./Data/Clients.json")
 
+
 verifingIfExistEmailClient :: String -> [Client] -> Client
 verifingIfExistEmailClient _ [] = Client (-1) "" "" "" "" "" 0 0 " " False 19 52 []
-verifingIfExistEmailClient emailClient (head:tail) = 
-  if emailClient == (email head) then head
-  else verifingIfExistEmailClient emailClient tail
+verifingIfExistEmailClient emailClient (head:tail)
+    | emailClient == email head = head
+    | otherwise = verifingIfExistEmailClient emailClient tail

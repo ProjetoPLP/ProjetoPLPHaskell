@@ -1,48 +1,42 @@
 module Models.Client.GetSetAttrsClient where
 
-import Models.Client.SaveClient
-import Models.Client.ModelClient
-import Models.Client.LoginClient (getLoggedClient)
+import Models.Client.SaveClient ( editClientJSON, getClient, getClientJSON, getClientsByID )
+import Models.Client.ModelClient ( Asset(qtd, companyID), Client(ident, name, age, cpf, email, password, patrimony, trendIndicator, canDeposit, row, col, allAssets, cash) )
+import Models.Client.LoginClient ( getLoggedClient )
 
--- ====================== getNameOfClient ============================ --
--- Entrada: id: Int
--- TipoDeSaida: String
+
 getName :: Int -> String
 getName id = name (getClient id)
 
--- ====================== getNameOfClient ============================ --
--- Entrada: id: Int
--- TipoDeSaida: Int
+
 getAge :: Int -> String
 getAge id = age (getClient id)
 
--- ====================== getCPFOfClient ============================= --
--- Entrada: id: Int
--- TipoDeSaida: String
+
 getCPF :: Int -> String
 getCPF id = formatCPF (cpf (getClient id))
 
--- ====================== getEmailOfClient =========================== --
--- Entrada: id: Int
--- TipoDeSaida: String
+
 getEmail :: Int -> String
 getEmail id = email (getClient id)
 
--- ====================== getPasswordOfClient ======================== --
--- Entrada: id: Int
--- TipoDeSaida: Int
+
 getPassword :: Int -> String
 getPassword id = password (getClient id)
 
--- ====================== getCashOfClient ============================ --
--- Entrada: id: Int
--- TipoDeSaida: Float
+
 getCash :: Int -> Float
 getCash id = cash (getClient id)
 
--- ====================== getAssetsOfClient ========================== --
--- Entrada: id: Int
--- TipoDeSaida: Float
+
+addCash :: Int -> Float -> IO ()
+addCash id cashAdd = do
+    let client = getClientsByID id (getClientJSON "./Data/Clients.json")
+        newCash = fromIntegral (round ((cash client + cashAdd) * 10)) / 10
+        newClient = client {cash = newCash}
+    editClientJSON "./Data/Clients.json" newClient
+
+
 getPatrimony :: Int -> Float
 getPatrimony id = patrimony (getClient id)
 
@@ -50,40 +44,48 @@ getPatrimony id = patrimony (getClient id)
 getTrendIndicator :: Int -> String
 getTrendIndicator id = trendIndicator (getClient id)
 
--- ====================== getCanDepositOfClient ====================== --
--- Entrada: id: Int
--- TipoDeSaida: Bool
+
 getCanDeposit :: Int -> Bool
 getCanDeposit id = canDeposit (getClient id)
 
--- ====================== getRowOfClient ============================= --
--- Entrada: id: Int
--- TipoDeSaida: Int
+
 getRow :: Int -> Int
 getRow id = row (getClient id)
 
--- ====================== getColOfClient ============================= --
--- Entrada: id: Int
--- TipoDeSaida: Int
+
 getCol :: Int -> Int
 getCol id = col (getClient id)
 
 
-updateRow :: Int -> Int -> IO ()
-updateRow id addRow = do
-    let client = getClientsByID id (getClientJSON "./Data/Clients.json")
-    let newClient = client {row = getRow id + addRow}
+addRow :: Int -> Int -> IO ()
+addRow idUser row = do
+    let client = getClientsByID idUser (getClientJSON "./Data/Clients.json")
+        newClient = client {row = getRow idUser + row}
     editClientJSON "./Data/Clients.json" newClient
 
 
-updateCol :: Int -> Int -> IO ()
-updateCol id addCol = do
-    let client = getClientsByID id (getClientJSON "./Data/Clients.json")
-    let newClient = client {col = getCol id + addCol}
+addCol :: Int -> Int -> IO ()
+addCol idUser col = do
+    let client = getClientsByID idUser (getClientJSON "./Data/Clients.json")
+        newClient = client {col = getCol idUser + col}
     editClientJSON "./Data/Clients.json" newClient
 
 
--- Retorna uma lista com a quantidade de ações que o usuário possui de cada empresa
+setRow :: Int -> Int -> IO ()
+setRow idUser row = do
+    let client = getClient idUser
+        newClient = client { row = row }
+    editClientJSON "./Data/Clients.json" newClient
+
+
+setCol :: Int -> Int -> IO ()
+setCol idUser col = do
+    let client = getClient idUser
+        newClient = client { col = col }
+    editClientJSON "./Data/Clients.json" newClient
+
+
+-- Retorna uma lista com as empresas nas quais o usuário possui ações
 getAllAssets :: Int -> [Asset]
 getAllAssets id = allAssets (getClient id)
 
@@ -91,18 +93,14 @@ getAllAssets id = allAssets (getClient id)
 -- Retorna a quantidade de ações que um cliente X possui em uma empresa Y
 getQtdAssetsInCompany :: Int -> Int -> Int
 getQtdAssetsInCompany idClient = getQtdAssetsInCompanyAux (getAllAssets idClient)
+    where
+        getQtdAssetsInCompanyAux :: [Asset] -> Int -> Int
+        getQtdAssetsInCompanyAux [] idComp = 0
+        getQtdAssetsInCompanyAux (x:xs) idComp =
+            if companyID x == idComp then qtd x
+            else getQtdAssetsInCompanyAux xs idComp
 
 
-getQtdAssetsInCompanyAux :: [Asset] -> Int -> Int
-getQtdAssetsInCompanyAux [] idComp = 0
-getQtdAssetsInCompanyAux (x:xs) idComp =
-    if companyID x == idComp then qtd x
-    else getQtdAssetsInCompanyAux xs idComp
-
-
--- ====================== setNameOfClient ============================ --
--- Entrada: id: Int / name: String
--- TipoDeSaida: Bool
 setName :: Int -> String -> IO Bool
 setName id name = do
     let client = getClient id
@@ -117,9 +115,8 @@ setName id name = do
     else do
         putStrLn "\nOcorreu um problema! O nome do cliente deve ter no máximo 18 caracteres."
         return False
--- ====================== setAgeOfClient ============================ --
--- Entrada: id: Int / age: Int
--- TipoDeSaida: Bool
+
+
 setAge :: Int -> String -> IO Bool
 setAge id age = do
     let client = getClient id
@@ -135,9 +132,7 @@ setAge id age = do
         putStrLn "\nOcorreu um problema! Proibido menores de 18 anos."
         return False
 
--- ====================== setCPFOfClient =========================== --
--- Entrada: id: Int / cpf: Int
--- TipoDeSaida: Bool
+
 setCPF :: Int -> String -> IO Bool
 setCPF id cpf = do
     let client = getClient id
@@ -153,9 +148,7 @@ setCPF id cpf = do
         putStrLn "\nOcorreu um problema! O CPF não contém 11 dígitos."
         return False
 
--- ====================== setEmailOfClient ========================= --
--- Entrada: id: Int / email: String
--- TipoDeSaida: Bool
+
 setEmail :: Int -> String -> IO Bool
 setEmail id email = do
     let client = getClient id
@@ -167,9 +160,7 @@ setEmail id email = do
         putStrLn "\nOcorreu um problema! O Cliente com este id não foi encontrado!"
         return False
 
--- ====================== setPasswordOfClient ====================== --
--- Entrada: id: Int / password: Int
--- TipoDeSaida: Bool
+
 setPassword :: Int -> String -> IO Bool
 setPassword id password = do
     let client = getClient id
@@ -185,9 +176,7 @@ setPassword id password = do
         putStrLn "\nOcorreu um problema! A senha deve ter 5 digitos."
         return False
 
--- ====================== setCashOfClient ========================== --
--- Entrada: id: Int / cash: Float
--- TipoDeSaida: Bool
+
 setCash :: Int -> Float -> IO ()
 setCash id cash = do
     let client = getClient id
@@ -197,9 +186,7 @@ setCash id cash = do
     else do
         putStrLn "\nOcorreu um problema! O Cliente com este id não foi encontrado!"
 
--- ====================== setPatrimonyOfClient ========================== --
--- Entrada: id: Int / patrimony: Float
--- TipoDeSaida: Bool
+
 setPatrimony :: Int -> Float -> IO ()
 setPatrimony id patrimony = do
     let client = getClient id
@@ -219,9 +206,7 @@ setTrendIndicator id trendIndicator = do
     else do
         putStrLn "\nOcorreu um problema! O Cliente com este id não foi encontrado!"
 
--- ====================== setCanDepositOfClient =================== --
--- Entrada: id: Int / canDeposit: Bool
--- TipoDeSaida: Bool
+
 setCanDeposit :: Int -> Bool -> IO ()
 setCanDeposit id canDeposit = do
     let client = getClient id
@@ -231,37 +216,7 @@ setCanDeposit id canDeposit = do
     else do
         putStrLn "\nOcorreu um problema! O Cliente com este id não foi encontrado!"
 
--- ====================== setRowOfClient ========================== --
--- Entrada: id: Int / row: Int
--- TipoDeSaida: Bool
-setRow :: Int -> Int -> IO Bool
-setRow id row = do
-    let client = getClient id
-    if (ident client) /= -1 then do
-        let newClient = client { row = row }
-        editClientJSON "./Data/Clients.json" newClient
-        return True
-    else do
-        putStrLn "\nOcorreu um problema! O Cliente com este id não foi encontrado!"
-        return False
 
--- ====================== setColOfClient ========================== --
--- Entrada: id: Int / col: Int
--- TipoDeSaida: Bool
-setCol :: Int -> Int -> IO Bool
-setCol id col = do
-    let client = getClient id
-    if (ident client) /= -1 then do
-        let newClient = client { col = col }
-        editClientJSON "./Data/Clients.json" newClient
-        return True
-    else do
-        putStrLn "\nOcorreu um problema! O Cliente com este id não foi encontrado!"
-        return False
-
--- ====================== setAllAssetsOfClient ========================== --
--- Entrada: id: Int / allAssets: [Asset]
--- TipoDeSaida: Bool
 setAllAssets :: Int -> [Asset] -> IO ()
 setAllAssets id allAssets = do
     let client = getClient id
@@ -273,13 +228,11 @@ setAllAssets id allAssets = do
 
 -- ================================ OthersMethodsAux ================================= --
 
--- ====================== formatCPF =========================== --
--- Entrada: cpf: Int
--- TipoDeSaida: Saida
+
 formatCPF :: String -> String
 formatCPF cpf =
   let cpfStr = cpf
-  in if (length cpfStr) == 11
+  in if length cpfStr == 11
        then
          let part1 = take 3 cpfStr
              part2 = take 3 (drop 3 cpfStr)
@@ -288,25 +241,7 @@ formatCPF cpf =
          in part1 ++ "." ++ part2 ++ "." ++ part3 ++ "-" ++ part4
        else "CPF inválido"
 
--- ====================== addCashClient ===== --
--- Entrada: id: Int / cash: Float
--- TipoDeSaida: None
-addCash :: Int -> Float -> IO ()
-addCash id cashAdd = do
-    let client = getClientsByID id (getClientJSON "./Data/Clients.json")
-    let newCash = fromIntegral (round ((cash client + cashAdd) * 10)) / 10
-    let newClient = client {cash = newCash}
-    editClientJSON "./Data/Clients.json" newClient
 
-
-removeCash :: Int -> Float -> IO ()
-removeCash id cashRemove = do
-    let client = getClientsByID id (getClientJSON "./Data/Clients.json")
-    let newCash = fromIntegral (round ((cash client - cashRemove) * 10)) / 10
-    let newClient = client {cash = newCash}
-    editClientJSON "./Data/Clients.json" newClient
-
-
-getCurrentUserID :: IO Int
-getCurrentUserID = do
+getLoggedUserID :: IO Int
+getLoggedUserID = do
     ident <$> getLoggedClient

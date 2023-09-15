@@ -1,35 +1,35 @@
 module Menus.Wallet.DepositoSaque.WalletDepSaqLogic where
     
-import Models.Client.GetSetAttrsClient ( addCash, setCash, removeCash, getCash, setCanDeposit )
+import Models.Client.GetSetAttrsClient ( addCash, setCash, addCash, getCash, setCanDeposit )
 
 
 depositar :: Int -> Bool -> IO ()
-depositar idClient canDeposit = do
-    if canDeposit then do
+depositar idClient canDeposit
+    | canDeposit = do
         addCash idClient 100
         setCanDeposit idClient False
-    else putStrLn "Depósito negado. O cliente não realizou um saque anteriormente."
+    | otherwise = putStrLn "Depósito negado. O cliente não realizou um saque anteriormente."
 
 
 sacarTudo :: Int -> IO ()
-sacarTudo idClient = do
-    if getCash idClient >= 200 then do
+sacarTudo idClient
+    | getCash idClient >= 200 = do
         setCash idClient 0
         setCanDeposit idClient True
-    else putStrLn "Saque negado. O cliente não possui um saldo de 200 reais ou mais."
+    | otherwise = putStrLn "Saque negado. O cliente não possui um saldo de 200 reais ou mais."
 
 
 sacar200 :: Int -> IO ()
-sacar200 idClient = do
-    if getCash idClient >= 200 then do
-        removeCash idClient 200
+sacar200 idClient
+    | getCash idClient >= 200 = do
+        addCash idClient (-200)
         setCanDeposit idClient True
-    else putStrLn "Saque negado. O cliente não possui um saldo de 200 reais ou mais."
+    | otherwise = putStrLn "Saque negado. O cliente não possui um saldo de 200 reais ou mais."
 
 
 sacar500 :: Int -> IO ()
-sacar500 idClient = do
-    if getCash idClient >= 500 then do
-        removeCash idClient 500
+sacar500 idClient
+    | getCash idClient >= 500 = do
+        addCash idClient (-500)
         setCanDeposit idClient True
-    else putStrLn "Saque negado. O cliente não possui um saldo de 200 reais ou mais."
+    | otherwise = putStrLn "Saque negado. O cliente não possui um saldo de 200 reais ou mais."

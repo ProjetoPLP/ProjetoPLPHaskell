@@ -6,7 +6,7 @@ import Utils.MatrixUtils ( printMatrix )
 import Utils.VerificationUtils ( existCompany, isNumber )
 import Models.Client.RealizarLogin ( fazerLogin )
 import Models.Client.CadastrarCliente ( cadastrarCliente )
-import Models.Client.GetSetAttrsClient ( getCanDeposit, getCurrentUserID )
+import Models.Client.GetSetAttrsClient ( getCanDeposit, getLoggedUserID )
 import Models.Client.LoginClient ( logoutClient )
 import Models.Company.CadastrarCompany ( cadastrarCompany )
 import Models.Company.SaveCompany ( getCompanyJSON )
@@ -53,7 +53,7 @@ fazerLoginMenu = do
     if querContinuarAOperacao userChoice then do
         resultadoLogin <- fazerLogin
         if resultadoLogin then do
-            idUser <- getCurrentUserID
+            idUser <- getLoggedUserID
             mainMenu idUser
         else
             startMenu

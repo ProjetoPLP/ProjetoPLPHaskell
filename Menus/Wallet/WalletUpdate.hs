@@ -22,8 +22,9 @@ updateClientWallet idUser = do
     updateAllWLCompanyCode filePath ownedAssets
     updateAllWLCompanyPrice filePath ownedAssets
     updateAllWLOwnedStocks filePath ownedAssets
-    where filePath = "./Models/Client/Wallets/wallet" ++ show idUser ++ ".txt"
-          ownedAssets = getAllAssets idUser
+    where
+        filePath = "./Models/Client/Wallets/wallet" ++ show idUser ++ ".txt"
+        ownedAssets = getAllAssets idUser
 
 
 -- Aualiza todas as informações do menu de depósito
@@ -35,7 +36,8 @@ updateWalletDeposito idUser = do
     updateWLPatrimony filePath (getPatrimony idUser) (getTrendIndicator idUser)
     updateWLUserName filePath (Cli.getName idUser)
     updateWLUserCPF filePath (getCPF idUser)
-    where filePath = "./Menus/Wallet/DepositoSaque/walletDeposito.txt"
+    where
+        filePath = "./Menus/Wallet/DepositoSaque/walletDeposito.txt"
 
 
 -- Aualiza todas as informações do menu de saque
@@ -47,7 +49,8 @@ updateWalletSaque idUser = do
     updateWLPatrimony filePath (getPatrimony idUser) (getTrendIndicator idUser)
     updateWLUserName filePath (Cli.getName idUser)
     updateWLUserCPF filePath (getCPF idUser)
-    where filePath = "./Menus/Wallet/DepositoSaque/walletSaque.txt"
+    where
+        filePath = "./Menus/Wallet/DepositoSaque/walletSaque.txt"
 
 
 updateWLCash :: FilePath -> Float -> IO ()
@@ -133,7 +136,8 @@ resetStocks (x:xs) idUser = do
     updateWLCompanyPrice filePath x "     " " "
     updateWLOwnedStocks filePath x "-----"
     resetStocks xs idUser
-    where filePath = "./Models/Client/Wallets/wallet" ++ show idUser ++ ".txt"
+    where
+        filePath = "./Models/Client/Wallets/wallet" ++ show idUser ++ ".txt"
 
 
 getCompanyCodePosition :: Int -> [Int]

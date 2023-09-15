@@ -13,8 +13,8 @@ import Models.Company.GetSetAttrsCompany ( getCol, getIdent, getMaxPrice, getMin
 getNewPrice :: Float -> IO Float
 getNewPrice oldPrice = do
     indexVar <- getIndexAndVariation
-    if last indexVar == 1 then return (format (([0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0] !! head indexVar) + oldPrice))
-    else if last indexVar == (-1) then return (format (([-0.1, -0.2, -0.3, -0.4, -0.5, -0.6, -0.7, -0.8, -0.9, -1.0] !! head indexVar) + oldPrice))
+    if last indexVar == 1 then return (format (([0.1, 0.2 .. 1.0] !! head indexVar) + oldPrice))
+    else if last indexVar == (-1) then return (format (([-0.1, -0.2 .. -1.0] !! head indexVar) + oldPrice))
     else return oldPrice
     where
         format :: Float -> Float
@@ -97,4 +97,5 @@ attCompanyPriceGraph id = do
     updateHBStockMinPrice filePath newMinPrice
     updateHBStockStartPrice filePath (getStartPrice id)
     updateHBGraphCandle filePath (getRow id) (getCol id)
-    where filePath = "./Models/Company/HomeBrokers/homebroker" ++ show id ++ ".txt"
+    where
+        filePath = "./Models/Company/HomeBrokers/homebroker" ++ show id ++ ".txt"

@@ -1,33 +1,32 @@
 module Models.Client.PostClient where
 
-import Models.Client.SaveClient
-import Models.Client.ModelClient
-import Models.Client.GetSetAttrsClient
+import Models.Client.SaveClient ( getClient, getClientJSON )
+import Models.Client.ModelClient ( createAsset, Asset(qtd, companyID), Client(ident, allAssets) )
+import Models.Client.GetSetAttrsClient ( getAllAssets, setAllAssets )
 
--- ====================== addAsset =========================== --
--- Entrada: id: int / companyID: Int / price: Float
--- TipoDeSaida: Bool
+
+-- Adiciona a um cliente X uma quantidade Z de uma empresa Y
 addAsset :: Int -> Int -> Int -> IO ()
 addAsset clientID companyID qtd = do
     let client = getClient clientID
 
-    if (ident client) /= -1 then do
+    if ident client /= -1 then do
         let recoveryAssetsClient = allAssets client
 
         if qtd >= 0 then do
-            if (existAssetInClient (allAssets client) companyID) then do
+            if existAssetInClient (allAssets client) companyID then do
                 let newExistentAssets = addExistentAssetInCompany recoveryAssetsClient companyID qtd
                 setAllAssets clientID newExistentAssets
 
             else do
-                let newAllAssets = [(createAsset companyID qtd)] ++ recoveryAssetsClient
-                if (length newAllAssets) <= 11 then do
+                let newAllAssets = createAsset companyID qtd : recoveryAssetsClient
+                if length newAllAssets <= 11 then do
                     setAllAssets clientID newAllAssets
                 else do
                     putStrLn "\nOcorreu um  probelama! Quantidade de ações excedida."
 
         else do
-            if (existAssetInClient (allAssets client) companyID) then do
+            if existAssetInClient (allAssets client) companyID then do
                 let newExistentAssets = addExistentAssetInCompany recoveryAssetsClient companyID qtd
                 let removed = removeAssetsNegative newExistentAssets
                 setAllAssets clientID removed
@@ -41,32 +40,29 @@ addAsset clientID companyID qtd = do
 
 existAssetInClient :: [Asset] -> Int -> Bool
 existAssetInClient [] _ = False
-existAssetInClient (x:xs) id =
-    if (companyID x) == id then
-        True
-    else
-        existAssetInClient xs id
+existAssetInClient (x:xs) id
+    | companyID x == id = True
+    | otherwise = existAssetInClient xs id
+
 
 addExistentAssetInCompany :: [Asset] -> Int -> Int -> [Asset]
 addExistentAssetInCompany [] _ _= []
-addExistentAssetInCompany (x:xs) idCompany qtd = [addQtd x idCompany qtd] ++ addExistentAssetInCompany xs idCompany qtd
+addExistentAssetInCompany (x:xs) idCompany qtd = addQtd x idCompany qtd : addExistentAssetInCompany xs idCompany qtd
+
 
 addQtd :: Asset -> Int -> Int -> Asset
-addQtd asset idCompany qtd_ =
-    if companyID asset == idCompany then
-        asset { qtd = qtd asset + qtd_ }
-    else
-        asset
+addQtd asset idCompany qtd_
+    | companyID asset == idCompany = asset { qtd = qtd asset + qtd_ }
+    | otherwise = asset
+
 
 removeAssetsNegative :: [Asset] -> [Asset]
 removeAssetsNegative [] = []
 removeAssetsNegative (x:xs) = (remove x) ++ removeAssetsNegative xs
 
-remove :: Asset -> [Asset]
-remove asset =
-    if (qtd asset) <= 0 then []
-    else [asset]
 
+remove :: Asset -> [Asset]
+remove asset = [asset | qtd asset > 0]
 
 
 -- Remove da carteira de todos os clientes uma empresa
