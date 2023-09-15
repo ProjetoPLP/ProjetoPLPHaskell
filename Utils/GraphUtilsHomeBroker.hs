@@ -1,7 +1,7 @@
 module Utils.GraphUtilsHomeBroker where
 
 import Utils.MatrixUtils ( writeMatrixValue )
-import Models.Company.GetSetAttrsCompany ( getCol, getIdent, getRow, updateCol, updateRow )
+import Models.Company.GetSetAttrsCompany ( getCol, getIdent, getRow, addCol, addRow, setCol, setRow )
 import Models.Company.ModelCompany ( Company )
 
 
@@ -10,12 +10,12 @@ attCompanyLineRow :: Int -> Float -> Float -> IO ()
 attCompanyLineRow idComp oldPrice newPrice = do
     checkCompanyColumn idComp
     if newPrice > oldPrice then do
-        updateRow idComp (-1)
+        addRow idComp (-1)
         checkCompanyRowOverflow idComp
     else if newPrice < oldPrice then do
-        updateRow idComp 1
+        addRow idComp 1
         checkCompanyRowUnderflow idComp
-    else updateRow idComp 0
+    else addRow idComp 0
 
 
 -- Verifica se a coluna do gráfico chegou no limite
@@ -23,9 +23,9 @@ checkCompanyColumn :: Int -> IO ()
 checkCompanyColumn idComp
     | getCol idComp > 74 = do
         cleanHBGraph ("./Models/Company/HomeBrokers/homebroker" ++ show idComp ++ ".txt") 6
-        updateCol idComp (-72)
+        setCol idComp 3
     | otherwise = 
-        updateCol idComp 0
+        addCol idComp 0
 
 
 -- Verifica se a linha do gráfico chegou no limite superior
@@ -33,9 +33,9 @@ checkCompanyRowOverflow :: Int -> IO ()
 checkCompanyRowOverflow idComp
     | getRow idComp < 6 = do
         cleanHBGraph ("./Models/Company/HomeBrokers/homebroker" ++ show idComp ++ ".txt") 6
-        updateRow idComp 21
+        setRow idComp 26
     | otherwise = 
-        updateRow idComp 0
+        addRow idComp 0
 
 
 -- Verifica se a linha do gráfico chegou no limite inferior
@@ -43,16 +43,16 @@ checkCompanyRowUnderflow :: Int -> IO ()
 checkCompanyRowUnderflow idComp
     | getRow idComp > 26 = do
         cleanHBGraph ("./Models/Company/HomeBrokers/homebroker" ++ show idComp ++ ".txt") 6
-        updateRow idComp (-21)
+        setRow idComp 6
     | otherwise =
-        updateRow idComp 0
+        addRow idComp 0
 
 
 -- Atualiza a próxima coluna em todos os gráficos
 attAllCompanyColumn :: [Company] -> IO ()
 attAllCompanyColumn [] = return ()
 attAllCompanyColumn (x:xs) = do
-    updateCol (getIdent x) 3
+    addCol (getIdent x) 3
     attAllCompanyColumn xs
 
 

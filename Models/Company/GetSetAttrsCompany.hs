@@ -64,88 +64,61 @@ getIdent = ident
 setPrice :: Int -> Float -> IO ()
 setPrice id price = do
     let company = getCompany id
-    if ident company /= (-1) then do
-        let newCompany = company { price = price }
-        editCompanyJSON "./Data/Companies.json" newCompany
-    else do
-        putStrLn "\nOcorreu um problema! A Empresa com este id não foi encontrada!"
+        newCompany = company { price = price }
+    editCompanyJSON "./Data/Companies.json" newCompany
 
 
 setTrendIndicator:: Int -> String -> IO ()
 setTrendIndicator id trendIndicator = do
     let company = getCompany id
-    if (ident company) /= (-1) then do
-        let newCompany = company { trendIndicator = trendIndicator }
-        editCompanyJSON "./Data/Companies.json" newCompany
-    else
-        putStrLn "\nOcorreu um problema! A Empresa com este id não foi encontrada!"
+        newCompany = company { trendIndicator = trendIndicator }
+    editCompanyJSON "./Data/Companies.json" newCompany
 
 
 setMinPrice :: Int -> Float -> IO ()
 setMinPrice id minPrice = do
     let company = getCompany id
-    if (ident company) /= (-1) then do
-        let newCompany = company { minPrice = minPrice }
-        editCompanyJSON "./Data/Companies.json" newCompany
-    else do
-        putStrLn "\nOcorreu um problema! A Empresa com este id não foi encontrada!"
+        newCompany = company { minPrice = minPrice }
+    editCompanyJSON "./Data/Companies.json" newCompany
 
 
 setMaxPrice :: Int -> Float -> IO ()
 setMaxPrice id maxPrice = do
     let company = getCompany id
-    if (ident company) /= (-1) then do
-        let newCompany = company { maxPrice = maxPrice }
-        editCompanyJSON "./Data/Companies.json" newCompany
-    else do
-        putStrLn "\nOcorreu um problema! A Empresa com este id não foi encontrada!"
-
-
-setStartPrice :: Int -> Float -> IO Bool
-setStartPrice id startPrice = do
-    let company = getCompany id
-    if (ident company) /= (-1) then do
-        let newCompany = company { startPrice = startPrice }
-        editCompanyJSON "./Data/Companies.json" newCompany
-        return True
-    else do
-        putStrLn "\nOcorreu um problema! A Empresa com este id não foi encontrada!"
-        return False
-
-
-setRow :: Int -> Int -> IO Bool
-setRow id row = do
-    let company = getCompany id
-    if (ident company) /= (-1) then do
-        let newCompany = company { row = row }
-        editCompanyJSON "./Data/Companies.json" newCompany
-        return True
-    else do
-        putStrLn "\nOcorreu um problema! A Empresa com este id não foi encontrada!"
-        return False
-
-
-setCol :: Int -> Int -> IO Bool
-setCol id col = do
-    let company = getCompany id
-    if (ident company) /= (-1) then do
-        let newCompany = company { col = col }
-        editCompanyJSON "./Data/Companies.json" newCompany
-        return True
-    else do
-        putStrLn "\nOcorreu um problema! A Empresa com este id não foi encontrada!"
-        return False
-
-
-updateRow :: Int -> Int -> IO()
-updateRow id addRow = do
-    let company = getCompaniesByID id (getCompanyJSON "./Data/Companies.json")
-    let newCompany = company {row = getRow id + addRow}
+        newCompany = company { maxPrice = maxPrice }
     editCompanyJSON "./Data/Companies.json" newCompany
 
 
-updateCol :: Int -> Int -> IO()
-updateCol id addCol = do
+setStartPrice :: Int -> Float -> IO ()
+setStartPrice id startPrice = do
+    let company = getCompany id
+        newCompany = company { startPrice = startPrice }
+    editCompanyJSON "./Data/Companies.json" newCompany
+
+
+setRow :: Int -> Int -> IO ()
+setRow id row = do
+    let company = getCompany id
+        newCompany = company { row = row }
+    editCompanyJSON "./Data/Companies.json" newCompany
+
+
+setCol :: Int -> Int -> IO ()
+setCol id col = do
+    let company = getCompany id
+        newCompany = company { col = col }
+    editCompanyJSON "./Data/Companies.json" newCompany
+
+
+addRow :: Int -> Int -> IO ()
+addRow id addRow = do
     let company = getCompaniesByID id (getCompanyJSON "./Data/Companies.json")
-    let newCompany = company {col = (getCol id) + addCol}
+        newCompany = company {row = getRow id + addRow}
+    editCompanyJSON "./Data/Companies.json" newCompany
+
+
+addCol :: Int -> Int -> IO()
+addCol id addCol = do
+    let company = getCompaniesByID id (getCompanyJSON "./Data/Companies.json")
+        newCompany = company {col = getCol id + addCol}
     editCompanyJSON "./Data/Companies.json" newCompany
