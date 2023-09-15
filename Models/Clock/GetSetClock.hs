@@ -1,9 +1,9 @@
 module Models.Clock.GetSetClock where
 
 import qualified Data.ByteString.Lazy as B
-import Data.Aeson (encode, decode)
-import System.IO.Unsafe (unsafePerformIO)
-import Models.Clock.ModelClock (Clock (Clock, minutes))
+import Data.Aeson ( encode, decode )
+import System.IO.Unsafe ( unsafePerformIO )
+import Models.Clock.ModelClock ( Clock (Clock, minutes) )
 
 
 -- Retorna os minutos totais do relógio no arquivo Clock.json

@@ -1,9 +1,9 @@
 module Models.Company.GetInfoForCreateCompany where
 
-import System.IO (hFlush, stdout) 
-import Data.Char (toUpper)
-import Utils.VerificationUtils (isNumber)
-import Models.Company.SaveCompany (existCompanyByName)
+import System.IO ( hFlush, stdout ) 
+import Data.Char ( toUpper )
+import Utils.VerificationUtils ( isNumber )
+import Models.Company.SaveCompany ( existCompanyByName )
 
 
 getName :: IO String

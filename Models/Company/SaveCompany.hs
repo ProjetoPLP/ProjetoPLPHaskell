@@ -1,61 +1,62 @@
 {-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE DeriveGeneric #-}
 
 module Models.Company.SaveCompany where
 
-import Data.Aeson
-import Data.List (sort)
-import qualified Data.ByteString.Lazy as B
-import qualified Data.ByteString.Lazy.Char8 as BC
-import GHC.Generics
 import System.IO.Unsafe ( unsafePerformIO )
-import System.IO
-import System.Directory
-import Models.Company.ModelCompany
+import System.Directory ( removeFile, renameFile )
+import Data.Aeson ( FromJSON, ToJSON, encode, decode )
+import Data.List ( sort )
+import qualified Data.ByteString.Lazy as B
+import Models.Company.ModelCompany ( Company(Company, ident, name) )
 
 instance FromJSON Company
 instance ToJSON Company
 
+
 getCompany :: Int -> Company
 getCompany id = getCompaniesByID id (getCompanyJSON "./Data/Companies.json")
+
 
 -- Pega uma empresa pelo ID
 getCompaniesByID :: Int -> [Company] -> Company
 getCompaniesByID _ [] = Company (-1) "" "" "" "" "" "" 0.00 " " 0.00 0.00 0.00 0 0
 getCompaniesByID identifierS (x:xs)
- | (ident x) == identifierS = x
- | otherwise = getCompaniesByID identifierS xs
+    | ident x == identifierS = x
+    | otherwise = getCompaniesByID identifierS xs
+
 
 -- Remove uma empresa pelo ID
 removeCompanyByID :: Int -> [Company] -> [Company]
 removeCompanyByID _ [] = []
 removeCompanyByID identifierS (x:xs)
- | (ident x) == identifierS = xs
- | otherwise = [x] ++ (removeCompanyByID identifierS xs)
+    | ident x == identifierS = xs
+    | otherwise = x : removeCompanyByID identifierS xs
+
 
 -- Pega todas as empresas salvas
 getCompanyJSON :: String -> [Company]
 getCompanyJSON path = do
- let file = unsafePerformIO (B.readFile path)
- let decodedFile = decode file :: Maybe [Company]
- case decodedFile of
-  Nothing -> []
-  Just out -> out
+    let file = unsafePerformIO (B.readFile path)
+        decodedFile = decode file :: Maybe [Company]
+    case decodedFile of
+        Nothing -> []
+        Just out -> out
+
 
 -- Salva uma Empresa
 saveCompanyJSON :: String -> Company -> IO ()
 saveCompanyJSON jsonFilePath company = do
-  let companyList = getCompanyJSON jsonFilePath
-  let newID = identifySequenceBreak (getIds $ getCompanyJSON "./Data/Companies.json")
-  let companiesList = companyList ++ [giveIdForCompany company (newID)]
-  
-  textoContents <- readFile "./Sprites/HomeBroker/homebroker_base.txt"
-  let walletFileName = "./Models/Company/HomeBrokers/homebroker" ++ (show newID) ++ ".txt"
-  appendFile walletFileName textoContents
+    let companyList = getCompanyJSON jsonFilePath
+        newID = identifySequenceBreak (getIds $ getCompanyJSON "./Data/Companies.json")
+        companiesList = companyList ++ [giveIdForCompany company newID]
 
-  B.writeFile "./Data/ArquivoTemporario.json" $ encode companiesList
-  removeFile jsonFilePath
-  renameFile "./Data/ArquivoTemporario.json" jsonFilePath
+    textoContents <- readFile "./Sprites/HomeBroker/homebroker_base.txt"
+    let walletFileName = "./Models/Company/HomeBrokers/homebroker" ++ show newID ++ ".txt"
+    appendFile walletFileName textoContents
+
+    B.writeFile "./Data/ArquivoTemporario.json" $ encode companiesList
+    removeFile jsonFilePath
+    renameFile "./Data/ArquivoTemporario.json" jsonFilePath
 
 
 -- Identifica uma quebra em uma sequência numérica, retornando o primeiro valor ausente
@@ -75,33 +76,36 @@ getIds companies = sort [ident x | x <- companies]
 -- Edita as ações da Empresa
 editCompanyJSON :: String -> Company -> IO ()
 editCompanyJSON jsonFilePath updatedCompany = do
- let companiesList = getCompanyJSON jsonFilePath
- let newCompaniesList = removeCompanyByID (ident updatedCompany) companiesList ++ [updatedCompany]
- B.writeFile "./Data/ArquivoTemporario.json" $ encode newCompaniesList
- removeFile jsonFilePath
- renameFile "./Data/ArquivoTemporario.json" jsonFilePath
+    let companiesList = getCompanyJSON jsonFilePath
+        newCompaniesList = removeCompanyByID (ident updatedCompany) companiesList ++ [updatedCompany]
+    B.writeFile "./Data/ArquivoTemporario.json" $ encode newCompaniesList
+    removeFile jsonFilePath
+    renameFile "./Data/ArquivoTemporario.json" jsonFilePath
+
 
 -- Remove uma empresa pelo ID
 removeCompany :: Int -> String -> IO ()
 removeCompany idComp jsonFilePath = do
- let companiesList = getCompanyJSON jsonFilePath
- let newCompaniesList = removeCompanyByID idComp companiesList
- B.writeFile "./Data/ArquivoTemporario.json" $ encode newCompaniesList
- removeFile jsonFilePath
- renameFile "./Data/ArquivoTemporario.json" jsonFilePath
- let filePathToDelete = "./Models/Company/HomeBrokers/homebroker" ++ show idComp ++ ".txt"
- removeFile filePathToDelete
+    let companiesList = getCompanyJSON jsonFilePath
+        newCompaniesList = removeCompanyByID idComp companiesList
+    B.writeFile "./Data/ArquivoTemporario.json" $ encode newCompaniesList
+    removeFile jsonFilePath
+    renameFile "./Data/ArquivoTemporario.json" jsonFilePath
+    let filePathToDelete = "./Models/Company/HomeBrokers/homebroker" ++ show idComp ++ ".txt"
+    removeFile filePathToDelete
 
 
 -- Verifica a existencia do cliente pelo email
 existCompanyByName :: String -> Bool
 existCompanyByName name = verifyExistNameCompany name (getCompanyJSON "./Data/Clients.json")
 
+
 verifyExistNameCompany :: String -> [Company] -> Bool
 verifyExistNameCompany _ [] = False
-verifyExistNameCompany nameCompany (head:tail) = 
-  if nameCompany == (name head) then True
-  else verifyExistNameCompany nameCompany tail
+verifyExistNameCompany nameCompany (head:tail)
+    | nameCompany == name head = True
+    | otherwise = verifyExistNameCompany nameCompany tail
+
 
 -- Atribui novo id ao cliente
 giveIdForCompany :: Company -> Int -> Company

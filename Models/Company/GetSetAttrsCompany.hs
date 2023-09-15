@@ -1,8 +1,9 @@
 module Models.Company.GetSetAttrsCompany where
 
-import Models.Company.SaveCompany
-import Models.Company.ModelCompany
-import Data.Char (toUpper)
+import Data.Char ( toUpper )
+import Models.Company.SaveCompany ( editCompanyJSON, getCompaniesByID, getCompany, getCompanyJSON )
+import Models.Company.ModelCompany ( Company(col, name, age, cnpj, actuation, declaration, code, price, trendIndicator, minPrice, maxPrice, startPrice, ident, row) )
+
 
 getName :: Int -> String
 getName id = name (getCompany id)
@@ -215,12 +216,6 @@ updateCol id addCol = do
     let newCompany = company {col = (getCol id) + addCol}
     editCompanyJSON "./Data/Companies.json" newCompany
 
--- addPrice :: Int -> Float -> IO()
--- addPrice id acaoAdicional = do
---     let company = getCompaniesByID id (getCompanyJSON "./Data/Companies.json")
---     let newPrice = fromIntegral (round ((price company + acaoAdicional) * 10 )) / 10    -- formata o valor para somente uma casa decimal
---     let newCompany = company {price = newPrice}
---     editCompanyJSON "./Data/Companies.json" newCompany
 
 formatCNPJ :: String -> String
 formatCNPJ cnpj =

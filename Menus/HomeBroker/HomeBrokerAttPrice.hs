@@ -18,6 +18,8 @@ getNewPrice oldPrice = do
     if var == 1 then return (format (newPrice + oldPrice))
     else if var == (-1) then return (format (-newPrice + oldPrice))
     else return oldPrice
+    -- newPrice <- randomRIO (-1.0, 1.0 :: Float)
+    -- return (format (newPrice + oldPrice))
 
 
 -- Atualiza em uma empresa, a partir do seu ID, o novo trendIndicator

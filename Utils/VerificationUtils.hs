@@ -12,7 +12,9 @@ existCompany id = existCompanyAux id (getCompanyJSON "./Data/Companies.json")
 
 existCompanyAux :: Int -> [Company] -> Bool
 existCompanyAux _ [] = False
-existCompanyAux id (x:xs) = (ident x == id) || existCompanyAux id xs
+existCompanyAux id (x:xs)
+    | ident x == id = True
+    | otherwise = existCompanyAux id xs
 
 
 -- Verifica se uma String é um número
