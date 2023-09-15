@@ -9,11 +9,12 @@ import Models.Clock.GetSetClock ( addClock )
 import Models.Company.SaveCompany ( getCompanyJSON )
 import Models.Client.SaveClient ( getClientJSON )
 import Menus.HomeBroker.HomeBrokerAttPrice ( attAllCompanyPriceGraph )
+import Menus.HomeBroker.CompanyDown.CompanyDownUpdate ( isDown )
 import Menus.Wallet.WalletAttPatrimony ( attAllClientsPatrimonyGraph )
 
 
 -- Define, a partir da entrada do usuário, por quanto tempo o preço e o gráfico deve variar
-callLoop :: Int -> Int -> IO ()
+callLoop :: Int -> Int -> IO Bool
 callLoop idComp seg = do
     startTime <- getCurrentTime
     addClock seg
@@ -23,12 +24,13 @@ callLoop idComp seg = do
 
 
 -- Atualiza o gráfico nas empresas e carteiras
-loop :: Int -> UTCTime -> IO ()
+loop :: Int -> UTCTime -> IO Bool
 loop idComp endTime = do
     currentTime <- getCurrentTime
-    if currentTime >= endTime then do
+    if currentTime >= endTime || isDown idComp then do
         attAllCompanyColumn (getCompanyJSON "./Data/Companies.json")
         attAllClientColumn (getClientJSON "./Data/Clients.json")
+        return (isDown idComp)
     else do
         attAllCompanyPriceGraph idComp (getCompanyJSON "./Data/Companies.json")
         attAllClientsPatrimonyGraph (getClientJSON "./Data/Clients.json")

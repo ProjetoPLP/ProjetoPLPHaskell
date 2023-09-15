@@ -69,7 +69,7 @@ attAllCompanyPriceGraph idComp (x:xs)
         randomId = getIdent x
 
 
--- Atualiza na empresa atual, a partir do seu ID, o preço e o gráfico
+-- Atualiza o preço e o gráfico na empresa que está sendo exibida
 attCurrentCompanyPriceGraph :: Int -> IO ()
 attCurrentCompanyPriceGraph id = do
     attCompanyPriceGraph id
