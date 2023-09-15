@@ -41,7 +41,15 @@ getCPF = do
     else if length cpf /= 11 then do
         putStrLn "\nAviso: O CPF não contém 11 dígitos."
         getCPF
-    else return cpf
+    else return (formatCPF cpf)
+    where
+        formatCPF :: String -> String
+        formatCPF cpf =
+            let part1 = take 3 cpf
+                part2 = take 3 (drop 3 cpf)
+                part3 = take 3 (drop 6 cpf)
+                part4 = drop 9 cpf
+            in part1 ++ "." ++ part2 ++ "." ++ part3 ++ "-" ++ part4
 
 
 getEmail :: IO String

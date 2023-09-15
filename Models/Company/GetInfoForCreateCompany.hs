@@ -42,7 +42,15 @@ getCNPJ = do
     else if length cnpj /= 14 then do
         putStrLn "\nAviso: O CPNJ não contém 14 dígitos."
         getCNPJ
-    else return cnpj
+    else return (formatCNPJ cnpj)
+    where
+        formatCNPJ :: String -> String
+        formatCNPJ cnpj =
+            let (part1, rest1) = splitAt 2 cnpj
+                (part2, rest2) = splitAt 3 rest1
+                (part3, rest3) = splitAt 3 rest2
+                (part4, part5) = splitAt 4 rest3
+            in part1 ++ "." ++ part2 ++ "." ++ part3 ++ "/" ++ part4 ++ "-" ++ part5
 
 
 getActuation :: IO String
@@ -75,8 +83,4 @@ getCode = do
     if length code /= 5 then do
         putStrLn "\nAviso: O código da ação deve possuir 5 caracteres."
         getCode
-    else return (uppercaseString code)
-
-
-uppercaseString :: String -> String
-uppercaseString = map toUpper
+    else return (map toUpper code)

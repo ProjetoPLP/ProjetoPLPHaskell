@@ -1,7 +1,7 @@
 [{
         "actuation": "Exploração de Petróleo e Gás",
         "age": "1953",
-        "cnpj": "33000167000101",
+        "cnpj": "33.000.167/0001-01",
         "code": "PETR4",
         "col": 3,
         "declaration": "Ser referência em soluções integradas para o segmento de óleo e gás",
@@ -17,7 +17,7 @@
     {
         "actuation": "Extração de Minério",
         "age": "1942",
-        "cnpj": "33592510000154",
+        "cnpj": "33.592.510/0001-54",
         "code": "VALE3",
         "col": 3,
         "declaration": "Ser a empresa de recursos naturais global número um",
@@ -33,7 +33,7 @@
     {
         "actuation": "Fabricação de Bebidas",
         "age": "1999",
-        "cnpj": "07526557000100",
+        "cnpj": "07.526.557/0001-00",
         "code": "ABEV3",
         "col": 3,
         "declaration": "Ser uma plataforma com marcas inspiradoras que conectam pessoas e o ecosistema",
@@ -49,7 +49,7 @@
     {
         "actuation": "E-commerce",
         "age": "1957",
-        "cnpj": "47960950000121",
+        "cnpj": "47.960.950/0001-21",
         "code": "MGLU3",
         "col": 3,
         "declaration": "Transformação digital do varejo brasileiro",
@@ -65,7 +65,7 @@
     {
         "actuation": "Serviços Financeiros",
         "age": "1995",
-        "cnpj": "01027058000191",
+        "cnpj": "01.027.058/0001-91",
         "code": "CIEL3",
         "col": 3,
         "declaration": "Buscar tecnologias e inovações para os negócios",
@@ -81,7 +81,7 @@
     {
         "actuation": "Industria, Máquinas e Motores",
         "age": "1961",
-        "cnpj": "84429695000111",
+        "cnpj": "84.429.695/0001-11",
         "code": "WEGE3",
         "col": 3,
         "declaration": "Ser referência global em motores, geradores, transformadores e acionamentos elétricos",
