@@ -22,3 +22,8 @@ resetMenu targetPath originalPath = do
 -- Formata, a partir do tamanho do nome, a coluna na qual o nome será escrito 
 getCompanyNameCol :: Int -> Int -> Int
 getCompanyNameCol len col = col - ((len - 1) `div` 2)
+
+
+-- Formata as casas decimais de um número para duas
+format :: Float -> Float
+format num = fromIntegral (round (num * 10 )) / 10

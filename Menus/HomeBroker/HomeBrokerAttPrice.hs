@@ -2,6 +2,7 @@ module Menus.HomeBroker.HomeBrokerAttPrice where
 
 import System.Random ( randomRIO )
 import Utils.MatrixUtils ( printMatrix )
+import Utils.UpdateUtils ( format )
 import Utils.GraphUtilsHomeBroker ( attCompanyLineRow)
 import Menus.HomeBroker.HomeBrokerUpdate ( updateHBGraphCandle, updateHBStockMaxPrice, updateHBStockMinPrice, updateHBStockPrice, updateHBStockStartPrice )
 import Menus.HomeBroker.CompanyDown.CompanyDownUpdate ( isDown, removeComapanyFromExchange )
@@ -9,22 +10,14 @@ import Models.Company.ModelCompany ( Company )
 import Models.Company.GetSetAttrsCompany ( getCol, getIdent, getMaxPrice, getMinPrice, getPrice, getRow, getStartPrice, getTrendIndicator, setMaxPrice, setMinPrice, setPrice, setTrendIndicator )
 
 
--- Retorna um novo preço baseado na aleatóriedade da função getIndexAndVariation
+-- Retorna um novo preço
 getNewPrice :: Float -> IO Float
 getNewPrice oldPrice = do
-    indexVar <- getIndexAndVariation
-    if last indexVar == 1 then return (format (([0.1, 0.2 .. 1.0] !! head indexVar) + oldPrice))
-    else if last indexVar == (-1) then return (format (([-0.1, -0.2 .. -1.0] !! head indexVar) + oldPrice))
+    newPrice <- randomRIO (0.1, 1.0 :: Float)
+    var <- randomRIO (-1,1 :: Int)
+    if var == 1 then return (format (newPrice + oldPrice))
+    else if var == (-1) then return (format (-newPrice + oldPrice))
     else return oldPrice
-    where
-        format :: Float -> Float
-        format newPrice = fromIntegral (round (newPrice * 10 )) / 10
-        
-        getIndexAndVariation :: IO [Int]
-        getIndexAndVariation = do
-            index <- randomRIO (0,9 :: Int)
-            var <- randomRIO (-1,1 :: Int)
-            return [index, var]
 
 
 -- Atualiza em uma empresa, a partir do seu ID, o novo trendIndicator

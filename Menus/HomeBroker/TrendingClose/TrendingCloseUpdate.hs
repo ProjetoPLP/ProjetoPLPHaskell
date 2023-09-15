@@ -1,7 +1,7 @@
 module Menus.HomeBroker.TrendingClose.TrendingCloseUpdate where
 
 import Utils.MatrixUtils ( writeMatrixValue )
-import Utils.UpdateUtils ( fillLeft, resetMenu )
+import Utils.UpdateUtils ( fillLeft, resetMenu, format )
 import Models.Company.GetSetAttrsCompany ( getStartPrice, getPrice, getCode, getIdent, setStartPrice )
 import Models.Company.ModelCompany ( Company )
 import Models.Client.GetSetAttrsClient ( getCash, getPatrimony )
@@ -76,9 +76,6 @@ getVar idComp
     | var < 0 = "▼" ++ tail (show (format var)) ++ "0%"
     | otherwise = "0.0%"
     where
-        format :: Float -> Float
-        format var = fromIntegral (round (var * 10 )) / 10
-
         var = ((getPrice idComp - getStartPrice idComp) / getStartPrice idComp) * 100
             
 

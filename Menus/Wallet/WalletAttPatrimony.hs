@@ -1,5 +1,6 @@
 module Menus.Wallet.WalletAttPatrimony where
 
+import Utils.UpdateUtils ( format )
 import Utils.GraphUtilsWallet ( updateWalletGraphCandle, attClientLineRow )
 import Models.Client.ModelClient ( Asset (companyID, qtd), Client (ident) )
 import Models.Company.GetSetAttrsCompany ( getPrice )
@@ -18,9 +19,6 @@ attClientPatrimonyAux (x:xs) = do
     let idUser = companyID x
         qtd_ = qtd x
     format (fromIntegral qtd_ * getPrice idUser + attClientPatrimonyAux xs)
-    where
-        format :: Float -> Float
-        format newPrice = fromIntegral (round (newPrice * 10 )) / 10
 
 
 attClientTrendIndicator :: Int -> Float -> Float -> IO ()
