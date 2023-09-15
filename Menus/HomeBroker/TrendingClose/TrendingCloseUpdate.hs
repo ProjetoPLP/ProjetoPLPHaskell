@@ -2,7 +2,7 @@ module Menus.HomeBroker.TrendingClose.TrendingCloseUpdate where
 
 import Utils.MatrixUtils ( writeMatrixValue )
 import Utils.UpdateUtils ( fillLeft, resetMenu, format )
-import Models.Company.GetSetAttrsCompany ( getStartPrice, getPrice, getCode, getIdent, setStartPrice )
+import Models.Company.GetSetAttrsCompany ( getStartPrice, getPrice, getCode, getIdent, setStartPrice, setMaxPrice, setMinPrice )
 import Models.Company.ModelCompany ( Company )
 import Models.Client.GetSetAttrsClient ( getCash, getPatrimony )
 import Models.Company.SaveCompany ( getCompanyJSON )
@@ -18,7 +18,7 @@ updateTrendingClose idUser = do
     updateTCPatrimony filePath (getPatrimony idUser)
     updateAllTCCompanyCode filePath jsonPath
     updateAllTCCompanyVar filePath jsonPath
-    updateAllCompaniesStartPrice jsonPath
+    updateAllCompaniesStartMaxMinPrice jsonPath
     where filePath = "./Menus/HomeBroker/TrendingClose/trendingClose.txt"
           jsonPath = getCompanyJSON "./Data/Companies.json"
 
@@ -62,12 +62,14 @@ updateTCCompanyVar filePath id = do
     writeMatrixValue filePath val (head pos) (last pos - length val)
 
 
-updateAllCompaniesStartPrice :: [Company] -> IO ()
-updateAllCompaniesStartPrice [] = return ()
-updateAllCompaniesStartPrice (x:xs) = do
+updateAllCompaniesStartMaxMinPrice :: [Company] -> IO ()
+updateAllCompaniesStartMaxMinPrice [] = return ()
+updateAllCompaniesStartMaxMinPrice (x:xs) = do
     let idComp = getIdent x
     setStartPrice idComp (getPrice idComp)
-    updateAllCompaniesStartPrice xs
+    setMaxPrice idComp (getPrice idComp)
+    setMinPrice idComp (getPrice idComp)
+    updateAllCompaniesStartMaxMinPrice xs
 
 
 getVar :: Int -> String
