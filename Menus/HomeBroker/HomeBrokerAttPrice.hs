@@ -13,13 +13,13 @@ import Models.Company.GetSetAttrsCompany ( getCol, getIdent, getMaxPrice, getMin
 -- Retorna um novo preço
 getNewPrice :: Float -> IO Float
 getNewPrice oldPrice = do
-    newPrice <- randomRIO (0.1, 1.0 :: Float)
-    var <- randomRIO (-1,1 :: Int)
-    if var == 1 then return (format (newPrice + oldPrice))
-    else if var == (-1) then return (format (-newPrice + oldPrice))
-    else return oldPrice
-    -- newPrice <- randomRIO (-1.0, 1.0 :: Float)
-    -- return (format (newPrice + oldPrice))
+    -- newPrice <- randomRIO (0.1, 1.0 :: Float)
+    -- var <- randomRIO (-1,1 :: Int)
+    -- if var == 1 then return (format (newPrice + oldPrice))
+    -- else if var == (-1) then return (format (-newPrice + oldPrice))
+    -- else return oldPrice
+    newPrice <- randomRIO (-1.0, 1.0 :: Float)
+    return (format (newPrice + oldPrice))
 
 
 -- Atualiza em uma empresa, a partir do seu ID, o novo trendIndicator
