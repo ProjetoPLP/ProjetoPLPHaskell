@@ -29,7 +29,7 @@ searchAndGetClientByEmail email = verifingIfExistEmailClient email (getClientJSO
 
 
 verifingIfExistEmailClient :: String -> [Client] -> Client
-verifingIfExistEmailClient _ [] = Client (-1) "" "" "" "" "" 0 0 " " False 19 52 []
+verifingIfExistEmailClient _ [] = Client (-1) "" "" "" "" "" 0 0 False 19 52 []
 verifingIfExistEmailClient emailClient (head:tail)
     | emailClient == email head = head
     | otherwise = verifingIfExistEmailClient emailClient tail

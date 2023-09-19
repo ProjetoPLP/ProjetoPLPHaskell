@@ -20,7 +20,7 @@ getClient id = getClientsByID id (getClientJSON "./Data/Clients.json")
 
 
 getClientsByID :: Int -> [Client] -> Client
-getClientsByID _ [] = Client (-1) "" "" "" "" "" 0 0 " " False 19 52 []
+getClientsByID _ [] = Client (-1) "" "" "" "" "" 0 0 False 19 52 []
 getClientsByID identifierS (x:xs)
     | ident x == identifierS = x
     | otherwise = getClientsByID identifierS xs

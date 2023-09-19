@@ -2,9 +2,9 @@ module Menus.Wallet.WalletUpdate where
 
 import Utils.MatrixUtils ( writeMatrixValue )
 import Utils.UpdateUtils ( fillLeft, resetMenu )
-import Models.Client.GetSetAttrsClient as Cli ( getCPF, getCash, getName, getPatrimony, getAllAssets, getTrendIndicator )
+import Models.Client.GetSetAttrsClient as Cli ( getCPF, getCash, getName, getPatrimony, getAllAssets )
 import Models.Client.ModelClient ( Asset (companyID, qtd) )
-import Models.Company.GetSetAttrsCompany as Com ( getCode, getPrice )
+import Models.Company.GetSetAttrsCompany as Com ( getCode, getPrice, getTrendIndicator )
 import Models.Clock.ClockUpdate ( updateMatrixClock )
 import Menus.Wallet.WalletAttPatrimony ( attClientPatrimony )
 
@@ -16,7 +16,7 @@ updateClientWallet idUser = do
     updateMatrixClock filePath
     updateWLCash filePath (getCash idUser)
     attClientPatrimony idUser
-    updateWLPatrimony filePath (getPatrimony idUser) (getTrendIndicator idUser)
+    updateWLPatrimony filePath (getPatrimony idUser)
     updateWLUserName filePath (Cli.getName idUser)
     updateWLUserCPF filePath (getCPF idUser)
     updateAllWLCompanyCode filePath ownedAssets
@@ -33,7 +33,7 @@ updateWalletDeposito idUser = do
     resetMenu filePath "./Sprites/Wallet/walletDeposito_base.txt"
     updateMatrixClock filePath
     updateWLCash filePath (getCash idUser)
-    updateWLPatrimony filePath (getPatrimony idUser) (getTrendIndicator idUser)
+    updateWLPatrimony filePath (getPatrimony idUser)
     updateWLUserName filePath (Cli.getName idUser)
     updateWLUserCPF filePath (getCPF idUser)
     where
@@ -46,7 +46,7 @@ updateWalletSaque idUser = do
     resetMenu filePath "./Sprites/Wallet/walletSaque_base.txt"
     updateMatrixClock filePath
     updateWLCash filePath (getCash idUser)
-    updateWLPatrimony filePath (getPatrimony idUser) (getTrendIndicator idUser)
+    updateWLPatrimony filePath (getPatrimony idUser)
     updateWLUserName filePath (Cli.getName idUser)
     updateWLUserCPF filePath (getCPF idUser)
     where
@@ -59,9 +59,9 @@ updateWLCash filePath cash = do
     writeMatrixValue filePath val 13 (22 - length val)
 
 
-updateWLPatrimony :: FilePath -> Float -> String -> IO ()
-updateWLPatrimony filePath patri trendInd = do
-    let val = fillLeft (trendInd ++ show patri ++ "0") 10
+updateWLPatrimony :: FilePath -> Float -> IO ()
+updateWLPatrimony filePath patri = do
+    let val = fillLeft (show patri ++ "0") 10
     writeMatrixValue filePath val 6 (24 - length val)
 
 

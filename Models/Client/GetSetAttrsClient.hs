@@ -1,7 +1,7 @@
 module Models.Client.GetSetAttrsClient where
 
 import Models.Client.SaveClient ( editClientJSON, getClient, getClientJSON, getClientsByID )
-import Models.Client.ModelClient ( Asset(qtd, companyID), Client(ident, name, age, cpf, email, password, patrimony, trendIndicator, canDeposit, row, col, allAssets, cash) )
+import Models.Client.ModelClient ( Asset(qtd, companyID), Client(ident, name, age, cpf, email, password, patrimony, canDeposit, row, col, allAssets, cash) )
 import Models.Client.LoginClient ( getLoggedClient )
 
 
@@ -23,10 +23,6 @@ getCash idUser = cash (getClient idUser)
 
 getPatrimony :: Int -> Float
 getPatrimony idUser = patrimony (getClient idUser)
-
-
-getTrendIndicator :: Int -> String
-getTrendIndicator idUser = trendIndicator (getClient idUser)
 
 
 getCanDeposit :: Int -> Bool
@@ -68,13 +64,6 @@ setPatrimony :: Int -> Float -> IO ()
 setPatrimony idUser patrimony = do
     let client = getClient idUser
         newClient = client { patrimony = patrimony }
-    editClientJSON "./Data/Clients.json" newClient
-
-
-setTrendIndicator :: Int -> String -> IO ()
-setTrendIndicator idUser trendIndicator = do
-    let client = getClient idUser
-        newClient = client { trendIndicator = trendIndicator }
     editClientJSON "./Data/Clients.json" newClient
 
 

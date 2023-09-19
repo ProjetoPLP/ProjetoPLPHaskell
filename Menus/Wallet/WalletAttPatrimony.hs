@@ -4,7 +4,7 @@ import Utils.UpdateUtils ( format )
 import Utils.GraphUtilsWallet ( updateWalletGraphCandle, attClientLineRow )
 import Models.Client.ModelClient ( Asset (companyID, qtd), Client (ident) )
 import Models.Company.GetSetAttrsCompany ( getPrice )
-import Models.Client.GetSetAttrsClient ( getAllAssets, setPatrimony, getRow, getCol, getPatrimony, setTrendIndicator )
+import Models.Client.GetSetAttrsClient ( getAllAssets, setPatrimony, getRow, getCol, getPatrimony )
 
 
 -- Atualiza o patrimônio de um cliente
@@ -21,20 +21,12 @@ attClientPatrimonyAux (x:xs) = do
     format (fromIntegral qtd_ * getPrice idUser + attClientPatrimonyAux xs)
 
 
-attClientTrendIndicator :: Int -> Float -> Float -> IO ()
-attClientTrendIndicator idUser oldPatri newPatri
-    | newPatri > oldPatri = setTrendIndicator idUser "▲"
-    | newPatri < oldPatri = setTrendIndicator idUser "▼"
-    | otherwise = setTrendIndicator idUser " "
-
-
 -- Atualiza o gráfico da carteira de todos os clientes
 attAllClientsPatrimonyGraph :: [Client] -> IO ()
 attAllClientsPatrimonyGraph [] = return ()
 attAllClientsPatrimonyGraph (x:xs) = do
     let oldPatrimony = getPatrimony idUser
         newPatrimony = attClientPatrimonyAux (getAllAssets idUser)
-    attClientTrendIndicator idUser oldPatrimony newPatrimony
     attClientPatrimonyGraph idUser oldPatrimony newPatrimony
     attClientPatrimony idUser
     attAllClientsPatrimonyGraph xs
