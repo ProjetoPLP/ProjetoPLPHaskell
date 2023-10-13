@@ -24,6 +24,6 @@ getCompanyNameCol :: Int -> Int -> Int
 getCompanyNameCol len col = col - ((len - 1) `div` 2)
 
 
--- Formata as casas decimais de um número para duas
+-- Formata as casas decimais de um número para uma
 format :: Float -> Float
 format num = fromIntegral (round (num * 10 )) / 10
