@@ -12,7 +12,7 @@ Assista a este [vídeo](https://www.youtube.com/watch?v=G0oL7a8rMmM) para entend
 Você precisa da versão mais atualizada de [Haskell](https://www.haskell.org/ghcup/install/) instalada.
 
 
-|Bibliotecas necessárias|Requirido para|
+|Bibliotecas necessárias|Requerido para|
 |-----------------------|--------------|
 | Aeson                 |Manipulação do banco de dados com `json`|
 | Random                |Funcionamento da lógica de variações randômicas dos preços das ações|
