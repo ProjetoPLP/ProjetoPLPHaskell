@@ -65,11 +65,6 @@ updateWLPatrimony filePath patri = do
     writeMatrixValue filePath val 6 (24 - length val)
 
 
-updateWLGraphCandle :: FilePath -> Int -> Int -> IO ()
-updateWLGraphCandle filePath row col = do
-    writeMatrixValue filePath "❚" row col
-
-
 -- Atualiza o código de todas as empresas no carteira do usuário
 updateAllWLCompanyCode :: FilePath -> [Asset] -> IO ()
 updateAllWLCompanyCode filePath [] = return ()

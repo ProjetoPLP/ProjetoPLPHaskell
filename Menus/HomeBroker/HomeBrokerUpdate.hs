@@ -54,11 +54,6 @@ updateHBStockPrice filePath price trendInd = do
     writeMatrixValue filePath val 11 (95 - length val)
 
 
-updateHBGraphCandle :: FilePath -> Int -> Int -> IO ()
-updateHBGraphCandle filePath row col = do
-    writeMatrixValue filePath "❚" row col
-
-
 updateHBStockMaxPrice :: FilePath -> Float -> IO ()
 updateHBStockMaxPrice filePath price = do
     let val = fillLeft (show price ++ "0") 6

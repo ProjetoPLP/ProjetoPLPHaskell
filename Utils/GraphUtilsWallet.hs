@@ -64,6 +64,6 @@ cleanWLGraph filepath row = do
     cleanWLGraph filepath (row + 1)
 
 
-updateWalletGraphCandle :: FilePath -> Int -> Int -> IO ()
-updateWalletGraphCandle filePath row col = do
+updateWLGraphCandle :: FilePath -> Int -> Int -> IO ()
+updateWLGraphCandle filePath row col = do
     writeMatrixValue filePath "❚" row col
