@@ -24,8 +24,7 @@ sell :: Int -> Int -> Int -> IO ()
 sell idClient idComp num = do
     if num <= 0 then return ()
     else do
-        let cash = getCash idClient
-            totalPrice = getPrice idComp * fromIntegral num
+        let totalPrice = getPrice idComp * fromIntegral num
 
         if num > getQtdAssetsInCompany idClient idComp then return ()
         else do
