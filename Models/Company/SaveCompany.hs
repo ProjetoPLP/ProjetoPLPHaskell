@@ -5,7 +5,6 @@ module Models.Company.SaveCompany where
 import System.IO.Unsafe ( unsafePerformIO )
 import System.Directory ( removeFile, renameFile )
 import Data.Aeson ( FromJSON, ToJSON, encode, decode )
-import Data.List ( sort )
 import qualified Data.ByteString.Lazy as B
 import Models.Company.ModelCompany ( Company(Company, ident, name) )
 
@@ -66,7 +65,7 @@ identifyIDSequenceBreak (x:xs)
     | x `notElem` ids = x
     | otherwise = identifyIDSequenceBreak xs
     where
-        ids = sort [ident x | x <- getCompanyJSON "./Data/Companies.json"]
+        ids = [ident x | x <- getCompanyJSON "./Data/Companies.json"]
 
 
 -- Edita as ações da Empresa
