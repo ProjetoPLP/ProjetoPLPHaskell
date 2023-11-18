@@ -4,6 +4,7 @@ import Models.Client.GetInfoForMakeLogin ( getEmail, getPassword )
 import Models.Client.SaveClient ( getClientJSON )
 import Models.Client.ModelClient ( Client(Client, email, ident, password) )
 import Models.Client.LoginClient ( saveLogin )
+import Control.Concurrent ( threadDelay )
 
 
 fazerLogin :: IO Bool
@@ -17,10 +18,12 @@ fazerLogin = do
             saveLogin client
             return True
         else do
-            putStrLn "Aviso: Senha incorreta."
+            putStrLn "\nAviso: Senha incorreta."
+            threadDelay 1200000
             return False
     else do
-        putStrLn "Aviso: E-mail não cadastrado."
+        putStrLn "\nAviso: E-mail não cadastrado."
+        threadDelay 1200000
         return False
 
 

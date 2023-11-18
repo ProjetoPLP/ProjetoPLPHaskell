@@ -39,7 +39,8 @@ optionsStartMenu userChoice
     | userChoice == "E" || userChoice == "e" = cadastraEmpresaMenu
     | userChoice == "S" || userChoice == "s" = return ()
     | otherwise = do
-        putStrLn "Opção Inválida!"
+        putStrLn "\nOpção Inválida!"
+        threadDelay 700000
         startMenu
 
 
@@ -102,7 +103,8 @@ menuCadastroRealizado cadastrou
         threadDelay 2000000
         startMenu
     | otherwise = do
-        putStrLn "Aviso: limite máximo de empresas cadastradas atingido."
+        putStrLn "\nAviso: limite máximo de empresas cadastradas atingido."
+        threadDelay 700000
         startMenu
 
 
@@ -133,7 +135,8 @@ optionsMainMenu idUser userChoice
     | userChoice == "C" || userChoice == "c" = homeBrokerMenu idUser 12
     | userChoice == "S" || userChoice == "s" = startMenu
     | otherwise = do
-        putStrLn "Opção inválida"
+        putStrLn "\nOpção inválida"
+        threadDelay 700000
         mainMenu idUser
 
 
@@ -157,7 +160,8 @@ optionsHomeBrokerMenu idUser idComp userChoice
     | userChoice == "V" || userChoice == "v" = mainMenu idUser
     | isNumber userChoice = attGraphs idUser idComp userChoice
     | otherwise = do
-        putStrLn "Opção inválida"
+        putStrLn "\nOpção inválida"
+        threadDelay 700000
         homeBrokerMenu idUser idComp
 
 
@@ -187,7 +191,8 @@ optionsCompanyProfileMenu :: Int -> Int -> String -> IO ()
 optionsCompanyProfileMenu idUser idComp userChoice
     | userChoice == "V" || userChoice == "v" = homeBrokerMenu idUser idComp
     | otherwise = do
-        putStrLn "Opção Inválida!"
+        putStrLn "\nOpção Inválida!"
+        threadDelay 700000
         companyProfileMenu idUser idComp
 
 
@@ -208,7 +213,8 @@ optionsBuyMenu idUser idComp userChoice
         buyMenu idUser idComp
     | userChoice `elem` ["V", "v", "C", "c"] = homeBrokerMenu idUser idComp
     | otherwise = do
-        putStrLn "Opção Inválida!"
+        putStrLn "\nOpção Inválida!"
+        threadDelay 700000
         buyMenu idUser idComp
 
 
@@ -229,7 +235,8 @@ optionsSellMenu idUser idComp userChoice
         sellMenu idUser idComp
     | userChoice `elem` ["V", "v", "C", "c"] = homeBrokerMenu idUser idComp
     | otherwise = do
-        putStrLn "Opção Inválida!"
+        putStrLn "\nOpção Inválida!"
+        threadDelay 700000
         sellMenu idUser idComp
 
 
@@ -249,7 +256,8 @@ optionsWalletMenu idUser userChoice
     | userChoice == "D" || userChoice == "d" = depositoMenu idUser
     | userChoice == "V" || userChoice == "v" = mainMenu idUser
     | otherwise = do
-        putStrLn "Opção inválida"
+        putStrLn "\nOpção inválida"
+        threadDelay 700000
         walletMenu idUser
 
 
@@ -276,7 +284,8 @@ optionsSaqueMenu idUser userChoice
         saqueMenu idUser
     | userChoice == "V" || userChoice == "v" = walletMenu idUser
     | otherwise = do
-        putStrLn "Opção inválida"
+        putStrLn "\nOpção inválida"
+        threadDelay 700000
         saqueMenu idUser
 
 
@@ -297,7 +306,8 @@ optionsDepositoMenu idUser userChoice
         depositoMenu idUser
     | userChoice `elem` ["V", "v", "N", "n"] = walletMenu idUser
     | otherwise = do
-        putStrLn "Opção inválida"
+        putStrLn "\nOpção inválida"
+        threadDelay 700000
         depositoMenu idUser
 
 

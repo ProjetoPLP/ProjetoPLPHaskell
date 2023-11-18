@@ -9,6 +9,7 @@ type Matrix = [[Char]]
 -- Printa no terminal o conteúdo do arquivo .txt
 printMatrix :: FilePath -> IO ()
 printMatrix filePath = do
+    putStrLn "\ESC[H\ESC[2J"
     matrix <- readMatrixFromFile filePath
     mapM_ putStrLn matrix
 
